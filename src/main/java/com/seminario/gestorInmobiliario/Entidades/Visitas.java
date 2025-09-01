@@ -20,7 +20,7 @@ public class Visitas {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name = "nro_visita", nullable = false, unique = true, length = 11, columnDefinition = "INT(11) UNSIGNED")
     private int nroVisita;
-    @Column (nullable = false, length = 10, columnDefinition = "DATE") 
+    @Column (nullable = false, columnDefinition = "DATETIME") 
     private LocalDateTime fechahora; 
     @Column (nullable = false, length = 45)
     private String nombre;
@@ -59,6 +59,10 @@ public class Visitas {
     public void setEmail(String email) {
         this.email = email;
     }
+    public Visitas() {
+        // Default constructor required by JPA
+    }
+
     public Visitas(int nroVisita, LocalDateTime fechahora, String nombre, String telefono, String email) {
         this.nroVisita = nroVisita;
         this.fechahora = fechahora;
