@@ -32,5 +32,62 @@ public class Agente {
     @Column(length = 45, nullable = false)
     private String clave;
 
+    public String getDniAgente() {
+        return dniAgente;
+    }
+
+    public void setDniAgente(String dniAgente) {
+        this.dniAgente = dniAgente;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getNomApe() {
+        return nomApe;
+    }
+
+    public void setNomApe(String nomApe) {
+        this.nomApe = nomApe;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+
+    
     
 }
