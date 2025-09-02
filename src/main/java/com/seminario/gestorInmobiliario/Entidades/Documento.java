@@ -4,50 +4,50 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "categoria")
-public class Categoria implements Serializable {
+@Table(name = "documento")
+public class Documento implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_categoria")
-    private int idCategoria;
+    @Column(name = "id_documento")
+    private int idDocumento;
 
-    @Column(name = "nombre", nullable = false, length = 100)
-    private String nombre;
+    @Column(name = "enlace", nullable = false, length = 50)
+    private String enlace;
 
-    @Column(name = "descripcion", length = 255)
+    @Column(name = "descripcion", length = 100)
     private String descripcion;
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Column(name = "contenido", columnDefinition = "LONGBLOB", nullable = true)
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] contenido;
 
-    // Constructor vacío 
-    public Categoria() {}
+    // Constructor vacío
+    public Documento() {}
 
     // Constructor con parámetros
-    public Categoria(String nombre, String descripcion, byte[] contenido) {
-        this.nombre = nombre;
+    public Documento(String enlace, String descripcion, byte[] contenido) {
+        this.enlace = enlace;
         this.descripcion = descripcion;
         this.contenido = contenido;
     }
 
     // Getters y Setters
-    public int getIdCategoria() {
-        return idCategoria;
+    public int getIdDocumento() {
+        return idDocumento;
     }
 
-    public void setIdCategoria(int idCategoria) {
-        this.idCategoria = idCategoria;
+    public void setIdDocumento(int idDocumento) {
+        this.idDocumento = idDocumento;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getEnlace() {
+        return enlace;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setEnlace(String enlace) {
+        this.enlace = enlace;
     }
 
     public String getDescripcion() {
@@ -68,9 +68,9 @@ public class Categoria implements Serializable {
 
     @Override
     public String toString() {
-        return "Categoria{" +
-                "idCategoria=" + idCategoria +
-                ", nombre='" + nombre + '\'' +
+        return "Documento{" +
+                "idDocumento=" + idDocumento +
+                ", enlace='" + enlace + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 '}';
     }
