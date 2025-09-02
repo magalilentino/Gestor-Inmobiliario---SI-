@@ -34,7 +34,19 @@ public class Alquiler {
 
     @OneToMany
     @JoinColumn(name = "idPago", nullable = false)
-    private List<Pago> pagos;
+    private List<Pago> misPagos;
+
+    @ManyToOne
+    @JoinColumn(name = "inquilino_id", nullable = false)
+    private Inquilino miInquilino;
+    
+    @ManyToOne
+    @JoinColumn(name = "agente_id", nullable = false)
+    private Agente miAgente;
+    
+    @ManyToOne
+    @JoinColumn(name = "aumento_id")
+    private Aumento miAumento;
 
     //setters y getters 
     public int getIdAlquiler() {
@@ -85,18 +97,37 @@ public class Alquiler {
         this.miPropiedad = miPropiedad;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "inquilino_id", nullable = false)
-    private Inquilino miInquilino;
-    
-    @ManyToOne
-    @JoinColumn(name = "agente_id", nullable = false)
-    private Agente miAgente;
-    
-    @ManyToOne
-    @JoinColumn(name = "aumento_id")
-    private Aumento miAumento;
+    public List<Pago> getMisPagos() {
+        return misPagos;
+    }
 
-    
+    public void setMisPagos(List<Pago> misPagos) {
+        this.misPagos = misPagos;
+    }
+
+    public Inquilino getMiInquilino() {
+        return miInquilino;
+    }
+
+    public void setMiInquilino(Inquilino miInquilino) {
+        this.miInquilino = miInquilino;
+    }
+
+    public Agente getMiAgente() {
+        return miAgente;
+    }
+
+    public void setMiAgente(Agente miAgente) {
+        this.miAgente = miAgente;
+    }
+
+    public Aumento getMiAumento() {
+        return miAumento;
+    }
+
+    public void setMiAumento(Aumento miAumento) {
+        this.miAumento = miAumento;
+    }
+
 
 }
