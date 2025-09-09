@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class PropiedadServicio {
@@ -30,11 +27,11 @@ public class PropiedadServicio {
     public void crearPropiedad(int idPropiedad, String ubicacion, String medidas, int cantAmbientes, int idLocalidad, int idCategoria, byte[] contenido) throws Exception {
         validar(ubicacion, medidas, cantAmbientes, idLocalidad, idCategoria);
         
-        Localidad localidad = localidadRepository.getOne(idLocalidad);
+        Localidad localidad = localidadRepository.findById(idLocalidad).get();
         if (localidad == null) {
             throw new Exception("La localidad indicada no existe");
         }
-        Categoria categoria = categoriaRepository.getOne(idCategoria);
+        Categoria categoria = categoriaRepository.findById(idCategoria).get();
         if (categoria == null) {
             throw new Exception("La categoria indicada no existe");
         }
@@ -59,11 +56,11 @@ public class PropiedadServicio {
         if (respuesta.isPresent()) {
             Propiedad propiedad = respuesta.get();
 
-            Localidad localidad = localidadRepository.getOne(idlocalidad);
+            Localidad localidad = localidadRepository.findById(idlocalidad).get();
             if (localidad == null) {
                 throw new Exception("La localidad indicada no existe");
             }
-            Categoria categoria = categoriaRepository.getOne(idcategoria);
+            Categoria categoria = categoriaRepository.findById(idcategoria).get();
             if (categoria == null) {
                 throw new Exception("La categoria indicada no existe");
             }
