@@ -3,13 +3,11 @@ package com.seminario.gestorInmobiliario.Servicios;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.seminario.gestorInmobiliario.Repositorios.ProvinciaRepository;
 import com.seminario.gestorInmobiliario.Repositorios.ProvinciaRepository;
 import com.seminario.gestorInmobiliario.Entidades.Provincia;
 
@@ -23,7 +21,7 @@ public class ProvinciaServicio {
     @Transactional
     public void crearProvincia(String nombre) throws Exception {
 
-        //validar(nombre);
+        validar(nombre);
 
         Provincia provincia = new Provincia();
 
@@ -38,11 +36,11 @@ public class ProvinciaServicio {
     }
 
     @Transactional
-    public void modificarprovincias(String nombre, int id) throws Exception {
+    public void modificarprovincias(String nombre, int idProvincia) throws Exception {
         
-        // validar(nombre);
+        validar(nombre);
 
-        Optional<Provincia> provinciaOpt = provinciaRepository.findById(id);
+        Optional<Provincia> provinciaOpt = provinciaRepository.findById(idProvincia);
 
         if (provinciaOpt.isPresent()) {
             Provincia provincia = provinciaOpt.get();
@@ -56,8 +54,8 @@ public class ProvinciaServicio {
     }
 
     @Transactional
-    public void eliminarProvincia(int id) throws Exception{
-        Optional<Provincia> provinciaOpt = provinciaRepository.findById(id);
+    public void eliminarProvincia(int idProvincia) throws Exception{
+        Optional<Provincia> provinciaOpt = provinciaRepository.findById(idProvincia);
         if (provinciaOpt.isPresent()) {
             provinciaRepository.delete(provinciaOpt.get());
         } else {
@@ -67,7 +65,13 @@ public class ProvinciaServicio {
     }
 
     @Transactional(readOnly = true)
-    public Provincia getOne(int id){
-        return provinciaRepository.getReferenceById(id);
+    public Provincia getOne(int idProvincia){
+        return provinciaRepository.getReferenceById(idProvincia);
+    }
+
+    private void validar(String nombre) throws Exception {
+        if (nombre.isEmpty() || nombre == null) {
+            throw new Exception("el nombre no puede ser nulo o estar vacío");
+        }
     }
 }
