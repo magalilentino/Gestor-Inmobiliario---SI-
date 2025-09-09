@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,12 +26,12 @@ public class LocalidadService {
 
 
     @Transactional // Todos los metodos que generen cambios en la base de dados
-    public void crearLocalidad(String nombre, Integer codPostal, Integer id)
+    public void crearLocalidad(String nombre, Integer codPostal, Integer idProvincia)
             throws Exception {
 
-        validar(nombre,codPostal,id);
+        validar(nombre,codPostal,idProvincia);
 
-        Provincia provincia = provinciaRepository.findById(id).get();
+        Provincia provincia = provinciaRepository.findById(idProvincia).get();
 
         if (provincia == null) {
             throw new Exception("La provincia especificado no existe.");
@@ -58,12 +57,12 @@ public class LocalidadService {
     }
 
     @Transactional
-    public void modificarLocalidad(Integer idLocalidad, String nombre, Integer codPostal, Integer id)
+    public void modificarLocalidad(Integer idLocalidad, String nombre, Integer codPostal, Integer idProvincia)
         throws Exception {
 
-        validar(nombre,codPostal,id);
+        validar(nombre,codPostal,idProvincia);
         Optional<Localidad> localidadOpt = localidadRepository.findById(idLocalidad);
-        Optional<Provincia> provinciaOpt = provinciaRepository.findById(id);
+        Optional<Provincia> provinciaOpt = provinciaRepository.findById(idProvincia);
 
 
         Provincia provincia = new Provincia();
@@ -101,15 +100,15 @@ public class LocalidadService {
         return localidadRepository.getReferenceById (idLocalidad);
     }
 
-    private void validar(String nombre, Integer codPostal, Integer id)
+    private void validar(String nombre, Integer codPostal, Integer idProvincia)
             throws Exception {
         
         if (nombre.isEmpty() || nombre == null) {
             throw new Exception("El nombre no puede ser nulo o estar vacio");
         }
 
-        if(id == null) {
-            throw new Exception("El id no puede ser nulo o estar vacio");
+        if(idProvincia == null) {
+            throw new Exception("El idProvincia no puede ser nulo o estar vacio");
         }
 
         if (codPostal == null) {

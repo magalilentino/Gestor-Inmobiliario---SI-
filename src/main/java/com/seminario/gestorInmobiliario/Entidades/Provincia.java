@@ -12,15 +12,15 @@ import jakarta.persistence.Table;
 public class Provincia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id; 
+    private int idProvincia; 
     private String nombre;
 
     //setters y getters 
     public int getId() {
-        return id;
+        return idProvincia;
     }
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int idProvincia) {
+        this.idProvincia = idProvincia;
     }
     public String getNombre() {
         return nombre;
