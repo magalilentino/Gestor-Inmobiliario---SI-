@@ -134,5 +134,13 @@ public class Alquiler {
         this.miAumento = miAumento;
     }
 
+    public List<Documento> getDocumentos() {
+        return documentos;
+    }
+
+    public void setDocumentos(List<Documento> documentos) {
+        this.documentos = documentos;
+    }
+
 
 }
