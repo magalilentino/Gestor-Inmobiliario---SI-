@@ -18,19 +18,14 @@ public class Categoria implements Serializable {
     @Column(name = "descripcion", length = 255)
     private String descripcion;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "contenido", columnDefinition = "LONGBLOB", nullable = true)
-    private byte[] contenido;
 
     // Constructor vacío 
     public Categoria() {}
 
     // Constructor con parámetros
-    public Categoria(String nombre, String descripcion, byte[] contenido) {
+    public Categoria(String nombre, String descripcion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.contenido = contenido;
     }
 
     // Getters y Setters
@@ -58,13 +53,6 @@ public class Categoria implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public byte[] getContenido() {
-        return contenido;
-    }
-
-    public void setContenido(byte[] contenido) {
-        this.contenido = contenido;
-    }
 
     @Override
     public String toString() {

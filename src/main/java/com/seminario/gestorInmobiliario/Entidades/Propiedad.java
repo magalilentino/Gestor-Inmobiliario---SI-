@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 public class Propiedad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idProvincia; 
+    private int idPropiedad; 
     @Column(nullable = false)
     private String ubicacion;
     @Column(nullable = false)
@@ -41,11 +41,11 @@ public class Propiedad {
 
     //getters y setters 
     public int getId() {
-        return idProvincia;
+        return idPropiedad;
     }
 
-    public void setId(int idProvincia) {
-        this.idProvincia = idProvincia;
+    public void setId(int idPropiedad) {
+        this.idPropiedad = idPropiedad;
     }
 
     public String getUbicacion() {
@@ -80,5 +80,20 @@ public class Propiedad {
         this.contenido = contenido;
     }
 
+    public Localidad getLocalidad() {
+        return miLocalidad;
+    }
+
+    public void setLocalidad(Localidad miLocalidad) {
+        this.miLocalidad = miLocalidad;
+    }
+
+    public Categoria getCategoria() {
+        return miCategoria;
+    }
+
+    public void setCategoria(Categoria miCategoria) {
+        this.miCategoria = miCategoria;
+    }
 
 }
