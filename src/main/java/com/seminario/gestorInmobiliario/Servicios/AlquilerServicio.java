@@ -1,7 +1,5 @@
 package com.seminario.gestorInmobiliario.Servicios;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.time.LocalDate;

@@ -1,7 +1,9 @@
 package com.seminario.gestorInmobiliario.Servicios;
 
 import com.seminario.gestorInmobiliario.Entidades.VisitaPropiedad;
+import com.seminario.gestorInmobiliario.Entidades.Visitas;
 import com.seminario.gestorInmobiliario.Repositorios.VisitaPropiedadRepository;
+import com.seminario.gestorInmobiliario.Repositorios.VisitasRepository;
 import com.seminario.gestorInmobiliario.Entidades.Propiedad;
 import com.seminario.gestorInmobiliario.Repositorios.PropiedadRepository;
 
@@ -9,10 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class VisitaPropiedadServicio {
@@ -21,18 +21,18 @@ public class VisitaPropiedadServicio {
     @Autowired
     private PropiedadRepository propiedadRepository;
     @Autowired
-    private VisitaRepository visitaRepository;
+    private VisitasRepository visitaRepository;
 
     @Transactional
     public void crearVisitaPropiedad(int idVisita, int idPropiedad) throws Exception {
         validar (idVisita, idPropiedad);
 
         VisitaPropiedad visitaPropiedad = new VisitaPropiedad();
-        Propiedad propiedad = propiedadRepository.findById(idPropiedad);
+        Propiedad propiedad = propiedadRepository.findById(idPropiedad).get();
         if (propiedad == null) {
             throw new Exception("La propiedad indicada no existe");
         }
-        Visita visita = visitaRepository.findById(idVisita);
+        Visitas visita = visitaRepository.findById(idVisita).get();
         if (visita == null) {
             throw new Exception("La visita indicada no existe");
         }
@@ -62,8 +62,8 @@ public class VisitaPropiedadServicio {
         Optional<VisitaPropiedad> respuesta = visitaPropiedadRepository.findById(idVisitaProp);
         if (respuesta.isPresent()) {
             VisitaPropiedad visitaPropiedad = respuesta.get();
-            visitaPropiedad.setVisita(visitaRepository.findById(idVisita));
-            visitaPropiedad.setPropiedad(propiedadRepository.findById(idPropiedad));
+            visitaPropiedad.setVisita(visitaRepository.findById(idVisita).get());
+            visitaPropiedad.setPropiedad(propiedadRepository.findById(idPropiedad).get());
             visitaPropiedadRepository.save(visitaPropiedad);
         } else {
             throw new Exception("No se encontro la visita propiedad solicitada");
@@ -96,4 +96,5 @@ public class VisitaPropiedadServicio {
             throw new Exception("El id de la propiedad debe ser un valor positivo");
         }
     }
+}
 
