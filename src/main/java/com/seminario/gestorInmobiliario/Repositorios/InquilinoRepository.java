@@ -1,7 +1,7 @@
-package com.seminario.gestorInmobiliario.repository;
+package com.seminario.gestorInmobiliario.Repositorios;
 
 import com.seminario.gestorInmobiliario.Entidades.Inquilino;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface InquilinoRepository extends JpaRepository<Inquilino, Long> {
+public interface InquilinoRepository extends JpaRepository<Inquilino, String> {
 }

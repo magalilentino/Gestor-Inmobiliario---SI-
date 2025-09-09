@@ -23,6 +23,10 @@ public class Documento implements Serializable {
     @Column(columnDefinition = "LONGBLOB")
     private byte[] contenido;
 
+    @ManyToOne
+    @JoinColumn(name = "idAlquiler", nullable = false)
+    private Alquiler alquiler;
+
     // Constructor vacío
     public Documento() {}
 
