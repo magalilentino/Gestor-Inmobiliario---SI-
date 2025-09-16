@@ -81,6 +81,16 @@ public class AgenteServicios {
         return agenteRepositorio.getReferenceById (dniAgente);
     }
 
+    public Agente login(String usuario, String clave) throws Exception {
+        Agente agente = agenteRepositorio.findByUsuario(usuario)
+                .orElseThrow(() -> new Exception("Usuario no encontrado"));
+
+        if (!agente.getClave().equals(clave)) {
+            throw new Exception("Clave incorrecta");
+        }
+
+        return agente;
+
     private void validar(String dniAgente, String email, String matricula , String usuario, String clave) throws Exception {
 
         if (dniAgente == null || dniAgente.isEmpty()) {
@@ -101,6 +111,10 @@ public class AgenteServicios {
 
         if (clave == null || clave.isEmpty()) {
             throw new Exception("La clave del agente no puede ser nulo o estar vacio");
+        }
+
+        if (agenteRepositorio.findByUsuario(usuario).isPresent()) {
+            throw new Exception("El usuario ya existe");
         }
     }
 }

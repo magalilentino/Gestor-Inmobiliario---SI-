@@ -1,0 +1,46 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<html>
+<head>
+    <title>Registro de Agente</title>
+</head>
+<body>
+    <h2>Registro de Agente</h2>
+
+    <!-- Mensaje de error -->
+    <c:if test="${not empty error}">
+        <p style="color:red;">${error}</p>
+    </c:if>
+
+    <form action="${pageContext.request.contextPath}/registro" method="post">
+
+        <label for="nombreyapellido">Nombre y Apellido:</label><br>
+        <input type="text" name="nombreyapellido" value="${nombreyapellido}" required><br><br>
+
+        <label for="dni">DNI:</label><br>
+        <input type="text" name="dni" value="${dni}" required><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" name="email" value="${email}" required><br><br>
+
+        <label for="telefono">Teléfono:</label><br>
+        <input type="text" name="telefono" value="${telefono}"><br><br>
+
+        <label for="matricula">Matrícula:</label><br>
+        <input type="text" name="matricula" value="${matricula}"><br><br>
+
+        <label for="usuario">Usuario:</label><br>
+        <input type="text" name="usuario" value="${usuario}" required><br><br>
+
+        <label for="clave">Clave:</label><br>
+        <input type="password" name="clave" required><br><br>
+
+        <button type="submit">Registrarse</button>
+    </form>
+
+    <br>
+    <p>¿Ya tienes cuenta?
+        <a href="${pageContext.request.contextPath}/login">Inicia sesión</a>
+    </p>
+</body>
+</html>
