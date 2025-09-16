@@ -9,7 +9,7 @@ public class Documento implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_documento")
+    @Column(name = "idDocumento")
     private int idDocumento;
 
     @Column(name = "enlace", nullable = false, length = 50)
@@ -22,6 +22,11 @@ public class Documento implements Serializable {
     @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition = "LONGBLOB")
     private byte[] contenido;
+
+     // Relación con Alquiler
+    @ManyToOne
+    @JoinColumn(name = "iDalquiler", nullable = false)
+    private Alquiler alquiler;
 
     // Constructor vacío
     public Documento() {}

@@ -2,7 +2,7 @@ package com.seminario.gestorInmobiliario.Entidades;
 
 import java.time.LocalDate;
 import java.util.List;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "alquileres")
@@ -47,6 +48,10 @@ public class Alquiler {
     @ManyToOne
     @JoinColumn(name = "aumento_id")
     private Aumento miAumento;
+
+    @OneToMany(mappedBy = "alquiler", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Documento> misDocumentos = new ArrayList<>();
+
 
     //setters y getters 
     public int getIdAlquiler() {

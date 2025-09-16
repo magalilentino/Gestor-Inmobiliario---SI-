@@ -1,4 +1,4 @@
-package com.seminario.gestorInmobiliario.repository;
+package com.seminario.gestorInmobiliario.Repositorios;
 
 import com.seminario.gestorInmobiliario.Entidades.Agente;
 import org.springframework.data.jpa.repository.JpaRepository;
