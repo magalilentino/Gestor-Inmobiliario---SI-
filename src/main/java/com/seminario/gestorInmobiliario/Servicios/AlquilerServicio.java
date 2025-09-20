@@ -1,27 +1,27 @@
 package com.seminario.gestorInmobiliario.Servicios;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.seminario.gestorInmobiliario.Repositorios.AlquilerRepository;
-import com.seminario.gestorInmobiliario.Repositorios.AumentoRepository;
-import com.seminario.gestorInmobiliario.Repositorios.DocumentoRepository;
-import com.seminario.gestorInmobiliario.Repositorios.PropiedadRepository;
-import com.seminario.gestorInmobiliario.Repositorios.AgenteRepository;
-import com.seminario.gestorInmobiliario.Repositorios.InquilinoRepository;
-import com.seminario.gestorInmobiliario.Repositorios.PagoRepository;
+import com.seminario.gestorInmobiliario.Entidades.Agente;
 import com.seminario.gestorInmobiliario.Entidades.Alquiler;
 import com.seminario.gestorInmobiliario.Entidades.Aumento;
 import com.seminario.gestorInmobiliario.Entidades.Documento;
-import com.seminario.gestorInmobiliario.Entidades.Propiedad;
-import com.seminario.gestorInmobiliario.Entidades.Agente;
 import com.seminario.gestorInmobiliario.Entidades.Inquilino;
 import com.seminario.gestorInmobiliario.Entidades.Pago;
+import com.seminario.gestorInmobiliario.Entidades.Propiedad;
+import com.seminario.gestorInmobiliario.Repositorios.AgenteRepository;
+import com.seminario.gestorInmobiliario.Repositorios.AlquilerRepository;
+import com.seminario.gestorInmobiliario.Repositorios.AumentoRepository;
+import com.seminario.gestorInmobiliario.Repositorios.DocumentoRepository;
+import com.seminario.gestorInmobiliario.Repositorios.InquilinoRepository;
+import com.seminario.gestorInmobiliario.Repositorios.PagoRepository;
+import com.seminario.gestorInmobiliario.Repositorios.PropiedadRepository;
 
 
 @Service
