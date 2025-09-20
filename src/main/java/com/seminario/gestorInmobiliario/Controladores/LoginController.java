@@ -1,13 +1,14 @@
 package com.seminario.gestorInmobiliario.Controladores;
 
-import com.seminario.gestorInmobiliario.Entidades.Agente;
-import com.seminario.gestorInmobiliario.Servicios.AgenteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.seminario.gestorInmobiliario.Entidades.Agente;
+import com.seminario.gestorInmobiliario.Servicios.AgenteServicios;
+
 import jakarta.servlet.http.HttpSession;
 
 
@@ -15,7 +16,7 @@ public class LoginController {
 
 
     @Autowired
-    private AgenteService agenteService;
+    private AgenteServicios agenteService;
 
     // Página principal de login
     @GetMapping("/login")
