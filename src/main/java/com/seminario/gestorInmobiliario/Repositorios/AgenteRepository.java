@@ -3,11 +3,6 @@ package com.seminario.gestorInmobiliario.Repositorios;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-<<<<<<< Updated upstream
-
-public interface AgenteRepository extends JpaRepository<Agente, Long> {
-}
-=======
 import org.springframework.stereotype.Repository;
 
 import com.seminario.gestorInmobiliario.Entidades.Agente;
@@ -25,4 +20,3 @@ public interface AgenteRepository extends JpaRepository<Agente, String> {
     // Opcional: buscar por email
     Optional<Agente> findByEmail(String email);
 }
->>>>>>> Stashed changes

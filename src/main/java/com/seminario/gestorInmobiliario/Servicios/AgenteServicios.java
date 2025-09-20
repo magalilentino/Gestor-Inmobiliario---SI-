@@ -1,9 +1,5 @@
 package com.seminario.gestorInmobiliario.Servicios;
 
-<<<<<<< Updated upstream
-import java.util.ArrayList;
-=======
->>>>>>> Stashed changes
 import java.util.List;
 import java.util.Optional;
 
@@ -21,21 +17,13 @@ public class AgenteServicios {
     private AgenteRepository agenteRepositorio;
 
     @Transactional // Todos los metodos que generen cambios en la base de dados
-<<<<<<< Updated upstream
-    public void crearAgente(String dniAgente, String nomApe, String email, String telefono, String matricula , String usuario, String clave)
-=======
     public void crearAgente(String dniAgente, String nomApe, String email, String telefono, String matricula, String usuario, String clave)
->>>>>>> Stashed changes
             throws Exception {
 
         validar(dniAgente, email, matricula, usuario, clave);
         Agente agente = new Agente();
 
-<<<<<<< Updated upstream
-        agente.setDniAgente(dniAgente); 
-=======
         agente.setDniAgente(dniAgente);
->>>>>>> Stashed changes
         agente.setNomApe(nomApe);
         agente.setEmail(email);
         agente.setTelefono(telefono);
@@ -47,23 +35,11 @@ public class AgenteServicios {
 
     @Transactional(readOnly = true)
     public List<Agente> listarAgentes() {
-<<<<<<< Updated upstream
-
-        List<Agente> agentes = new ArrayList<>();
-
-        agentes = agenteRepositorio.findAll();
-        return agentes;
-    }
-
-    @Transactional
-    public void modificarAgente(String dniAgente, String nomApe, String email, String telefono, String matricula , String usuario, String clave)
-=======
         return agenteRepositorio.findAll();  
     }
 
     @Transactional
     public void modificarAgente(String dniAgente, String nomApe, String email, String telefono, String matricula, String usuario, String clave)
->>>>>>> Stashed changes
             throws Exception {
 
         validar(dniAgente, email, matricula, usuario, clave);
@@ -97,11 +73,7 @@ public class AgenteServicios {
 
     @Transactional(readOnly = true)
     public Agente getOne(String dniAgente) {
-<<<<<<< Updated upstream
-        return agenteRepositorio.getReferenceById (dniAgente);
-=======
         return agenteRepositorio.getReferenceById(dniAgente);
->>>>>>> Stashed changes
     }
 
     public Agente login(String usuario, String clave) throws Exception {
@@ -113,14 +85,9 @@ public class AgenteServicios {
         }
 
         return agente;
-<<<<<<< Updated upstream
-
-    private void validar(String dniAgente, String email, String matricula , String usuario, String clave) throws Exception {
-=======
     }
 
     private void validar(String dniAgente, String email, String matricula, String usuario, String clave) throws Exception {
->>>>>>> Stashed changes
 
         if (dniAgente == null || dniAgente.isEmpty()) {
             throw new Exception("El DNI del agente no puede ser nulo o estar vacio");
@@ -146,8 +113,4 @@ public class AgenteServicios {
             throw new Exception("El usuario ya existe");
         }
     }
-<<<<<<< Updated upstream
 }
-=======
-}
->>>>>>> Stashed changes
