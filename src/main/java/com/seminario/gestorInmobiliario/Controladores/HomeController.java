@@ -16,11 +16,6 @@ public class HomeController {
         return "index";
     }
 
-    // @GetMapping("/agentes")
-    // public String agentes() {
-    //     return "agentes/lista";
-    // }
-
     @GetMapping("/propiedades")
     public String propiedades() {
         return "propiedades/lista";
