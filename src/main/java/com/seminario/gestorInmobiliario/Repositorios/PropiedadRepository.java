@@ -1,8 +1,9 @@
 package com.seminario.gestorInmobiliario.Repositorios;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.seminario.gestorInmobiliario.Entidades.Propiedad;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface PropiedadRepository extends JpaRepository<Propiedad, Long> {
+@Repository
+public interface PropiedadRepository extends JpaRepository<Propiedad, Integer> {
 }

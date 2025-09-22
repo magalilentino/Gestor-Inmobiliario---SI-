@@ -2,8 +2,6 @@ package com.seminario.gestorInmobiliario.Entidades;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -11,7 +9,6 @@ import jakarta.persistence.Table;
 @Table(name = "inquilinos")
 public class Inquilino {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String dniInquilino;
     
     @Column(length = 45)

@@ -2,6 +2,8 @@ package com.seminario.gestorInmobiliario.Repositorios;
 
 import com.seminario.gestorInmobiliario.Entidades.Pago;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface PagoRepository extends JpaRepository<Pago, Long> {
+@Repository
+public interface PagoRepository extends JpaRepository<Pago, Integer> {
 }

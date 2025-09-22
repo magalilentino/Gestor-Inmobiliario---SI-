@@ -22,7 +22,7 @@ public class Precio {
     @Column(unique = true, nullable = false)
     private LocalDate anioDesde;
     @Column(nullable = false)
-    private double precio; 
+    private double montoPrecio; 
 
     @ManyToOne
     @JoinColumn(name = "alquiler_id", nullable = false, unique = true)
@@ -54,11 +54,11 @@ public class Precio {
     }
 
     public double getPrecio() {
-        return precio;
+        return montoPrecio;
     }
 
-    public void setPrecio(double precio) {
-        this.precio = precio;
+    public void setPrecio(double montoPrecio) {
+        this.montoPrecio =montoPrecio;
     }
 
     public Alquiler getAlquiler() {
