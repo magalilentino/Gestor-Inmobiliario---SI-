@@ -73,8 +73,9 @@ public class InquilinoService {
     }
 
     @Transactional(readOnly = true)
-    public Inquilino getOne(String dniInquilino) {
-        return inquilinoRepository.getReferenceById (dniInquilino);
+    public Inquilino getOne(String dniInquilino) throws Exception{
+   
+        return inquilinoRepository.findById(dniInquilino).orElseThrow(()-> new Exception("No se encontro el inquilino solicitado"));
     }
 
     private void validar(String dniInquilino, String email) throws Exception {

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Alquiler</title>
+</head>
+<body>
+
+    <div class="">
+        <form class="" th:action="@{/alquiler/buscarInquilino}" method="POST">
+            
+            <h5 class="">Buscar Inquilino:</h5> 
+            <input type="text" class="" name="dniInq" placeholder="DNI Inquilino">
+    
+            <button type="submit" class="">Buscar</button>
+        </form>
+    </div>
+
+    <div th:replace="~{fragmentos/mensaje :: div}"></div>
+
+    <!-- Cartel si no se encuentra el inquilino -->
+    <div th:if="${mostrarOpciones}">
+        <!-- <p style="color: red;" th:text="${error}"></p> -->
+        <form th:action="@{/inquilino/registrar}" method="GET" style="display: inline;">
+            <button type="submit">Agregar Inquilino</button>
+        </form>
+    </div>
+
+</body>
+</html>

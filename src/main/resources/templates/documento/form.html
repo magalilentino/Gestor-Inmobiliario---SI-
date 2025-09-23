@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Alquiler</title>
+
+    <script>
+        let documentos = [];
+
+        function agregarDocumento() {
+            const archivo = document.getElementById("archivo").files[0];
+            const descripcion = document.getElementById("descripcion").value;
+
+            if (!archivo || !descripcion) {
+                alert("Completá todos los campos antes de agregar otro.");
+                return;
+            }
+
+            documentos.push({ archivo, descripcion });
+
+            // Mostrar en lista
+            const lista = document.getElementById("listaDocumentos");
+            const item = document.createElement("li");
+            item.textContent = `Documento ${documentos.length}: ${descripcion}`;
+            lista.appendChild(item);
+
+            // Limpiar campos
+            document.getElementById("archivo").value = "";
+            document.getElementById("descripcion").value = "";
+        }
+
+       function enviarDocumentos() {
+        const archivo = document.getElementById("archivo").files[0];
+        const descripcion = document.getElementById("descripcion").value;
+
+        // Si no se presionó "Ingresar otro", agregamos el documento actual
+        if (documentos.length === 0 && archivo && descripcion) {
+            documentos.push({ archivo, descripcion });
+        }
+
+        if (documentos.length === 0) {
+            alert("No hay documentos para enviar.");
+            return;
+        }
+
+        const formData = new FormData();
+
+        documentos.forEach((doc) => {
+            formData.append("archivos", doc.archivo);
+            formData.append("descripciones", doc.descripcion);
+        });
+
+        fetch("/documento/registro", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("Documentos cargados correctamente.");
+                window.location.href = "/alquiler/form";
+            } else {
+                alert("Error al cargar documentos.");
+            }
+        });
+    }
+    </script>
+</head>
+
+<body>
+    <h2>Cargar Documentos</h2>
+    <form id="formDocumentos" enctype="multipart/form-data">
+        <input type="file" id="archivo" accept=".pdf" />
+        <input type="text" id="descripcion" placeholder="Descripción" />
+        <button type="button" onclick="agregarDocumento()">Ingresar otro</button>
+        <button type="button" onclick="enviarDocumentos()">Aceptar</button>
+    </form>
+
+    <h4>Documentos agregados:</h4>
+    <ul id="listaDocumentos"></ul>
+</body>
+</html>
+
+
+<!-- 
+    <h2>Cargar Documentos</h2>
+
+    <input type="hidden" id="idAlquiler" th:value="${alquiler.idAlquiler}" />
+
+
+    <div class="campo">
+        <label>Documento N° <span id="contadorDocumento">1</span></label>
+        <input type="file" id="archivo" accept=".pdf" />
+    </div>
+
+    <div class="campo">
+        <label>Descripción:</label><br>
+        <input type="text" id="descripcion" maxlength="100" placeholder="Descripción del documento" />
+    </div>
+
+    <div class="botones">
+        <button type="button" onclick="agregarDocumento()">Ingresar otro</button>
+        <button type="button" onclick="enviarDocumentos()">Aceptar</button>
+    </div>
+
+    <h4>Documentos agregados:</h4>
+    <ul id="listaDocumentos"></ul> -->

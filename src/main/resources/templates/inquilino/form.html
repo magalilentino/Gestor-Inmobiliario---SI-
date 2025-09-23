@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Inquilino</title>
+</head>
+<body>
+    <div class="">
+        <form class="formulario" th:action="@{/inquilino/registro}" method="POST">
+            
+            <div class="">
+                <h5 class="">DNI:</h5> 
+                <input type="text" class="" name="dni" placeholder="DNI">
+            </div>
+            <div class="">
+                <h5 class="">Nombre y Apellido:</h5> 
+                <input type="text" class="" name="nomApe" placeholder="nombre y apellido">
+            </div>
+            <div class="">
+                <h5 class="">Teléfono:</h5> 
+                <input type="text" class="" name="telefono" placeholder="telefono">
+            </div>
+            <div class="">
+                <h5 class="">Email:</h5> 
+                <input type="text" class="" name="email" placeholder="email">
+            </div>
+        
+
+            <div th:replace="~{fragmentos/mensaje :: div}"></div>
+
+            <button type="submit" class="">Registrar</button>
+        </form>
+
+
+        <section class="">
+            <div class="">
+                <div class="">
+                    <a th:href="@{/alquiler/registrar}" class="">Volver</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    
+</body>
+</html>

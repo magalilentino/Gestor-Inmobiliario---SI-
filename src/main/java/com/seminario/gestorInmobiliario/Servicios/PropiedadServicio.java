@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,7 +39,7 @@ public class PropiedadServicio {
 
         Propiedad propiedad = new Propiedad();
 
-        propiedad.setId(idPropiedad);
+        //propiedad.setId(idPropiedad);
         propiedad.setUbicacion(ubicacion);
         propiedad.setMedidas(medidas);
         propiedad.setCantAmbientes(cantAmbientes);
@@ -65,7 +66,7 @@ public class PropiedadServicio {
                 throw new Exception("La categoria indicada no existe");
             }
 
-            propiedad.setId(idPropiedad);
+            //propiedad.setId(idPropiedad);
             propiedad.setUbicacion(ubicacion);
             propiedad.setMedidas(medidas);
             propiedad.setCantAmbientes(cantAmbientes);
@@ -77,6 +78,10 @@ public class PropiedadServicio {
             throw new Exception("No se encontro la propiedad solicitada");
         }
 
+    }
+
+    public List<Propiedad> listarPropiedades() {
+        return propiedadRepository.findAll();
     }
 
     @Transactional
