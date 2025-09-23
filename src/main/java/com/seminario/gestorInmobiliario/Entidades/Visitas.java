@@ -15,9 +15,9 @@ import jakarta.persistence.Table;
 public class Visitas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "nro_visita", nullable = false, unique = true, length = 11, columnDefinition = "INT(11) UNSIGNED")
+    @Column (name = "nro_visita", nullable = false)
     private int nroVisita;
-    @Column (nullable = false, columnDefinition = "DATETIME") 
+    @Column (nullable = false) 
     private LocalDateTime fechahora; 
     @Column (nullable = false, length = 45)
     private String nombre;

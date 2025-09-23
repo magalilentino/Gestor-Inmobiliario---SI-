@@ -16,11 +16,11 @@ public class VisitaPropiedad {
     private int idVisitaProp;
 
     @ManyToOne
-    @JoinColumn(name = "idVisita", nullable = false)
+    @JoinColumn(name = "id_visita", nullable = false)
     private Visitas visita;
 
     @ManyToOne
-    @JoinColumn(name = "idPropiedad", nullable = false)
+    @JoinColumn(name = "id_propiedad", nullable = false)
     private Propiedad propiedad;
 
     public int getIdVisitaProp() {

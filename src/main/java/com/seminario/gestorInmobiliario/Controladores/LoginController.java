@@ -1,6 +1,7 @@
 package com.seminario.gestorInmobiliario.Controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +12,7 @@ import com.seminario.gestorInmobiliario.Servicios.AgenteServicios;
 
 import jakarta.servlet.http.HttpSession;
 
-
+@Controller
 public class LoginController {
 
 
@@ -36,7 +37,7 @@ public class LoginController {
         try {
             Agente agente = agenteService.login(usuario, clave);
             session.setAttribute("agentesession", agente); // guardar en sesión
-            return "redirect:/inicio";
+            return "redirect:/index";
         } catch (Exception e) {
             modelo.put("error", e.getMessage());
             modelo.put("usuario", usuario);
@@ -76,11 +77,12 @@ public class LoginController {
 
     // Página de inicio (solo para agentes logueados)
     @GetMapping("/inicio")
-    public String inicio(HttpSession session) {
+    public String inicio(HttpSession session, ModelMap modelo) {
         Agente agente = (Agente) session.getAttribute("agentesession");
         if (agente == null) {
             return "redirect:/login?error=Debes iniciar sesión";
         }
+        modelo.put("agente", agente);
         return "inicio"; // inicio.html en templates
     }
 

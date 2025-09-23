@@ -6,27 +6,28 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "agentes_inmobiliarios")
+@Table(name = "agente")
 public class Agente {
     @Id
+    @Column(name = "dniAgente")
     private String dniAgente;
 
-    @Column(length = 45, unique = true, nullable = false)
+    @Column(name = "email", length = 45, unique = true, nullable = false)
     private String email;
     
-    @Column(length = 45, nullable = false)
+    @Column(name = "nomApe", length = 45, nullable = false)
     private String nomApe;
 
-    @Column(length = 45, unique = true, nullable = false)
+    @Column(name = "telefono", length = 45, unique = true, nullable = false)
     private String telefono;
 
-    @Column(length = 45, unique = true, nullable = false)
+    @Column(name = "matricula", length = 45, unique = true, nullable = false)
     private String matricula;
 
-    @Column(length = 45, unique = true, nullable = false)
+    @Column(name = "usuario", length = 45, unique = true, nullable = false)
     private String usuario;
 
-    @Column(length = 45, nullable = false)
+    @Column(name = "clave", length = 45, nullable = false)
     private String clave;
 
     public String getDniAgente() {

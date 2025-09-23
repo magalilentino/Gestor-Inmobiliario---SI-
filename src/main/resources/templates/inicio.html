@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Inicio Agente</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h2>Bienvenido, <span th:text="${agente.nombreApellido}">Usuario</span>!</h2>
+
+    <p>Usuario: <span th:text="${agente.usuario}"></span></p>
+    <p>Email: <span th:text="${agente.email}"></span></p>
+
+    <br>
+    <a th:href="@{/logout}">Cerrar sesión</a>
+</body>
+</html>
