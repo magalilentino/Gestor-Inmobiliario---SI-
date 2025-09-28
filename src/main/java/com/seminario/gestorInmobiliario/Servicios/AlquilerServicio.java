@@ -49,7 +49,7 @@ public class AlquilerServicio {
     private DocumentoRepository documentoRepositorio;
 
     @Transactional 
-    public void crearAlquiler(LocalDate fechaIngreso, LocalDate fechaEgreso, double valorInicial, int idPropiedad, String dniAgente, String dniInquilino)
+    public void crearAlquiler(LocalDate fechaIngreso, LocalDate fechaEgreso, double valorInicial, int idPropiedad, String dniAgente, String dniInquilino, List<Documento> documentos)
             throws Exception {
 
         validar(fechaIngreso, fechaEgreso, valorInicial, idPropiedad, dniAgente, dniInquilino);
@@ -76,6 +76,7 @@ public class AlquilerServicio {
         alquiler.setMiPropiedad(propiedad);
         alquiler.setMiAgente(agente);
         alquiler.setMiInquilino(inquilino);
+        alquiler.setDocumentos(documentos);
 
         alquilerRepositorio.save(alquiler);
 

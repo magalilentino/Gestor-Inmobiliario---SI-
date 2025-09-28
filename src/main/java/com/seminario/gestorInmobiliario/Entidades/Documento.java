@@ -9,9 +9,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,29 +21,21 @@ public class Documento implements Serializable {
     @Column(name = "id_documento")
     private int idDocumento;
 
-    @Column(name = "enlace", nullable = false, length = 50)
-    private String enlace;
-
     @Column(name = "descripcion", length = 100)
     private String descripcion;
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition = "LONGBLOB")
-    private byte[] contenido;
-
-    @ManyToOne
-    @JoinColumn(name = "idAlquiler", nullable = false)
-    private Alquiler alquiler;
+    private byte[] archivo;
 
     // Constructor vacío
     public Documento() {}
 
     // Constructor con parámetros
-    public Documento(String enlace, String descripcion, byte[] contenido) {
-        this.enlace = enlace;
+    public Documento(String descripcion, byte[] archivo) {
         this.descripcion = descripcion;
-        this.contenido = contenido;
+        this.archivo = archivo;
     }
 
     // Getters y Setters
@@ -57,14 +47,6 @@ public class Documento implements Serializable {
         this.idDocumento = idDocumento;
     }
 
-    public String getEnlace() {
-        return enlace;
-    }
-
-    public void setEnlace(String enlace) {
-        this.enlace = enlace;
-    }
-
     public String getDescripcion() {
         return descripcion;
     }
@@ -73,19 +55,19 @@ public class Documento implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public byte[] getContenido() {
-        return contenido;
+    public byte[] getArchivo() {
+        return archivo;
     }
 
-    public void setContenido(byte[] contenido) {
-        this.contenido = contenido;
+    public void setArchivo(byte[] archivo) {
+        this.archivo = archivo;
     }
 
     @Override
     public String toString() {
         return "Documento{" +
                 "idDocumento=" + idDocumento +
-                ", enlace='" + enlace + '\'' +
+                ", archivo='" + archivo + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 '}';
     }
