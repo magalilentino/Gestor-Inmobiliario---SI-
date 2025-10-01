@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Agente</title>
+</head>
+<body>
+    <h2>Iniciar Sesión</h2>
+
+    <!-- Mensaje de error -->
+    <p th:if="${error}" style="color:red;" th:text="${error}"></p>
+
+    <!-- Mensaje de éxito -->
+    <p th:if="${exito}" style="color:green;" th:text="${exito}"></p>
+
+    <form th:action="@{/login}" method="post">
+        <label for="usuario">Usuario:</label><br>
+        <input type="text" name="usuario" th:value="${usuario}" required><br><br>
+
+        <label for="clave">Clave:</label><br>
+        <input type="password" name="clave" required><br><br>
+
+        <button type="submit">Ingresar</button>
+    </form>
+
+    <br>
+    <p>¿No tienes cuenta?
+        <a th:href="@{/registro}">Registrarse</a>
+    </p>
+</body>
+</html>

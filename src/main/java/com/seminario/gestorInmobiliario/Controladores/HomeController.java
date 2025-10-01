@@ -21,8 +21,8 @@ public class HomeController {
         return "propiedades/lista";
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
+    // @GetMapping("/login")
+    // public String login() {
+    //     return "login";
+    // }
 }

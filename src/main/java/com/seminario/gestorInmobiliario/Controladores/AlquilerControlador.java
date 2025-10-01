@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.seminario.gestorInmobiliario.Entidades.Agente;
 import com.seminario.gestorInmobiliario.Entidades.Documento;
 import com.seminario.gestorInmobiliario.Entidades.Inquilino;
 import com.seminario.gestorInmobiliario.Entidades.Propiedad;
@@ -46,8 +47,10 @@ public class AlquilerControlador {
         try {
             List<Documento> documentos = (List<Documento>) session.getAttribute("documentosPendientes");
             String dniInquilino = (String) session.getAttribute("dniInquilino");
-            String dniAgente = (String) session.getAttribute("dniAgente");
+            //String dniAgente = (String) session.getAttribute("dniAgente");
             int idPropiedad = (int) session.getAttribute("idPropiedad");
+            Agente agente = (Agente) session.getAttribute("agentesession");
+            String dniAgente = agente != null ? agente.getDniAgente() : null;
 
             alquilerServicio.crearAlquiler(fechaIngreso, fechaEgreso, valorInicial, idPropiedad, dniAgente, dniInquilino, documentos);
             model.put("exito", "El Alquiler fue cargado correctamente.");

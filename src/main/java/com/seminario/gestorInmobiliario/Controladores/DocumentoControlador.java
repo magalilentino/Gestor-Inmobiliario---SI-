@@ -34,6 +34,7 @@ public class DocumentoControlador {
         String email = (String) session.getAttribute("email");
         model.put("email", email);
         model.put("idPropiedad", idPropiedad);
+        session.setAttribute("idPropiedad", idPropiedad);
         return "documento/form";
     }
 
