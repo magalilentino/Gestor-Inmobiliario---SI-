@@ -41,10 +41,11 @@ public class DocumentoControlador {
     @PostMapping("/registro")
     public String registrarDocumentos(@RequestParam MultipartFile[] archivos,
                                     @RequestParam String[] descripciones,
+                                    @RequestParam Integer idAlquiler,
                                     HttpSession session,
                                     ModelMap model) {
         try {
-            List<Documento> documentos = documentoServicio.crearDocumentos(descripciones, archivos);
+            List<Documento> documentos = documentoServicio.crearDocumentos(descripciones, archivos, idAlquiler);
             session.setAttribute("documentosPendientes", documentos);
             model.put("exito", "Documentos cargados correctamente.");
             return "alquiler/form"; // siguiente paso

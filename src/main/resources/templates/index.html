@@ -5,11 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${titulo}">Gestor Inmobiliario</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<<<<<<< HEAD
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-=======
     <link rel="stylesheet" th:href="@{/css/desplegable.css}" />
->>>>>>> origin/rama-deque
     <style>
         .hero {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -36,8 +33,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-<<<<<<< HEAD
-                        <a class="nav-link" href="/index">Inicio</a>
+                        <a class="nav-link" href="/">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/agentes">Agentes</a>
@@ -49,54 +45,35 @@
                         <a class="nav-link" href="/logout">
                             <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
                         </a>
-=======
-                        <a class="nav-link" href="/">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Agentes">Agentes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Propiedades">Propiedades</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Login">Login</a>
->>>>>>> origin/rama-deque
+                        <a class="nav-link" href="/login">
+                            <i class="bi bi-person"></i> Login
+                        </a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-<<<<<<< HEAD
-    <!-- Hero Section -->
+    <!-- Sección principal -->
     <div class="hero text-center">
         <div class="container">
             <h1 th:text="${titulo}" class="display-4 mb-4">Gestor Inmobiliario</h1>
             <p th:text="${mensaje}" class="lead mb-4">Bienvenido al sistema de gestión inmobiliaria</p>
+            
+            <!-- Botones de acción -->
+            <div class="dropdown d-inline-block me-3">
+                <a href="#" class="btn btn-light btn-lg dropdown-toggle">Gestionar Alquileres</a>
+                <div class="dropdown-content">
+                    <a href="/pagar">Pagar alquiler</a>
+                    <a href="/rescindir">Rescindir Alquiler</a>
+                </div>
+            </div>
             <a href="/agentes" class="btn btn-light btn-lg me-3">Gestionar Agentes</a>
             <a href="/propiedades" class="btn btn-outline-light btn-lg">Ver Propiedades</a>
         </div>
     </div>
-=======
-<div class="hero text-center">
-    <div class="container">
-        <h1 th:text="${titulo}" class="display-4 mb-4">Gestor Inmobiliario</h1>
-        <p th:text="${mensaje}" class="lead mb-4">Bienvenido al sistema de gestión inmobiliaria</p>
-
-        <!-- Botón con menú desplegable -->
-        <div class="dropdown d-inline-block me-3">
-            <a href="#" class="btn btn-light btn-lg dropdown-toggle">Gestionar Alquileres</a>
-            <div class="dropdown-content">
-                <a href="/Pagar">Pagar alquiler</a>
-                <a href="/Rescindir">Rescindir Alquiler</a>
-            </div>
-        </div>
-        <!-- Otro botón normal -->
-        <a href="/propiedades" class="btn btn-outline-light btn-lg">Registro Nuevo</a>
-    </div>
-</div>
-
->>>>>>> origin/rama-deque
 
     <!-- Features Section -->
     <div class="container my-5">

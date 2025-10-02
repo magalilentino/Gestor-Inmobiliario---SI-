@@ -29,15 +29,20 @@ public class Documento implements Serializable {
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition = "LONGBLOB")
-    private byte[] archivo;
+    private byte[] contenido;
+
+    @ManyToOne
+    @JoinColumn(name = "id_alquiler")
+    private Alquiler alquiler;
 
     // Constructor vacío
     public Documento() {}
 
     // Constructor con parámetros
-    public Documento(String descripcion, byte[] archivo) {
+    public Documento(String descripcion, byte[] contenido, Alquiler alquiler) {
         this.descripcion = descripcion;
-        this.archivo = archivo;
+        this.contenido = contenido;
+        this.alquiler = alquiler;
     }
 
     // Getters y Setters
@@ -57,20 +62,29 @@ public class Documento implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public byte[] getArchivo() {
-        return archivo;
+    public byte[] getContenido() {
+        return contenido;
     }
 
-    public void setArchivo(byte[] archivo) {
-        this.archivo = archivo;
+    public void setContenido(byte[] contenido) {
+        this.contenido = contenido;
+    }
+
+    public Alquiler getAlquiler() {
+        return alquiler;
+    }
+
+    public void setAlquiler(Alquiler alquiler) {
+        this.alquiler = alquiler;
     }
 
     @Override
     public String toString() {
         return "Documento{" +
                 "idDocumento=" + idDocumento +
-                ", archivo='" + archivo + '\'' +
                 ", descripcion='" + descripcion + '\'' +
+                ", contenido='" + (contenido != null ? "[CONTENIDO BINARIO]" : "null") + '\'' +
+                ", alquiler=" + (alquiler != null ? alquiler.getIdAlquiler() : "null") +
                 '}';
     }
 }
