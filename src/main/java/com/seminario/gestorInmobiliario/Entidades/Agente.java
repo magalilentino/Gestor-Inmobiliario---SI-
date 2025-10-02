@@ -9,7 +9,10 @@ import jakarta.persistence.Table;
 @Table(name = "agente")
 public class Agente {
     @Id
+<<<<<<< HEAD
     @Column(name = "dniAgente")
+=======
+>>>>>>> origin/rama-deque
     private String dniAgente;
 
     @Column(name = "email", length = 45, unique = true, nullable = false)

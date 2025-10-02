@@ -16,11 +16,19 @@ public class VisitaPropiedad {
     private int idVisitaProp;
 
     @ManyToOne
+<<<<<<< HEAD
     @JoinColumn(name = "id_visita", nullable = false)
     private Visitas visita;
 
     @ManyToOne
     @JoinColumn(name = "id_propiedad", nullable = false)
+=======
+    @JoinColumn(name = "idVisita", nullable = false)
+    private Visitas visita;
+
+    @ManyToOne
+    @JoinColumn(name = "idPropiedad", nullable = false)
+>>>>>>> origin/rama-deque
     private Propiedad propiedad;
 
     public int getIdVisitaProp() {

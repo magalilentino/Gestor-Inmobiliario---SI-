@@ -1,7 +1,10 @@
 package com.seminario.gestorInmobiliario.Controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.stereotype.Controller;
+=======
+>>>>>>> origin/rama-deque
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +15,11 @@ import com.seminario.gestorInmobiliario.Servicios.AgenteServicios;
 
 import jakarta.servlet.http.HttpSession;
 
+<<<<<<< HEAD
 @Controller
+=======
+
+>>>>>>> origin/rama-deque
 public class LoginController {
 
 
@@ -37,7 +44,11 @@ public class LoginController {
         try {
             Agente agente = agenteService.login(usuario, clave);
             session.setAttribute("agentesession", agente); // guardar en sesión
+<<<<<<< HEAD
             return "redirect:/index";
+=======
+            return "redirect:/inicio";
+>>>>>>> origin/rama-deque
         } catch (Exception e) {
             modelo.put("error", e.getMessage());
             modelo.put("usuario", usuario);
@@ -77,12 +88,19 @@ public class LoginController {
 
     // Página de inicio (solo para agentes logueados)
     @GetMapping("/inicio")
+<<<<<<< HEAD
     public String inicio(HttpSession session, ModelMap modelo) {
+=======
+    public String inicio(HttpSession session) {
+>>>>>>> origin/rama-deque
         Agente agente = (Agente) session.getAttribute("agentesession");
         if (agente == null) {
             return "redirect:/login?error=Debes iniciar sesión";
         }
+<<<<<<< HEAD
         modelo.put("agente", agente);
+=======
+>>>>>>> origin/rama-deque
         return "inicio"; // inicio.html en templates
     }
 

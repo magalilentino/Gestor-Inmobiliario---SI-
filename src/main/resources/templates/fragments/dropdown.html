@@ -1,0 +1,12 @@
+<!-- fragments/dropdown.html -->
+<div th:fragment="dropdown(menuButton, opciones)">
+    <div class="dropdown d-inline-block me-3">
+        <!-- Botón principal -->
+        <a href="#" class="btn btn-light btn-lg dropdown-toggle" th:text="${menuButton}"></a>
+
+        <!-- Opciones desplegables -->
+        <div class="dropdown-content">
+            <a th:each="opcion : ${opciones}" th:href="@{${opcion.href}}" th:text="${opcion.text}"></a>
+        </div>
+    </div>
+</div>
