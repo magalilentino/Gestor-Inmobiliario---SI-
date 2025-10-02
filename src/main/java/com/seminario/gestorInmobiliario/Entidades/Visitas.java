@@ -15,15 +15,9 @@ import jakarta.persistence.Table;
 public class Visitas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-<<<<<<< HEAD
-    @Column (name = "nro_visita", nullable = false)
-    private int nroVisita;
-    @Column (nullable = false) 
-=======
     @Column (name = "nro_visita", nullable = false, unique = true, length = 11, columnDefinition = "INT(11) UNSIGNED")
     private int nroVisita;
-    @Column (nullable = false, columnDefinition = "DATETIME") 
->>>>>>> origin/rama-deque
+    @Column (nullable = false, columnDefinition = "DATETIME")
     private LocalDateTime fechahora; 
     @Column (nullable = false, length = 45)
     private String nombre;
