@@ -88,6 +88,11 @@ public class VisitaPropiedadServicio {
         }
     }
 
+    @Transactional(readOnly = true)
+    public List<Propiedad> listarPropVisitadas(String email) {
+        return visitaPropiedadRepository.listarPropVisitadas(email);
+    }
+
     private void validar(int idVisita, int idPropiedad) throws Exception {
         if (idVisita <= 0) {
             throw new Exception("El id de la visita debe ser un valor positivo");

@@ -40,11 +40,11 @@ public class Propiedad {
     private byte[] contenido;
 
     //getters y setters 
-    public int getId() {
+    public int getIdPropiedad() {
         return idPropiedad;
     }
 
-    public void setId(int idPropiedad) {
+    public void setIdPropiedad(int idPropiedad) {
         this.idPropiedad = idPropiedad;
     }
 

@@ -36,7 +36,7 @@ public class Alquiler {
     private Propiedad miPropiedad;
 
     @OneToMany
-    @JoinColumn(name = "alquiler_id", nullable = false)  // Nombre diferente
+    @JoinColumn(name = "alquiler_id", nullable = false)
     private List<Pago> misPagos;
 
     @ManyToOne
@@ -51,7 +51,8 @@ public class Alquiler {
     @JoinColumn(name = "aumento_id")
     private Aumento miAumento;
 
-    @OneToMany(mappedBy = "alquiler", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "alquiler_id")
     private List<Documento> documentos = new ArrayList<>();
 
     //setters y getters 
