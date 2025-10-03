@@ -9,6 +9,8 @@
     <h1>registro de pago</h1>
 
     <div th:if="${mensaje}">
+        <form th:action="@{/registro-pago/registrar}" method="post"> 
+    </form>
         <p th:text="${mensaje}">Pago registrado correctamente.</p>
         <p>El comprobante no fue solicitado o se enviará por correo.</p>
     </div>
@@ -18,7 +20,7 @@
         </div>
 
     <hr>
-    <p><a th:href="@{/buscar-inquilino}">Volver a buscar inquilino e iniciar otro pago</a></p>
+    <p><a th:href="@{/registro-pago/buscar-inquilino}">Volver a buscar inquilino e iniciar otro pago</a></p>
 
 </body>
 </html>

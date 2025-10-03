@@ -14,7 +14,7 @@
     </div>
 
     <div th:if="${pagos != null and not #lists.isEmpty(pagos)}">
-        <form action="#" th:action="@{/calcular-monto}" method="post">
+        <form action="#" th:action="@{/registro-pago/calcular-monto}" method="post">
             
             <input type="hidden" name="idAlquiler" th:value="${idAlquiler}">
 
@@ -25,20 +25,16 @@
                     <tr>
                         <th>Seleccionar</th>
                         <th>ID Pago</th>
-                        <th>Concepto/Mes</th>
-                        <th>Monto</th>
                         <th>Fecha Vencimiento</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="pago : ${pagos}">
                         <td>
-                            <input type="checkbox" name="pagosSeleccionados" th:value="${pago.id}">
+                            <input type="checkbox" name="pagosSeleccionados" th:value="${pago.idPago}">
                         </td>
-                        <td th:text="${pago.id}">456</td>
-                        <td th:text="${pago.concepto}">Alquiler Mes Enero</td> 
-                        <td th:text="${pago.monto}">150000.00</td>
-                        <td th:text="${pago.fechaVencimiento}">2025-01-10</td>
+                        <td th:text="${pago.idPago}">456</td> 
+                        <td th:text="${pago.fecha_limite}">2025-01-10</td>
                     </tr>
                 </tbody>
             </table>

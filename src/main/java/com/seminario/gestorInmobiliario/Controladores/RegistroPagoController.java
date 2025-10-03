@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.seminario.gestorInmobiliario.Servicios.InquilinoService;
 import com.seminario.gestorInmobiliario.Servicios.PagoService;
 
 import ch.qos.logback.core.model.Model;
-import jakarta.transaction.Transactional;
+
 
 import com.seminario.gestorInmobiliario.Entidades.Alquiler;
 import com.seminario.gestorInmobiliario.Entidades.Documento;
@@ -74,7 +75,7 @@ public class RegistroPagoController {
     @GetMapping("/pagos-pendientes")
     public String mostrarPagosPendientes(@RequestParam int idAlquiler, ModelMap model) {
         try {
-            List<Pago> pagos = pagoRepository.findPagosPendientesPorAlquiler(idAlquiler, "pendiente"); 
+            List<Pago> pagos = pagoRepository.findPagosPendientesPorAlquiler(idAlquiler, "pendiente");
 
             if (pagos.isEmpty()) {
                 model.addAttribute("mensaje", "El alquiler no tiene pagos pendientes.");
@@ -114,6 +115,7 @@ public class RegistroPagoController {
             pago.setFechaPago(fecha);
             model.addAttribute("pago", pago);
             model.addAttribute("formasPago", formaPagoService.listarFormasPago());
+            model.addAttribute("monto", montoBase);
             return "pago/confirmarPago";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
@@ -125,6 +127,7 @@ public class RegistroPagoController {
 
     // Paso 4: Registrar pago y opcionalmente generar comprobante
     @PostMapping("/registrar")
+    @Transactional
     public String registrarPago(@RequestParam int idPago,
                                 @RequestParam int idFormaPago,
                                 @RequestParam(required = false) boolean solicitarComprobante,
