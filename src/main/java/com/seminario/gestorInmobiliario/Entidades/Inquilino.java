@@ -1,8 +1,13 @@
 package com.seminario.gestorInmobiliario.Entidades;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -20,6 +25,18 @@ public class Inquilino {
     @Column(length = 45, unique = true)
     private String email;
 
+    @OneToMany(mappedBy = "miInquilino", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Alquiler> misAlquileres = new ArrayList<>();
+
+
+
+    public List<Alquiler> getMisAlquileres() {
+        return misAlquileres;
+    }
+
+    public void setMisAlquileres(List<Alquiler> misAlquileres) {
+        this.misAlquileres = misAlquileres;
+    }
 
     public String getDniInquilino() {
         return dniInquilino;

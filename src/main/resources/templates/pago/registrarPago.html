@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Paso 4: Confirmación Final</title>
+</head>
+<body>
+
+    <h1>registro de pago</h1>
+
+    <div th:if="${mensaje}">
+        <form th:action="@{/registro-pago/registrar}" method="post"> 
+    </form>
+        <p th:text="${mensaje}">Pago registrado correctamente.</p>
+        <p>El comprobante no fue solicitado o se enviará por correo.</p>
+    </div>
+
+    <div th:if="${error}">
+        <p><strong>Error al registrar el pago:</strong> <span th:text="${error}"></span></p>
+        </div>
+
+    <hr>
+    <p><a th:href="@{/registro-pago/buscar-inquilino}">Volver a buscar inquilino e iniciar otro pago</a></p>
+
+</body>
+</html>
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Pago</title>
+</head>
+<body>
+    <div class="formulario">
+        <h2>Registrar Pago</h2>
+
+        <form th:action="@{/registro-pago/registrar}" method="post">
+            <input type="hidden" name="idPago" th:value="${pago.idPago}" />
+
+            <p><strong>Inquilino:</strong> <span th:text="${pago.alquiler.inquilino.nombre}"></span></p>
+            <p><strong>Propiedad:</strong> <span th:text="${pago.alquiler.propiedad.direccion}"></span></p>
+            <p><strong>Fecha de Pago:</strong> <span th:text="${pago.fechaPago}"></span></p>
+            <p><strong>Monto Calculado:</strong> $<span th:text="${pago.montoPagado}"></span></p>
+
+            <label for="idFormaPago">Forma de Pago:</label>
+            <select name="idFormaPago" id="idFormaPago" required>
+                <option th:each="fp : ${formasPago}" 
+                        th:value="${fp.idFormaPago}" 
+                        th:text="${fp.nombre}"></option>
+            </select>
+
+            <label>
+                <input type="checkbox" name="solicitarComprobante" />
+                Solicitar comprobante de pago
+            </label>
+
+            <div class="acciones">
+                <button type="submit">Registrar</button>
+                <a href="/">Cancelar</a>
+            </div>
+        </form>
+
+        <div th:if="${error != null}">
+            <p th:text="${error}"></p>
+        </div>
+    </div>
+</body>
+</html> -->
