@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmar Pago y Monto</title>
+    </head>
+<body>
+
+    <h1>Paso 3: Cálculo y Confirmación de Monto</h1>
+
+    <div th:if="${error}" style="color: red;">
+        <p><strong>Error al calcular el monto:</strong> <span th:text="${error}"></span></p>
+        <p><a th:href="@{/pagos-pendientes(idAlquiler=${idAlquiler})}">Volver a seleccionar pagos</a></p>
+    </div>
+
+    <div th:if="${pago != null}">
+        
+        <h2>Detalles del Pago</h2>
+        
+        <div th:if="${mensajeRetraso}" style="color: orange; font-weight: bold;">
+            <p><span th:text="${mensajeRetraso}"></span> - Se ha aplicado un recargo por mora.</p>
+        </div>
+        
+        <ul>
+            <li><strong>ID Pago:</strong> <span th:text="${pago.id}"></span></li>
+            <li><strong>Concepto:</strong> <span th:text="${pago.concepto}"></span></li>
+            <li><strong>Monto Final a Pagar:</strong> <strong th:text="${pago.montoBase}"></strong></li>
+            <li><strong>Fecha de Pago Registrada:</strong> <span th:text="${pago.fechaPago}"></span></li>
+        </ul>
+        
+        <hr>
+
+        <form th:action="@{/registrar}" method="post">
+            
+            <input type="hidden" name="idPago" th:value="${pago.id}">
+            <input type="hidden" name="fechaPago" th:value="${pago.fechaPago}"> 
+
+            <fieldset>
+                <legend>Seleccionar Forma de Pago</legend>
+                <select name="idFormaPago" required>
+                    <option value="">-- Seleccione una forma de pago --</option>
+                    <option th:each="forma : ${formasPago}" 
+                            th:value="${forma.id}" 
+                            th:text="${forma.nombre}">Efectivo</option>
+                </select>
+            </fieldset>
+
+            <fieldset>
+                <legend>Opciones Adicionales</legend>
+                <input type="checkbox" id="solicitarComprobante" name="solicitarComprobante" value="true">
+                <label for="solicitarComprobante">Solicitar Comprobante de Pago</label>
+            </fieldset>
+            
+            <button type="submit" style="background-color: green; color: white;">CONFIRMAR Y REGISTRAR PAGO (Paso 4)</button>
+        </form>
+        
+    </div>
+
+</body>
+</html>

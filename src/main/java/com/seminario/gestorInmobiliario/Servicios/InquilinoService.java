@@ -8,14 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.seminario.gestorInmobiliario.Entidades.Alquiler;
 import com.seminario.gestorInmobiliario.Entidades.Inquilino;
 import com.seminario.gestorInmobiliario.Repositorios.InquilinoRepository;
+import com.seminario.gestorInmobiliario.Repositorios.AlquilerRepository;
+
 
 @Service
 public class InquilinoService {
 
     @Autowired
     private InquilinoRepository inquilinoRepository;
+
+    @Autowired
+    private AlquilerRepository alquilerRepository;
 
     @Transactional // Todos los metodos que generen cambios en la base de dados
     public void crearInquilino(String dniInquilino, String nomApe, String email, String telefono)
@@ -78,6 +84,22 @@ public class InquilinoService {
         return inquilinoRepository.findById(dniInquilino).orElseThrow(()-> new Exception("No se encontro el inquilino solicitado"));
     }
 
+
+    public List<Alquiler> buscarAlquileresActivosPorDni(String dniInquilino) throws Exception {
+        Optional<Inquilino> respuesta = inquilinoRepository.findById(dniInquilino);
+
+        if (respuesta.isEmpty()) {
+            throw new Exception("El DNI ingresado no corresponde a ningún Inquilino.");
+        }
+
+        List<Alquiler> alquileres = alquilerRepository.findAlquileresByDniAndEstado(dniInquilino, "Activo");
+
+        if (alquileres.isEmpty()) {
+            throw new Exception("El Inquilino no cuenta con alquileres activos.");
+        }
+        return alquileres;
+    }
+
     private void validar(String dniInquilino, String email) throws Exception {
 
         if (dniInquilino == null || dniInquilino.isEmpty()) {
@@ -89,4 +111,5 @@ public class InquilinoService {
         }
 
     }
+
 }

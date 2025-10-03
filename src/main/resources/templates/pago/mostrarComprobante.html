@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Comprobante de Pago</title>
+</head>
+<body>
+    <div class="mostrar-comprobante">
+        <h2>Comprobante de Pago</h2>
+        <p><strong>Inquilino:</strong> <span th:text="${pago.alquiler.miInquilino.nomApe}"></span></p>
+        <p><strong>Propiedad:</strong> <span th:text="${pago.alquiler.miPropiedad.ubicacion}"></span></p>
+        <p><strong>Fecha de Pago:</strong> <span th:text="${pago.fechaPago}"></span></p>
+        <p><strong>Monto Pagado:</strong> $<span th:text="${monto}"></span></p>
+        <p><strong>Forma de Pago:</strong> <span th:text="${pago.formaPago.nombre}"></span></p>
+        <p><strong>Estado:</strong> <span th:text="${pago.estado}"></span></p>
+    </div>
+</body>
+</html>

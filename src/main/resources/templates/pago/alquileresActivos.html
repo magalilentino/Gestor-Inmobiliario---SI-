@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscar Inquilino y Alquileres Activos</title>
+    </head>
+<body>
+
+    <h1>Registro de pagos</h1>
+
+    <form th:action="@{/buscar-inquilino}" method="post">
+        <label for="dni">Ingrese el DNI del Inquilino:</label>
+        <input type="text" id="dni" name="dni" required>
+        <button type="submit">Buscar Alquileres</button>
+    </form>
+    
+    <hr>
+
+    <div th:if="${error}">
+        <p><strong>el dni no pertenece a ningun inquilino</strong> <span th:text="${error}"></span></p>
+        <p>Vuelve al paso 1.</p>
+    </div>
+
+    <div th:if="${alquileres != null and not #lists.isEmpty(alquileres)}">
+        <h2>Selecciona un Alquiler Activo</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Alquiler</th>
+                    <th>Propiedad</th>
+                    <th>Inquilino</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="alquiler : ${alquileres}">
+                    <td th:text="${alquiler.idAlquiler}">123</td>
+                    <td th:text="${alquiler.miPropiedad.ubicacion}">Calle Falsa 123</td>
+                    <td th:text="${alquiler.miInquilino.nomApe}">Juan Pérez</td>
+                    <td>
+                        <a th:href="@{/registro-pago/pagos-pendientes(idAlquiler=${alquiler.idAlquiler})}"> 
+                            Ver Pagos Pendientes
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

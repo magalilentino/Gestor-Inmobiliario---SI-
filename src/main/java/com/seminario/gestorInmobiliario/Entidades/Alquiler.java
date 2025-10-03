@@ -23,21 +23,36 @@ public class Alquiler {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idAlquiler;
 
-    @Column(unique = true, nullable = false)
+    @Column( nullable = false)
     private LocalDate fechaIngreso;
-    @Column(unique = true, nullable = false)
+    @Column( nullable = false)
     private LocalDate fechaEgreso;
     private LocalDate fechaRecision;
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private double valorInicial;
+    @Column(nullable = false)
+    private String estado;
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
 
     @ManyToOne
     @JoinColumn(name = "propiedad_id", nullable = false)
     private Propiedad miPropiedad;
 
-    @OneToMany
-    @JoinColumn(name = "pago_lista", nullable = false)
+    @OneToMany(mappedBy = "alquiler")
+    //@JoinColumn(name = "alquiler_id", nullable = false)
     private List<Pago> misPagos;
+
+    @OneToMany(mappedBy = "alquiler")
+    //@JoinColumn(name = "alquiler_id", nullable = false)
+    private List<Precio> misPrecios;
 
     @ManyToOne
     @JoinColumn(name = "inquilino_id", nullable = false)
@@ -142,6 +157,26 @@ public class Alquiler {
 
     public void setDocumentos(List<Documento> documentos) {
         this.documentos = documentos;
+    }
+
+    public List<Precio> getMisPrecios() {
+        return misPrecios;
+    }
+
+    public void setMisPrecios(List<Precio> misPrecios) {
+        this.misPrecios = misPrecios;
+    }
+
+
+    //calculo el total 
+    public double getPrecio(LocalDate fechaPago){
+        double precio=0;
+        for(Precio p: misPrecios){
+            if(!p.getFechaDesde().isAfter(fechaPago)){
+                precio= p.getPrecio();
+            }
+        }
+        return precio;
     }
 
 

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pagos Pendientes</title>
+    </head>
+<body>
+
+    <h1>Paso 2: Pagos Pendientes</h1>
+
+    <div th:if="${mensaje}">
+        <p th:text="${mensaje}" style="color: green; font-weight: bold;"></p>
+        <p><a th:href="@{/}">Volver a buscar inquilino</a></p>
+    </div>
+
+    <div th:if="${pagos != null and not #lists.isEmpty(pagos)}">
+        <form action="#" th:action="@{/calcular-monto}" method="post">
+            
+            <input type="hidden" name="idAlquiler" th:value="${idAlquiler}">
+
+            <h2>Pagos Pendientes para el Alquiler ID: <span th:text="${idAlquiler}"></span></h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Seleccionar</th>
+                        <th>ID Pago</th>
+                        <th>Concepto/Mes</th>
+                        <th>Monto</th>
+                        <th>Fecha Vencimiento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="pago : ${pagos}">
+                        <td>
+                            <input type="checkbox" name="pagosSeleccionados" th:value="${pago.id}">
+                        </td>
+                        <td th:text="${pago.id}">456</td>
+                        <td th:text="${pago.concepto}">Alquiler Mes Enero</td> 
+                        <td th:text="${pago.monto}">150000.00</td>
+                        <td th:text="${pago.fechaVencimiento}">2025-01-10</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr>
+            
+            <label for="fechaPago">Fecha de Pago:</label>
+            <input type="date" id="fechaPago" name="fechaPago" required>
+            
+            <button type="submit">Procesar Pagos Seleccionados</button>
+            
+        </form>
+    </div>
+
+</body>
+</html>

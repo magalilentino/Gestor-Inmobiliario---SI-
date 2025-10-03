@@ -22,14 +22,31 @@ public class Pago {
     private LocalDate fecha_limite;
 
     @Column(nullable = false)
+    private String estado;
+
+    @Column(nullable = false)
     private double interesMora;
 
     private LocalDate fechaPago;
 
     @ManyToOne
-    @JoinColumn(name = "idFormaPago", nullable = false)
+    @JoinColumn(name = "idFormaPago")
     private FormaPago formaPago;
 
+    @ManyToOne
+    @JoinColumn(name = "alquiler_id", nullable = false)
+    private Alquiler alquiler;
+    
+    
+    public Alquiler getAlquiler() {
+        return alquiler;
+    }
+
+    public void setAlquiler(Alquiler alquiler) {
+        this.alquiler = alquiler;
+    }
+
+    //getters y setters 
     public int getIdPago() {
         return idPago;
     }
@@ -70,5 +87,16 @@ public class Pago {
         this.formaPago = formaPago;
     }
 
+    public String getEstado(){
+        return estado;
+    }
+    public void setEstado(){
+        this.estado= "pendiente";
+    }
+
+    //cambiar estado 
+    public void  cambiarEstado() {
+        this.estado = "Pagado";
+    }
     
 }

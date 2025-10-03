@@ -18,9 +18,7 @@ public class Precio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPrecio; 
     @Column(unique = true, nullable = false)
-    private LocalDate mesDesde;
-    @Column(unique = true, nullable = false)
-    private LocalDate anioDesde;
+    private LocalDate fechaDesde;
     @Column(nullable = false)
     private double montoPrecio; 
 
@@ -37,20 +35,12 @@ public class Precio {
         this.idPrecio = idPrecio;
     }
 
-    public LocalDate getMesDesde() {
-        return mesDesde;
+    public LocalDate getFechaDesde() {
+        return fechaDesde;
     }
 
-    public void setMesDesde(LocalDate mesDesde) {
-        this.mesDesde = mesDesde;
-    }
-
-    public LocalDate getAnioDesde() {
-        return anioDesde;
-    }
-
-    public void setAnioDesde(LocalDate anioDesde) {
-        this.anioDesde = anioDesde;
+    public void setFechaDesde(LocalDate fechaDesde) {
+        this.fechaDesde = fechaDesde;
     }
 
     public double getPrecio() {

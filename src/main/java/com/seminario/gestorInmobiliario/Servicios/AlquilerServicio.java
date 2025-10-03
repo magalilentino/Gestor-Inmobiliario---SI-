@@ -1,6 +1,7 @@
 package com.seminario.gestorInmobiliario.Servicios;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ import com.seminario.gestorInmobiliario.Entidades.Aumento;
 import com.seminario.gestorInmobiliario.Entidades.Documento;
 import com.seminario.gestorInmobiliario.Entidades.Inquilino;
 import com.seminario.gestorInmobiliario.Entidades.Pago;
+import com.seminario.gestorInmobiliario.Entidades.Precio;
 import com.seminario.gestorInmobiliario.Entidades.Propiedad;
 import com.seminario.gestorInmobiliario.Repositorios.AgenteRepository;
 import com.seminario.gestorInmobiliario.Repositorios.AlquilerRepository;
@@ -47,6 +49,10 @@ public class AlquilerServicio {
 
     @Autowired
     private DocumentoRepository documentoRepositorio;
+
+    @Autowired
+    private PrecioServicio precioServicio;
+
 
     @Transactional 
     public void crearAlquiler(LocalDate fechaIngreso, LocalDate fechaEgreso, double valorInicial, int idPropiedad, String dniAgente, String dniInquilino, List<Documento> documentos)
@@ -156,6 +162,19 @@ public class AlquilerServicio {
         alquilerRepositorio.save(alquiler);
     }
 
+    public double getPrecioActual(){
+        List<Precio> misPrecios= precioServicio.listarPrecios();
+        Precio precioActual;
+
+        precioActual = misPrecios.get(0);
+
+        for(Precio p: misPrecios){
+            if (p.getFechaDesde().isAfter(precioActual.getFechaDesde())) {
+            precioActual = p;}
+        }
+        return precioActual.getPrecio();
+    }
+
     public void agregarPago(int id, int idPago) throws Exception{
         Alquiler alquiler = alquilerRepositorio.findById(id).get();
         Pago pago = pagoRepository.findById(idPago).get();
@@ -223,4 +242,5 @@ public class AlquilerServicio {
             throw new Exception("El dni del inquilino no puede ser nulo o estar vacio");
         }
     }
+
 }
