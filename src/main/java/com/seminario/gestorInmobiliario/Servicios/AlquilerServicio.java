@@ -168,12 +168,27 @@ public class AlquilerServicio {
 
         precioActual = misPrecios.get(0);
 
-        for(Precio p: misPrecios){
-            if (p.getFechaDesde().isAfter(precioActual.getFechaDesde())) {
-            precioActual = p;}
+        
+    for (Precio p : misPrecios) {
+        // Primero comparamos el año
+        if (p.getAñoDesde() > precioActual.getAñoDesde()) {
+            precioActual = p;
         }
-        return precioActual.getPrecio();
+        // Si el año es igual, comparamos el mes
+        else if (p.getAñoDesde() == precioActual.getAñoDesde() &&
+                 p.getMesDesde() > precioActual.getMesDesde()) {
+            precioActual = p;
+        }
     }
+
+    return precioActual.getPrecio();
+}
+        // for(Precio p: misPrecios){
+        //     if (p.getFechaDesde().isAfter(precioActual.getFechaDesde())) {
+        //     precioActual = p;}
+        // }
+        // return precioActual.getPrecio();
+
 
     public void agregarPago(int id, int idPago) throws Exception{
         Alquiler alquiler = alquilerRepositorio.findById(id).get();

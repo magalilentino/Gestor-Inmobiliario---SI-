@@ -1,7 +1,5 @@
 package com.seminario.gestorInmobiliario.Servicios;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +22,7 @@ public class PrecioServicio {
     private AlquilerRepository alquilerRepository;
 
     @Transactional
-    public void crearPrecio(LocalDate mesDesde, LocalDate anioDesde, double montoPrecio, Integer idAlquiler)
+    public void crearPrecio(Integer mesDesde, Integer anioDesde, double montoPrecio, Integer idAlquiler)
             throws Exception {
 
         validar(mesDesde, anioDesde, montoPrecio, idAlquiler);
@@ -38,7 +36,7 @@ public class PrecioServicio {
         Precio precio = new Precio();
 
         precio.setMesDesde(mesDesde);
-        precio.setAnioDesde(anioDesde);
+        precio.setAñoDesde(anioDesde);
         precio.setPrecio(montoPrecio);
         precio.setAlquiler(alquiler);
 
@@ -52,7 +50,7 @@ public class PrecioServicio {
     }
 
     @Transactional
-    public void modificarPrecio(Integer idPrecio, LocalDate mesDesde, LocalDate anioDesde, double montoPrecio, Integer idAlquiler)
+    public void modificarPrecio(Integer idPrecio, Integer mesDesde, Integer anioDesde, double montoPrecio, Integer idAlquiler)
             throws Exception {
 
         validar(mesDesde, anioDesde, montoPrecio, idAlquiler);
@@ -69,7 +67,7 @@ public class PrecioServicio {
             Precio precio = precioOpt.get();
 
             precio.setMesDesde(mesDesde);
-            precio.setAnioDesde(anioDesde);
+            precio.setAñoDesde(anioDesde);
             precio.setPrecio(montoPrecio);
             precio.setAlquiler(alquiler);
 
@@ -94,7 +92,7 @@ public class PrecioServicio {
         return precioRepository.getReferenceById(idPrecio);
     }
 
-    private void validar(LocalDate mesDesde, LocalDate anioDesde, double montoPrecio, Integer idAlquiler)
+    private void validar(Integer mesDesde, Integer anioDesde, double montoPrecio, Integer idAlquiler)
             throws Exception {
 
         if (mesDesde == null) {  //no valide que la fecha sea mayor a la de hoy porque supongo que se puede cargar o modificar precios anteriores y a futuro 

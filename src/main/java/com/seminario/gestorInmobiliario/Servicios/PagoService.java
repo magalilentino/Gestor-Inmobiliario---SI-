@@ -10,15 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.seminario.gestorInmobiliario.Entidades.Pago;
-import com.seminario.gestorInmobiliario.Entidades.Alquiler;
 import com.seminario.gestorInmobiliario.Entidades.FormaPago;
-import com.seminario.gestorInmobiliario.Entidades.Inquilino;
-import com.seminario.gestorInmobiliario.Entidades.Localidad;
-import com.seminario.gestorInmobiliario.Repositorios.PagoRepository;
-import com.seminario.gestorInmobiliario.Repositorios.PagoRepository;
+import com.seminario.gestorInmobiliario.Entidades.Pago;
 import com.seminario.gestorInmobiliario.Repositorios.FormaPagoRepository;
-import com.seminario.gestorInmobiliario.Repositorios.FormaPagoRepository;
+import com.seminario.gestorInmobiliario.Repositorios.PagoRepository;
 
 
 @Service
@@ -30,7 +25,9 @@ public class PagoService {
     @Autowired
     private FormaPagoRepository formaPagoRepository;
 
-
+    @Autowired
+    private AlquilerServicio alquilerService;
+    
     @Transactional 
     public void crearPago(LocalDate fecha_limite, double interesMora)
             throws Exception {
@@ -100,7 +97,8 @@ public class PagoService {
         if (pagoOpt.isPresent()) {
             Pago pago = pagoOpt.get();
             
-            precio= pago.getAlquiler().getPrecio(fechaPago);
+            //precio= pago.getAlquiler().getPrecio(fechaPago);
+            precio = alquilerService.getPrecioActual();
 
             if(fechaPago.isAfter(pago.getFecha_limite())){
                 precio= precio*pago.getInteresMora();

@@ -30,13 +30,17 @@ public class Alquiler {
     private LocalDate fechaRecision;
     @Column(unique = true, nullable = false)
     private double valorInicial;
+    @Column(unique = true, nullable = false)
+    private String estado;
 
     @ManyToOne
     @JoinColumn(name = "propiedad_id", nullable = false)
     private Propiedad miPropiedad;
 
-    @OneToMany
-    @JoinColumn(name = "alquiler_id", nullable = false)
+    // @OneToMany
+    // @JoinColumn(name = "alquiler_id", nullable = false)
+    // private List<Pago> misPagos;
+    @OneToMany(mappedBy = "alquiler")
     private List<Pago> misPagos;
 
     @ManyToOne
@@ -95,6 +99,13 @@ public class Alquiler {
     public void setValorInicial(double valorInicial) {
         this.valorInicial = valorInicial;
     }
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 
     public Propiedad getMiPropiedad() {
         return miPropiedad;
@@ -143,8 +154,5 @@ public class Alquiler {
     public void setDocumentos(List<Documento> documentos) {
         this.documentos = documentos;
     }
-
-
-
 
 }

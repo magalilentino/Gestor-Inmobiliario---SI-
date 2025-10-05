@@ -6,26 +6,21 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.seminario.gestorInmobiliario.Servicios.InquilinoService;
-import com.seminario.gestorInmobiliario.Servicios.PagoService;
-
-import ch.qos.logback.core.model.Model;
-
 
 import com.seminario.gestorInmobiliario.Entidades.Alquiler;
-import com.seminario.gestorInmobiliario.Entidades.Documento;
 import com.seminario.gestorInmobiliario.Entidades.Pago;
+import com.seminario.gestorInmobiliario.Repositorios.PagoRepository;
 import com.seminario.gestorInmobiliario.Servicios.AlquilerServicio;
 import com.seminario.gestorInmobiliario.Servicios.DocumentoServicio;
 import com.seminario.gestorInmobiliario.Servicios.FormaPagoServicio;
-import com.seminario.gestorInmobiliario.Repositorios.PagoRepository;
+import com.seminario.gestorInmobiliario.Servicios.InquilinoService;
+import com.seminario.gestorInmobiliario.Servicios.PagoService;
 
 
 @Controller
@@ -45,7 +40,7 @@ public class RegistroPagoController {
     private FormaPagoServicio formaPagoService;
 
     @Autowired
-    private DocumentoServicio documentoService;
+    private DocumentoServicio DocumentoServicio;
 
     @Autowired
     private PagoRepository pagoRepository;
@@ -155,7 +150,8 @@ public class RegistroPagoController {
             Pago pago = pagoRepository.findById(idPago).orElse(null);
             model.addAttribute("pago", pago);
             Alquiler alquiler = pago.getAlquiler();
-            model.addAttribute("monto", alquiler.getPrecio(pago.getFechaPago()));
+            //model.addAttribute("monto", alquiler.getPrecio(pago.getFechaPago()));
+            model.addAttribute("monto", alquilerService.getPrecioActual());
             return "pago/mostrarComprobante";
         } catch (Exception e) {
             model.addAttribute("error", "Error al cargar comprobante: ");
