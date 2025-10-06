@@ -36,7 +36,7 @@ public class Alquiler {
     private Propiedad miPropiedad;
 
     @OneToMany
-    @JoinColumn(name = "alquiler_id", nullable = false)
+    @JoinColumn(name = "pago_lista", nullable = false)
     private List<Pago> misPagos;
 
     @ManyToOne

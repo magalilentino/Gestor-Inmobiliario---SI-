@@ -1,6 +1,5 @@
 package com.seminario.gestorInmobiliario.Repositorios;
 
-import com.seminario.gestorInmobiliario.Entidades.Alquiler;
 import com.seminario.gestorInmobiliario.Entidades.Pago;
 
 import java.util.List;
