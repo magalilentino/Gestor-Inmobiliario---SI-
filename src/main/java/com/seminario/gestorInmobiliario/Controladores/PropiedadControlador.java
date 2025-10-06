@@ -1,6 +1,5 @@
 package com.seminario.gestorInmobiliario.Controladores;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

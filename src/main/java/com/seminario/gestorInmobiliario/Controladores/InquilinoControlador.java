@@ -25,19 +25,37 @@ public class InquilinoControlador {
         return "inquilino/form";
     }
 
-    @PostMapping("/registro")
-    public String guardarInquilino(@RequestParam String nombre, @RequestParam String apellido,
-            @RequestParam String dni, @RequestParam String telefono, @RequestParam String email,
-            @RequestParam String garantia, ModelMap modelo) {
+      @PostMapping("/registro")
+    public String registro(@RequestParam String dni, 
+                            @RequestParam String nomApe, 
+                            @RequestParam String telefono,  
+                            @RequestParam String email, ModelMap model){
         try {
-            inquilinoServicio.crearInquilino(dni, nombre + " " + apellido, email, telefono);
-            modelo.put("exito", "El inquilino fue registrado correctamente!");
-            return "redirect:/";
-        } catch (Exception e) {
-            modelo.put("error", e.getMessage());
-            return "inquilino/form";
+
+            inquilinoServicio.crearInquilino(dni, nomApe, email, telefono);
+            model.put("exito", "El Inquilino fue cargado correctamente.");
+            
+
+        } catch (Exception ex) {
+            model.put("error", ex.getMessage());
+
+            return "inquilino/form"; 
         }
+        return "alquiler/buscarInquilino";
     }
+    // @PostMapping("/registro")
+    // public String guardarInquilino(@RequestParam String nombre,
+    //         @RequestParam String dni, @RequestParam String telefono, @RequestParam String email,
+    //         @RequestParam String garantia, ModelMap modelo) {
+    //     try {
+    //         inquilinoServicio.crearInquilino(dni, nombre, email, telefono);
+    //         modelo.put("exito", "El inquilino fue registrado correctamente!");
+    //         return "redirect:/";
+    //     } catch (Exception e) {
+    //         modelo.put("error", e.getMessage());
+    //         return "inquilino/form";
+    //     }
+    // }
 
     @GetMapping("/listar")
     public String listarInquilinos(ModelMap modelo) {

@@ -1,7 +1,6 @@
 package com.seminario.gestorInmobiliario.Servicios;
 
 import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -83,6 +82,7 @@ public class AlquilerServicio {
         alquiler.setMiAgente(agente);
         alquiler.setMiInquilino(inquilino);
         alquiler.setDocumentos(documentos);
+        alquiler.setEstado("Activo");
 
         alquilerRepositorio.save(alquiler);
 
