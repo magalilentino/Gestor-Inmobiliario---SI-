@@ -17,6 +17,7 @@ import com.seminario.gestorInmobiliario.Entidades.Inquilino;
 import com.seminario.gestorInmobiliario.Entidades.Propiedad;
 import com.seminario.gestorInmobiliario.Servicios.AlquilerServicio;
 import com.seminario.gestorInmobiliario.Servicios.InquilinoService;
+import com.seminario.gestorInmobiliario.Servicios.PropiedadServicio;
 import com.seminario.gestorInmobiliario.Servicios.VisitaPropiedadServicio;
 
 import jakarta.servlet.http.HttpSession;
@@ -29,6 +30,9 @@ public class AlquilerControlador2 {
 
     @Autowired
     private VisitaPropiedadServicio visitaPropiedadServicio;
+
+    @Autowired
+    private PropiedadServicio propiedadServicio;
 
     @Autowired
     private InquilinoService inquilinoService;
@@ -52,6 +56,9 @@ public class AlquilerControlador2 {
             int idPropiedad = (int) session.getAttribute("idPropiedad");
 
             alquilerServicio.crearAlquiler(fechaIngreso, fechaEgreso, valorInicial, idPropiedad, dniAgente, dniInquilino, documentos);
+
+            propiedadServicio.cambiarEstadoPropiedad(idPropiedad, "Ocupada");
+
             model.put("exito", "El Alquiler fue cargado correctamente."); // falta mostrar este mensaje
 
         } catch (Exception ex) {

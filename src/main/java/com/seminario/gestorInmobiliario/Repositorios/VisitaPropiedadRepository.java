@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 public interface VisitaPropiedadRepository extends JpaRepository<VisitaPropiedad, Integer> {
     @Query("SELECT vp.propiedad FROM VisitaPropiedad vp " +
        "JOIN vp.visita v " +
-       "WHERE v.email = :email ")
-      // +"AND vp.propiedad.estado = 'Disponible'")
+       "WHERE v.email = :email "
+      +"AND vp.propiedad.estado = 'Disponible'")
     List<Propiedad> listarPropVisitadas(@Param("email") String email);
 }
