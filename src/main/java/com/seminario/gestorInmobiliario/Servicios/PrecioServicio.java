@@ -1,7 +1,6 @@
 package com.seminario.gestorInmobiliario.Servicios;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,11 +22,11 @@ public class PrecioServicio {
     @Autowired
     private AlquilerRepository alquilerRepository;
 
-    @Transactional
-    public void crearPrecio(LocalDate mesDesde, LocalDate anioDesde, double montoPrecio, Integer idAlquiler)
-            throws Exception {
+    @Transactional 
+    public void crearPrecio(LocalDate fechaDesde, double montoPrecio, Integer idAlquiler)
+        throws Exception {
 
-        validar(mesDesde, anioDesde, montoPrecio, idAlquiler);
+        validar(fechaDesde, montoPrecio, idAlquiler);
 
         Alquiler alquiler = alquilerRepository.findById(idAlquiler).get();
 
@@ -37,8 +36,7 @@ public class PrecioServicio {
 
         Precio precio = new Precio();
 
-        precio.setMesDesde(mesDesde);
-        precio.setAnioDesde(anioDesde);
+        precio.setFechaDesde(fechaDesde);
         precio.setPrecio(montoPrecio);
         precio.setAlquiler(alquiler);
 
@@ -52,10 +50,10 @@ public class PrecioServicio {
     }
 
     @Transactional
-    public void modificarPrecio(Integer idPrecio, LocalDate mesDesde, LocalDate anioDesde, double montoPrecio, Integer idAlquiler)
-            throws Exception {
+    public void modificarPrecio(Integer idPrecio, LocalDate fechaDesde, double montoPrecio, Integer idAlquiler)
+        throws Exception {
 
-        validar(mesDesde, anioDesde, montoPrecio, idAlquiler);
+        validar(fechaDesde, montoPrecio, idAlquiler);
         Optional<Precio> precioOpt = precioRepository.findById(idPrecio);
         Optional<Alquiler> alquilerOpt = alquilerRepository.findById(idAlquiler);
 
@@ -68,8 +66,7 @@ public class PrecioServicio {
         if (precioOpt.isPresent()) {
             Precio precio = precioOpt.get();
 
-            precio.setMesDesde(mesDesde);
-            precio.setAnioDesde(anioDesde);
+            precio.setFechaDesde(fechaDesde);
             precio.setPrecio(montoPrecio);
             precio.setAlquiler(alquiler);
 
@@ -89,24 +86,21 @@ public class PrecioServicio {
 
     }
 
+
     @Transactional(readOnly = true)
     public Precio getOne(Integer idPrecio) {
         return precioRepository.getReferenceById(idPrecio);
     }
 
-    private void validar(LocalDate mesDesde, LocalDate anioDesde, double montoPrecio, Integer idAlquiler)
-            throws Exception {
-
-        if (mesDesde == null) {  //no valide que la fecha sea mayor a la de hoy porque supongo que se puede cargar o modificar precios anteriores y a futuro 
+    private void validar(LocalDate fechaDesde, double montoPrecio, Integer idAlquiler)
+        throws Exception {
+        
+        if (fechaDesde == null) {  //no valide que la fecha sea mayor a la de hoy porque supongo que se puede cargar o modificar precios anteriores y a futuro 
             throw new Exception("El nombre no puede ser nulo o estar vacio");
         }
 
         if (idAlquiler == null) {
             throw new Exception("El idAlquiler no puede ser nulo o estar vacio");
-        }
-
-        if (anioDesde == null) {
-            throw new Exception("El codPostal no puede ser nulo o estar vacio");
         }
 
         if (montoPrecio == 0) {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Comprobante de Pago</title>
@@ -16,3 +16,41 @@
     </div>
 </body>
 </html>
+
+
+<!-- <body>
+    <div class="mostrarComprobante">
+        <h2>Comprobante de Pago</h2>
+
+        <p><strong>Inquilino:</strong> 
+            <span th:text="${pago.alquiler.miInquilino.nomApe}">[Nombre Apellido Inquilino]</span>
+        </p>
+        
+        <p><strong>Propiedad:</strong> 
+            <span th:text="${pago.alquiler.miPropiedad.ubicacion}">[Ubicación Propiedad]</span>
+        </p>
+
+        <p><strong>Fecha de Pago:</strong> 
+            <span th:text="${pago.fechaPago}">[Fecha Pago]</span>
+        </p>
+
+        <p><strong>Monto Pagado:</strong> 
+            <span th:text="${pago.montoPagado}">[Monto Final Pagado]</span>
+        </p>
+
+        <p><strong>Forma de Pago:</strong> 
+            <span th:text="${pago.formaPago.nombre}">[Nombre Forma Pago]</span>
+        </p>
+        
+        <p><strong>Estado:</strong> 
+            <span th:text="${pago.estado}">[Estado]</span>
+        </p>
+    </div>
+
+    <hr>
+    <p>
+        <a th:href="@{/registro-pago/buscar-inquilino}">Volver a buscar inquilino e iniciar otro pago</a>
+    </p>
+
+</body>
+</html> -->

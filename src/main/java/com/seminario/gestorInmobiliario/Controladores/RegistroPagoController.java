@@ -16,14 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.seminario.gestorInmobiliario.Servicios.InquilinoService;
 import com.seminario.gestorInmobiliario.Servicios.PagoService;
 
-import ch.qos.logback.core.model.Model;
-
 
 import com.seminario.gestorInmobiliario.Entidades.Alquiler;
-import com.seminario.gestorInmobiliario.Entidades.Documento;
 import com.seminario.gestorInmobiliario.Entidades.Pago;
 import com.seminario.gestorInmobiliario.Servicios.AlquilerServicio;
-import com.seminario.gestorInmobiliario.Servicios.DocumentoServicio;
 import com.seminario.gestorInmobiliario.Servicios.FormaPagoServicio;
 import com.seminario.gestorInmobiliario.Repositorios.PagoRepository;
 
@@ -43,9 +39,6 @@ public class RegistroPagoController {
 
     @Autowired
     private FormaPagoServicio formaPagoService;
-
-    @Autowired
-    private DocumentoServicio documentoService;
 
     @Autowired
     private PagoRepository pagoRepository;
@@ -105,18 +98,29 @@ public class RegistroPagoController {
 
             double montoBase = alquilerService.getPrecioActual();
             int diasRetraso = 0;
+            LocalDate hoy = LocalDate.now();
 
             if (fecha.isAfter(pago.getFecha_limite())) {
+
                 diasRetraso = (int) ChronoUnit.DAYS.between(pago.getFecha_limite(), fecha);
                 double interes = pago.getInteresMora() * diasRetraso;
                 montoBase += interes;
                 model.addAttribute("mensajeRetraso", "El pago tiene " + diasRetraso + " días de retraso.");
+
+            }else if (fecha.isAfter(hoy)){
+                
+                model.addAttribute("idAlquiler", idAlquiler);
+                model.addAttribute("error2", "La fecha de pago no puede ser posterior a la fecha actual (" + hoy.toString() + ").");
+                return "pago/pagosPendientes";
             }
+
             pago.setFechaPago(fecha);
+            pago.setMontoPagado(montoBase);
             model.addAttribute("pago", pago);
             model.addAttribute("formasPago", formaPagoService.listarFormasPago());
             model.addAttribute("monto", montoBase);
             return "pago/confirmarPago";
+
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             model.addAttribute("idAlquiler", idAlquiler);
@@ -137,7 +141,7 @@ public class RegistroPagoController {
             model.addAttribute("mensaje", "Pago registrado correctamente.");
 
             if (solicitarComprobante) {
-                model.addAttribute("pago", pago);
+                //model.addAttribute("pago", pago);
                 return "redirect:/registro-pago/mostrar-comprobante?idPago=" + pago.getIdPago();  
             }
 
@@ -150,15 +154,22 @@ public class RegistroPagoController {
 
     // CA4 - se solicita el comprobante 
     @GetMapping("/mostrar-comprobante")
+    @Transactional
     public String mostrarComprobante(@RequestParam int idPago, ModelMap model) {
         try {
             Pago pago = pagoRepository.findById(idPago).orElse(null);
+
+            if (pago == null) {
+            model.addAttribute("error", "Error: Pago no encontrado, ID: " + idPago);
+            return "pago/registrarPago"; 
+            }
+
             model.addAttribute("pago", pago);
-            Alquiler alquiler = pago.getAlquiler();
-            model.addAttribute("monto", alquiler.getPrecio(pago.getFechaPago()));
+            //model.addAttribute("monto", pago.getMontoPagado());
             return "pago/mostrarComprobante";
+
         } catch (Exception e) {
-            model.addAttribute("error", "Error al cargar comprobante: ");
+            model.addAttribute("error", "Error al cargar comprobante ");
             return "pago/registrarPago"; // Vuelve a una vista segura
     }
 }}
