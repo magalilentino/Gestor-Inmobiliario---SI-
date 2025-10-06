@@ -82,6 +82,7 @@ public class AlquilerServicio {
         alquiler.setMiAgente(agente);
         alquiler.setMiInquilino(inquilino);
         alquiler.setDocumentos(documentos);
+        alquiler.setEstado("Activo");
 
         alquilerRepositorio.save(alquiler);
 
