@@ -10,7 +10,7 @@
 
     <div th:if="${mensaje}">
         <p th:text="${mensaje}" style="color: green; font-weight: bold;"></p>
-        <p><a th:href="@{/}">Volver a buscar inquilino</a></p>
+        <p><a th:href="@{/registro-pago/carga-inicial}">Volver a buscar inquilino</a></p>
     </div>
 
     <div th:if="${pagos != null and not #lists.isEmpty(pagos)}">
@@ -33,7 +33,7 @@
                         <td>
                             <input type="checkbox" name="pagosSeleccionados" th:value="${pago.idPago}">
                         </td>
-                        <td th:text="${pago.idPago}">456</td> 
+                        <input type="radio" name="idPago" th:value="${pago.idPago}" required>
                         <td th:text="${pago.fecha_limite}">2025-01-10</td>
                     </tr>
                 </tbody>
@@ -47,6 +47,11 @@
             <button type="submit">Procesar Pagos Seleccionados</button>
             
         </form>
+    </div>
+
+    <div th:if="${error2}" style="color: red;">
+        <p><strong>la fecha de pago no puede ser mayor a la fecha actual</strong> <span th:text="${error}"></span></p>
+        <p><a th:href="@{/registro-pago/calcular-monto}">reintentar</a></p>
     </div>
 
 </body>

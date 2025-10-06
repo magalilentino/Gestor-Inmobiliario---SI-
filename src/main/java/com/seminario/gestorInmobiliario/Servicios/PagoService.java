@@ -11,14 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.seminario.gestorInmobiliario.Entidades.Pago;
-import com.seminario.gestorInmobiliario.Entidades.Alquiler;
 import com.seminario.gestorInmobiliario.Entidades.FormaPago;
-import com.seminario.gestorInmobiliario.Entidades.Inquilino;
-import com.seminario.gestorInmobiliario.Entidades.Localidad;
-import com.seminario.gestorInmobiliario.Repositorios.PagoRepository;
 import com.seminario.gestorInmobiliario.Repositorios.PagoRepository;
 import com.seminario.gestorInmobiliario.Repositorios.FormaPagoRepository;
-import com.seminario.gestorInmobiliario.Repositorios.FormaPagoRepository;
+
 
 
 @Service
