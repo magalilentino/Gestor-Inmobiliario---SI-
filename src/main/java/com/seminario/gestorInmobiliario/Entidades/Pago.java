@@ -29,6 +29,9 @@ public class Pago {
 
     private LocalDate fechaPago;
 
+    @Column(nullable = true)
+    private Double montoPagado;
+
     @ManyToOne
     @JoinColumn(name = "idFormaPago")
     private FormaPago formaPago;
@@ -37,6 +40,19 @@ public class Pago {
     @JoinColumn(name = "alquiler_id", nullable = false)
     private Alquiler alquiler;
     
+
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public Double getMontoPagado() {
+        return montoPagado;
+    }
+
+    public void setMontoPagado(Double montoPagado) {
+        this.montoPagado = montoPagado;
+    }
     
     public Alquiler getAlquiler() {
         return alquiler;
@@ -46,7 +62,6 @@ public class Pago {
         this.alquiler = alquiler;
     }
 
-    //getters y setters 
     public int getIdPago() {
         return idPago;
     }

@@ -46,6 +46,8 @@ public class PropiedadServicio {
         propiedad.setLocalidad(localidad);
         propiedad.setCategoria(categoria);
         propiedad.setContenido(contenido);
+        propiedad.setEstado("Disponible");
+
         propiedadRepository.save(propiedad);
     }
 
@@ -97,6 +99,17 @@ public class PropiedadServicio {
 
     public Propiedad getOne(int idPropiedad) {
         return propiedadRepository.getReferenceById(idPropiedad);
+    }
+
+    public void cambiarEstadoPropiedad(int idPropiedad, String estado) throws Exception {
+        Optional<Propiedad> respuesta = propiedadRepository.findById(idPropiedad);
+        if (respuesta.isPresent()) {
+            Propiedad propiedad = respuesta.get();
+            propiedad.setEstado(estado);
+            propiedadRepository.save(propiedad);
+        } else {
+            throw new Exception("No se encontro la propiedad solicitada");
+        }
     }
     
     private void validar(String ubicacion, String medidas, Integer cantAmbientes, int idlocalidad, int idcategoria)

@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Buscar Inquilino y Alquileres Activos</title>
+    <link rel="stylesheet" th:href="@{/css/pago.css}">
     </head>
 <body>
 
     <h1>Registro de pagos</h1>
 
-    <form th:action="@{/registro-pago/buscar-inquilino}" method="post">
+    <form th:action="@{/registro-pago/buscar-inquilino}" method="post" class="container-datos">
         <label for="dni">Ingrese el DNI del Inquilino:</label>
         <input type="text" id="dni" name="dni" required>
-        <button type="submit">Buscar Alquileres</button>
+        <button type="submit" class="btn-primary">Buscar Alquileres</button>
     </form>
     
     <hr>
 
-    <div th:if="${error}">
+    <div th:if="${error}" class="message-error">
         <p><strong>el dni no pertenece a ningun inquilino</strong> <span th:text="${error}"></span></p>
-        <p>Vuelve al paso 1.</p>
+        <p>ingrese un otro dni</p>
     </div>
 
     <div th:if="${alquileres != null and not #lists.isEmpty(alquileres)}">
@@ -39,7 +40,7 @@
                     <td th:text="${alquiler.miPropiedad.ubicacion}">Calle Falsa 123</td>
                     <td th:text="${alquiler.miInquilino.nomApe}">Juan Pérez</td>
                     <td>
-                        <a th:href="@{/registro-pago/pagos-pendientes(idAlquiler=${alquiler.idAlquiler})}"> 
+                        <a th:href="@{/registro-pago/pagos-pendientes(idAlquiler=${alquiler.idAlquiler})}" class="btn-primary"> 
                             Ver Pagos Pendientes
                         </a>
                     </td>

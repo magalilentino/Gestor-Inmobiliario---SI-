@@ -1,6 +1,5 @@
 package com.seminario.gestorInmobiliario.Repositorios;
 
-import com.seminario.gestorInmobiliario.Entidades.Alquiler;
 import com.seminario.gestorInmobiliario.Entidades.Pago;
 
 import java.util.List;
@@ -13,9 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PagoRepository extends JpaRepository<Pago, Integer> {
     
-    // @Query("SELECT p FROM Pago p WHERE p.alquiler.idAlquiler = ?1 AND p.estado = :estado")
-    // List<Pago> findPagosPendientesPorAlquiler(@Param("id") int idAlquiler, @Param("estado") String estado);
-
     @Query("SELECT p FROM Pago p WHERE p.alquiler.id = :idAlquiler AND p.estado = :estado")
     List<Pago> findPagosPendientesPorAlquiler(@Param("idAlquiler") int idAlquiler, @Param("estado") String estado);
+
 }

@@ -10,10 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.seminario.gestorInmobiliario.Entidades.FormaPago;
 import com.seminario.gestorInmobiliario.Entidades.Pago;
-import com.seminario.gestorInmobiliario.Repositorios.FormaPagoRepository;
+import com.seminario.gestorInmobiliario.Entidades.FormaPago;
 import com.seminario.gestorInmobiliario.Repositorios.PagoRepository;
+import com.seminario.gestorInmobiliario.Repositorios.FormaPagoRepository;
+
 
 
 @Service
@@ -25,9 +26,7 @@ public class PagoService {
     @Autowired
     private FormaPagoRepository formaPagoRepository;
 
-    @Autowired
-    private AlquilerServicio alquilerService;
-    
+
     @Transactional 
     public void crearPago(LocalDate fecha_limite, double interesMora)
             throws Exception {
@@ -97,8 +96,7 @@ public class PagoService {
         if (pagoOpt.isPresent()) {
             Pago pago = pagoOpt.get();
             
-            //precio= pago.getAlquiler().getPrecio(fechaPago);
-            precio = alquilerService.getPrecioActual();
+            precio= pago.getAlquiler().getPrecio(fechaPago);
 
             if(fechaPago.isAfter(pago.getFecha_limite())){
                 precio= precio*pago.getInteresMora();
@@ -112,7 +110,7 @@ public class PagoService {
     }
 
     @Transactional
-    public Pago registrarComoPagado (int idPago, int idFormaPago)throws Exception{
+    public Pago registrarComoPagado (int idPago, int idFormaPago, LocalDate fechaPago, Double montoPagado)throws Exception{
         Optional<Pago> pagoOpt = pagoRepository.findById(idPago);
         Pago pago = pagoOpt.get();
 
@@ -124,6 +122,8 @@ public class PagoService {
             }
             pago.cambiarEstado();
             pago.setFormaPago(formaPago);
+            pago.setFechaPago(fechaPago);
+            pago.setMontoPagado(montoPagado);
             pagoRepository.save(pago);
         }
         return pago;

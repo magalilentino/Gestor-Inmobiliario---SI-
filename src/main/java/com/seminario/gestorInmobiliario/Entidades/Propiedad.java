@@ -25,6 +25,8 @@ public class Propiedad {
     private String medidas; 
     @Column(nullable = false)
     private int cantAmbientes; 
+    @Column(nullable = false)
+    private String estado;
 
     @ManyToOne
     @JoinColumn(name = "localidad_id", nullable = false)
@@ -95,5 +97,14 @@ public class Propiedad {
     public void setCategoria(Categoria miCategoria) {
         this.miCategoria = miCategoria;
     }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
 
 }

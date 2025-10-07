@@ -1,6 +1,5 @@
 package com.seminario.gestorInmobiliario.Controladores;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +42,12 @@ public class PropiedadControlador {
 
     @PostMapping("/registro")
     public String registro(@RequestParam String ubicacion,
-                         @RequestParam String medidas,
-                         @RequestParam Integer cantAmbientes,
-                         @RequestParam Integer idLocalidad,
-                         @RequestParam Integer idCategoria,
-                         @RequestParam(required = false) MultipartFile imagen,
-                         ModelMap model) {
+                        @RequestParam String medidas,
+                        @RequestParam Integer cantAmbientes,
+                        @RequestParam Integer idLocalidad,
+                        @RequestParam Integer idCategoria,
+                        @RequestParam(required = false) MultipartFile imagen,
+                        ModelMap model) {
         try {
             byte[] contenido = imagen != null ? imagen.getBytes() : null;
             propiedadServicio.crearPropiedad(0, ubicacion, medidas, cantAmbientes, idLocalidad, idCategoria, contenido);
@@ -76,13 +75,13 @@ public class PropiedadControlador {
 
     @PostMapping("/modificar")
     public String modificar(@RequestParam Integer id,
-                          @RequestParam String ubicacion,
-                          @RequestParam String medidas,
-                          @RequestParam Integer cantAmbientes,
-                          @RequestParam Integer idLocalidad,
-                          @RequestParam Integer idCategoria,
-                          @RequestParam(required = false) MultipartFile imagen,
-                          ModelMap model) {
+                        @RequestParam String ubicacion,
+                        @RequestParam String medidas,
+                        @RequestParam Integer cantAmbientes,
+                        @RequestParam Integer idLocalidad,
+                        @RequestParam Integer idCategoria,
+                        @RequestParam(required = false) MultipartFile imagen,
+                        ModelMap model) {
         try {
             byte[] contenido = imagen != null ? imagen.getBytes() : null;
             propiedadServicio.modificarPropiedad(id, ubicacion, medidas, cantAmbientes, idLocalidad, idCategoria, contenido);

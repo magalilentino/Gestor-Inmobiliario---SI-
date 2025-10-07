@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.seminario.gestorInmobiliario.Entidades.Alquiler;
 import com.seminario.gestorInmobiliario.Entidades.Documento;
-import com.seminario.gestorInmobiliario.Repositorios.AlquilerRepository;
 import com.seminario.gestorInmobiliario.Repositorios.DocumentoRepository;
 
 @Service
@@ -19,31 +17,8 @@ public class DocumentoServicio {
     @Autowired
     private DocumentoRepository documentoRepositorio;
 
-    @Autowired
-    private AlquilerRepository alquilerRepositorio;
-
-    @Transactional
-    public void crearDocumento(String enlace, String descripcion, byte[] contenido, Integer idAlquiler)
-            throws Exception {
-        validar(enlace, idAlquiler);
-
-        Alquiler alquiler = alquilerRepositorio.findById(idAlquiler)
-                .orElseThrow(() -> new Exception("El alquiler especificado no existe."));
-
-        Documento documento = new Documento();
-        documento.setDescripcion(descripcion);
-        documento.setContenido(contenido);
-        documento.setAlquiler(alquiler);
-
-        documentoRepositorio.save(documento);
-    }
-
-    @Transactional
-    public List<Documento> crearDocumentos(String[] descripciones, MultipartFile[] archivos, Integer idAlquiler) throws Exception {
+    public List<Documento> crearDocumentos(String[] descripciones, MultipartFile[] archivos) throws Exception {
         List<Documento> documentos = new ArrayList<>();
-
-        Alquiler alquiler = alquilerRepositorio.findById(idAlquiler)
-                .orElseThrow(() -> new Exception("El alquiler especificado no existe."));
 
         for (int i = 0; i < archivos.length; i++) {
             MultipartFile archivo = archivos[i];
@@ -52,16 +27,57 @@ public class DocumentoServicio {
             if (!archivo.isEmpty()) {
                 Documento doc = new Documento();
                 doc.setDescripcion(descripcion);
-                doc.setContenido(archivo.getBytes());
-                doc.setAlquiler(alquiler);
+                doc.setArchivo(archivo.getBytes());
 
-                documentoRepositorio.save(doc);
+                documentoRepositorio.save(doc); // se guarda sin alquiler por ahora
                 documentos.add(doc);
             }
         }
 
         return documentos;
     }
+
+
+    // @Transactional
+    // public void crearDocumento(String enlace, String descripcion, byte[] contenido, Integer idAlquiler)
+    //         throws Exception {
+    //     validar(enlace, idAlquiler);
+
+    //     Alquiler alquiler = alquilerRepositorio.findById(idAlquiler)
+    //             .orElseThrow(() -> new Exception("El alquiler especificado no existe."));
+
+    //     Documento documento = new Documento();
+    //     documento.setDescripcion(descripcion);
+    //     documento.setContenido(contenido);
+    //     documento.setAlquiler(alquiler);
+
+    //     documentoRepositorio.save(documento);
+    // }
+
+    // @Transactional
+    // public List<Documento> crearDocumentos(String[] descripciones, MultipartFile[] archivos, Integer idAlquiler) throws Exception {
+    //     List<Documento> documentos = new ArrayList<>();
+
+    //     Alquiler alquiler = alquilerRepositorio.findById(idAlquiler)
+    //             .orElseThrow(() -> new Exception("El alquiler especificado no existe."));
+
+    //     for (int i = 0; i < archivos.length; i++) {
+    //         MultipartFile archivo = archivos[i];
+    //         String descripcion = descripciones[i];
+
+    //         if (!archivo.isEmpty()) {
+    //             Documento doc = new Documento();
+    //             doc.setDescripcion(descripcion);
+    //             doc.setContenido(archivo.getBytes());
+    //             doc.setAlquiler(alquiler);
+
+    //             documentoRepositorio.save(doc);
+    //             documentos.add(doc);
+    //         }
+    //     }
+
+    //     return documentos;
+    // }
 
     @Transactional(readOnly = true)
     public List<Documento> listarDocumentos() {
@@ -78,7 +94,7 @@ public class DocumentoServicio {
         }
 
         if (archivo != null && !archivo.isEmpty()) {
-            documento.setContenido(archivo.getBytes());
+            documento.setArchivo(archivo.getBytes());
         }
 
         documentoRepositorio.save(documento);
@@ -89,9 +105,9 @@ public class DocumentoServicio {
         return documentoRepositorio.getReferenceById(idDocumento);
     }
 
-    private void validar(String enlace, Integer idAlquiler) throws Exception {
-        if (idAlquiler == null) {
-            throw new Exception("El idAlquiler no puede ser nulo.");
-        }
-    }
+    // private void validar(String enlace, Integer idAlquiler) throws Exception {
+    //     if (idAlquiler == null) {
+    //         throw new Exception("El idAlquiler no puede ser nulo.");
+    //     }
+    // }
 }
