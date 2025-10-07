@@ -46,11 +46,11 @@ public class Pago {
         this.estado = estado;
     }
 
-    public double getMontoPagado() {
+    public Double getMontoPagado() {
         return montoPagado;
     }
 
-    public void setMontoPagado(double montoPagado) {
+    public void setMontoPagado(Double montoPagado) {
         this.montoPagado = montoPagado;
     }
     

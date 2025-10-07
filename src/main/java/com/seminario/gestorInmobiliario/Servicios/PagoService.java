@@ -110,7 +110,7 @@ public class PagoService {
     }
 
     @Transactional
-    public Pago registrarComoPagado (int idPago, int idFormaPago)throws Exception{
+    public Pago registrarComoPagado (int idPago, int idFormaPago, LocalDate fechaPago, Double montoPagado)throws Exception{
         Optional<Pago> pagoOpt = pagoRepository.findById(idPago);
         Pago pago = pagoOpt.get();
 
@@ -122,6 +122,8 @@ public class PagoService {
             }
             pago.cambiarEstado();
             pago.setFormaPago(formaPago);
+            pago.setFechaPago(fechaPago);
+            pago.setMontoPagado(montoPagado);
             pagoRepository.save(pago);
         }
         return pago;
