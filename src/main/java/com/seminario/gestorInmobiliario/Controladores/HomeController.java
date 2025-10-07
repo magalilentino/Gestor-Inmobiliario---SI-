@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.seminario.gestorInmobiliario.Entidades.Agente;
+
 import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/")
 public class HomeController {
@@ -23,7 +25,7 @@ public class HomeController {
         if (agente == null) {
             return "redirect:/login";
         }
-        
+
         modelo.put("agente", agente);
         modelo.put("titulo", "Gestor Inmobiliario");
         modelo.put("mensaje", "Bienvenido al sistema de gestión inmobiliaria");
@@ -38,4 +40,16 @@ public class HomeController {
         }
         return "propiedades/lista";
     }
+
+    @GetMapping("/visitas")
+    public String visitas(HttpSession session, ModelMap modelo) {
+        Agente agente = (Agente) session.getAttribute("agentesession");
+        if (agente == null) {
+            return "redirect:/login";
+        }
+
+        modelo.put("agente", agente);
+        return "visitas/visitas";
+    }
+
 }

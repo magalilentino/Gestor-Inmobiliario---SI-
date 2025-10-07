@@ -1,5 +1,7 @@
 package com.seminario.gestorInmobiliario.Entidades;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,9 +18,7 @@ public class Precio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPrecio; 
     @Column(unique = true, nullable = false)
-    private int mesDesde;
-    @Column(unique = true, nullable = false)
-    private int añoDesde;
+    private LocalDate fechaDesde;
     @Column(nullable = false)
     private double montoPrecio; 
 
@@ -35,20 +35,12 @@ public class Precio {
         this.idPrecio = idPrecio;
     }
 
-    public int getMesDesde() {
-        return mesDesde;
+    public LocalDate getFechaDesde() {
+        return fechaDesde;
     }
 
-    public void setMesDesde(int mesDesde) {
-        this.mesDesde = mesDesde;
-    }
-
-    public int getAñoDesde() {
-        return añoDesde;
-    }
-
-    public void setAñoDesde(int añoDesde) {
-        this.añoDesde = añoDesde;
+    public void setFechaDesde(LocalDate fechaDesde) {
+        this.fechaDesde = fechaDesde;
     }
 
     public double getPrecio() {
