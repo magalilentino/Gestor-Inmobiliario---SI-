@@ -229,6 +229,12 @@ public class AlquilerServicio {
         if (fechaEgreso == null) {
             throw new Exception("La fecha de egreso no puede ser nula");
         }
+        if (!fechaEgreso.isAfter(fechaIngreso)) {
+            throw new Exception("La fecha de egreso no puede ser anterior o igual a la fecha de ingreso");
+        }
+        if (fechaIngreso.isBefore(LocalDate.now())) {
+            throw new Exception("La fecha de ingreso no puede ser anterior a la fecha actual");
+        }
         if (valorInicial <= 0) {
             throw new Exception("El valor inicial debe ser un valor positivo");
         }

@@ -3,35 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/registrarAlquiler.css}">
+    <link rel="stylesheet" href="/css/navAlquiler.css">
     <title>Registrar Alquiler</title>
 </head>
 <body>
-    <div class="">
+    <div th:replace="~{fragmentos/navAlquiler :: nav}"></div>
+    <div class="form-container">
     
-    <form th:action="@{/documento/registrar}" method="GET">
-        <!-- <input type="hidden" name="email" th:value="${email}" /> -->
-
-        <div th:each="propiedad : ${propVisitadas}" style="border: 1px solid #ccc; margin-bottom: 1rem; padding: 1rem;">
-            <label>
-                <input type="radio" name="idPropiedad" th:value="${propiedad.idPropiedad}" required />
-                <strong>ID:</strong> <span th:text="${propiedad.idPropiedad}"></span><br>
-                <strong>Ubicación:</strong> <span th:text="${propiedad.ubicacion}"></span><br>
-                <!-- <img th:src="@{${propiedad.contenido}}" alt="Imagen propiedad" style="max-width: 200px;" /> -->
-            </label>
-        </div>
-
-        <button type="submit">Cargar Documentos</button>
-    </form>
-
-        <section class="">
-            <div class="">
-                <div class="">
-                    <a th:href="@{/alquiler/registrar}" class="">Volver</a>
-                </div>
-            </div>
-        </section>
+   <form th:action="@{/documento/registrar}" method="GET">
+    <h2 class="titulo">Seleccione la propiedad:</h2>
+    <div class="tabla-propiedades-container">
+        <table class="tabla-propiedades">
+            <thead>
+                <tr>
+                    <th></th> 
+                    <th>id propiedad</th>
+                    <th>ubicacion</th>
+                    <th>imagen</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="propiedad : ${propVisitadas}" class="fila-propiedad-seleccionable">
+                    <td class="columna-radio">
+                        <label class="radio-label">
+                            <input type="radio" name="idPropiedad" th:value="${propiedad.idPropiedad}" required class="radio-select"/>
+                            <div class="custom-radio"></div> 
+                        </label>
+                    </td>
+                    
+                    <td th:text="${propiedad.idPropiedad}" class="columna-id"></td>
+                    <td th:text="${propiedad.getUbicacionCompleta}" class="columna-ubicacion"></td>
+                    <td class="columna-imagen">
+                        <img th:src="@{${propiedad.contenido}}" alt="Imagen propiedad" class="propiedad-img-peq" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
+    <div class="botonera-principal">
+        <button type="submit" class="btn-azul">Cargar Documentos</button>
+    </div>
+</form>
+
+<section class="volver-section">
+    <div>
+        <a th:href="@{/alquiler/registrar}" class="volver-link">Volver</a>
+    </div>
+</section>
+
+    </div>
     
 </body>
 </html>

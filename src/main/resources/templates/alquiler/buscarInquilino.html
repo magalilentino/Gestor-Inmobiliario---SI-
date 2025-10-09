@@ -3,28 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/registrarAlquiler.css}">
+    <link rel="stylesheet" th:href="@{/css/navAlquiler.css}"> 
     <title>Registrar Alquiler</title>
 </head>
 <body>
+    <div th:replace="~{fragmentos/navAlquiler :: nav}"></div>
 
-    <div class="">
-        <form class="" th:action="@{/alquiler/buscarInquilino}" method="POST">
+    <div class="form-container">
+        <form th:action="@{/alquiler/buscarInquilino}" method="POST">
             
-            <h5 class="">Buscar Inquilino:</h5> 
+            <h5 class="titulo">Buscar Inquilino:</h5> 
             <input type="text" class="" name="dniInq" placeholder="DNI Inquilino">
     
             <button type="submit" class="">Buscar</button>
         </form>
-    </div>
+    
 
     <div th:replace="~{fragmentos/mensaje :: div}"></div>
 
     <!-- Cartel si no se encuentra el inquilino -->
-    <div th:if="${mostrarOpciones}">
-        <!-- <p style="color: red;" th:text="${error}"></p> -->
+    <div th:if="${mostrarOpciones}" class="cartel-opciones">
         <form th:action="@{/inquilino/registrar}" method="GET" style="display: inline;">
             <button type="submit">Agregar Inquilino</button>
         </form>
+    </div>
     </div>
 
 </body>

@@ -2,6 +2,8 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/registrarAlquiler.css}">
+    <link rel="stylesheet" href="/css/navAlquiler.css">
     <title>Registrar Alquiler</title>
 
     <script>
@@ -67,16 +69,20 @@
 </head>
 
 <body>
-    <h2>Cargar Documentos</h2>
-    <form id="formDocumentos" enctype="multipart/form-data">
-        <input type="file" id="archivo" accept=".pdf" />
-        <input type="text" id="descripcion" placeholder="Descripción" />
-        <button type="button" onclick="agregarDocumento()">Ingresar otro</button>
-        <button type="button" onclick="enviarDocumentos()">Aceptar</button>
-    </form>
+    <div th:replace="~{fragmentos/navAlquiler :: nav}"></div>
 
-    <h4>Documentos agregados:</h4>
-    <ul id="listaDocumentos"></ul>
+    <div class="form-container">
+        <h2 class="titulo">Cargar Documentos</h2>
+        <form id="formDocumentos" enctype="multipart/form-data">
+            <input type="file" id="archivo" accept=".pdf" />
+            <input type="text" id="descripcion" placeholder="Descripción" class="input-text"/>
+            <button type="button" onclick="agregarDocumento()" class="btn-azul">Ingresar otro</button>
+            <button type="button" onclick="enviarDocumentos()" class="btn-verde">Aceptar</button>
+        </form>
+
+        <h4 class="subtittulo">Documentos agregados:</h4>
+        <ul id="listaDocumentos" class="lista-documentos"></ul>
+    </div>
 </body>
 </html>
 

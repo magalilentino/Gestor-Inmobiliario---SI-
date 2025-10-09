@@ -1,0 +1,52 @@
+.navbar-top {
+    width: 100%;
+    background-color: #007bff; 
+    padding: 5px 10px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+    
+    /* Configuración para que se quede arriba */
+    position: fixed; 
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.navbar-content {
+    max-width: 1300px; 
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between; 
+    align-items: left;
+}
+
+/* Estilo para el Título */
+.navbar-title {
+    color: white;
+    font-size: 1.3rem; 
+    font-weight: 500;
+    text-decoration: none;
+    padding-right: 15px; 
+}
+
+/* Contenedor de los enlaces a la derecha */
+.navbar-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.15); 
+}
+
+body { 
+    padding-top: 65px; 
+}

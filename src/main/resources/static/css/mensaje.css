@@ -1,0 +1,41 @@
+/* Estilos de Alerta (Mensajes de Éxito y Error) */
+.mensaje-alerta-contenedor {
+    margin: 0;
+    padding: 0;
+    width: 100%; 
+}
+
+/* Estilo base para la tarjeta de alerta */
+.alerta {
+    padding: 20px 40px;
+    margin: 0;
+    border-radius: 0px;
+    color: #ffffff; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none; 
+}
+
+/* Título y texto dentro de la alerta */
+.alerta-titulo {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.alerta-texto {
+    font-size: 0.95rem;
+    margin-bottom: 0;
+}
+
+/* Alerta de Éxito (Verde) */
+.alerta-exito {
+    background-color: #28a745; 
+    background: linear-gradient(90deg, #28aa45e0 0%, #208e3b 100%);
+}
+
+
+/* Alerta de Error (Rojo) */
+.alerta-error {
+    background-color: #dc3545; 
+    background: linear-gradient(90deg, #dc3545e0 0%, #c42938 100%);
+}

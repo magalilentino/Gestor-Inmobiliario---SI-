@@ -3,39 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/registrarAlquiler.css}">
+    <link rel="stylesheet" href="/css/navAlquiler.css">
     <title>Registrar Alquiler</title>
 </head>
 <body>
-    <div class="">
+    <div th:replace="~{fragmentos/navAlquiler :: nav}"></div>
+    <div class="form-container">
         <div th:replace="~{fragmentos/mensaje :: div}"></div>
+        <h2 class="titulo">Completar Datos:</h2>
         <form class="formulario" th:action="@{/alquiler/registro}" method="POST">
             
-            <div class="">
-                <h5 class="">Fecha de Ingreso:</h5> 
-                <input type="date" class="" name="fechaIngreso" placeholder="Fecha Ingreso">
-            </div>
-            <div class="">
-                <h5 class="">Fecha de Egreso:</h5> 
-                <input type="date" class="" name="fechaEgreso" placeholder="Fecha Egreso">
-            </div>
-            <div class="">
-                <h5 class="">Valor Inicial:</h5> 
-                <input type="number" class="" name="valorInicial" placeholder="Valor Inicial">
-            </div>
+            <h5 class="">Fecha de Ingreso:</h5> 
+            <input type="date" class="input-text" name="fechaIngreso" placeholder="Fecha Ingreso">
+        
+            <h5 class="">Fecha de Egreso:</h5> 
+            <input type="date" class="input-text" name="fechaEgreso" placeholder="Fecha Egreso">
+        
+            <h5 class="">Valor Inicial:</h5> 
+            <input type="number" class="input-text" name="valorInicial" placeholder="Valor Inicial">
 
-            <button type="submit">Registrar Alquiler</button>
+            <button type="submit" class="btn-azul">Registrar Alquiler</button>
 
         </form>
 
-        <section class="">
-            <div class="">
-                <div class="">
-                    <a th:href="@{/documento/registrar}" class="">Volver</a>
-                </div>
-            </div>
+        <section class="volver-section">
+            <a th:href="@{/documento/registrar}" class="volver-link">Volver</a>
         </section>
     </div>
-
     
 </body>
 </html>

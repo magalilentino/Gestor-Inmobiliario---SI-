@@ -3,42 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/registrarAlquiler.css}">
+    <link rel="stylesheet" href="/css/navAlquiler.css">
     <title>Registrar Inquilino</title>
 </head>
 <body>
-    <div class="">
+    <div th:replace="~{fragmentos/navInquilino :: nav}"></div>
+    <div class="form-container">
+        <h2 class="titulo">Registrar Nuevo Inquilino</h2>
         <form class="formulario" th:action="@{/inquilino/registro}" method="POST">
             
-            <div class="">
+            <div class="input-group">
                 <h5 class="">DNI:</h5> 
-                <input type="text" class="" name="dni" placeholder="DNI">
+                <input type="text" class="input-text" name="dni" placeholder="DNI">
             </div>
-            <div class="">
+            <div class="input-group">
                 <h5 class="">Nombre y Apellido:</h5> 
-                <input type="text" class="" name="nomApe" placeholder="nombre y apellido">
+                <input type="text" class="input-text" name="nomApe" placeholder="nombre y apellido">
             </div>
-            <div class="">
+            <div class="input-group">
                 <h5 class="">Teléfono:</h5> 
-                <input type="text" class="" name="telefono" placeholder="telefono">
+                <input type="text" class="input-text" name="telefono" placeholder="telefono">
             </div>
-            <div class="">
+            <div class="input-group">
                 <h5 class="">Email:</h5> 
-                <input type="text" class="" name="email" placeholder="email">
+                <input type="text" class="input-text" name="email" placeholder="email">
             </div>
         
 
             <div th:replace="~{fragmentos/mensaje :: div}"></div>
 
-            <button type="submit" class="">Registrar</button>
+            <div class="botonera-principal">
+                <button type="submit" class="btn-azul">Registrar</button>
+            </div>
+
         </form>
 
 
-        <section class="">
-            <div class="">
-                <div class="">
-                    <a th:href="@{/alquiler/registrar}" class="">Volver</a>
-                </div>
-            </div>
+        <section class="volver-section">
+            <a th:href="@{/alquiler/registrar}" class="volver-link">Volver</a>
         </section>
     </div>
 
