@@ -167,7 +167,6 @@ public class AlquilerServicio {
         Precio precioActual;
 
         precioActual = misPrecios.get(0);
-
         for(Precio p: misPrecios){
             if (p.getFechaDesde().isAfter(precioActual.getFechaDesde())) {
             precioActual = p;}

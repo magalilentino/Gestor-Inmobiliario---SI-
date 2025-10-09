@@ -1,0 +1,64 @@
+body {
+    background-color: #f7f9fc;
+}
+
+.search-bar {
+    max-width: 600px;
+    margin: 40px auto 20px auto;
+    position: relative;
+}
+
+.search-bar input {
+    width: 100%;
+    padding-right: 40px;
+}
+
+.search-bar button {
+    position: absolute;
+    right: 5px;
+    top: 4px;
+    border: none;
+    background: none;
+    color: #007bff;
+}
+
+table {
+    background-color: white;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* 🎨 Radio buttons grandes y claros */
+input[type="radio"] {
+    width: 24px;
+    height: 24px;
+    accent-color: #007bff;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+input[type="radio"]:hover {
+    transform: scale(1.2);
+}
+
+input[type="radio"]:checked {
+    box-shadow: none; /* sin recuadro */
+}
+
+/* 💡 Resalta la fila seleccionada */
+tr.selected {
+    background-color: #e7f1ff !important;
+}

@@ -100,25 +100,26 @@ public class RegistroPagoController {
             int diasRetraso = 0;
             LocalDate hoy = LocalDate.now();
 
-            if (fecha.isAfter(pago.getFecha_limite())) {
+            if (fecha.isAfter(hoy)){
+                
+                model.addAttribute("idAlquiler", idAlquiler);
+                model.addAttribute("error2", "La fecha de pago no puede ser posterior a la fecha actual (" + hoy.toString() + ").");
+                return "pago/pagosPendientes";
+
+            }else if (fecha.isAfter(pago.getFecha_limite())) {
 
                 diasRetraso = (int) ChronoUnit.DAYS.between(pago.getFecha_limite(), fecha);
                 double interes = pago.getInteresMora() * diasRetraso;
                 montoBase += interes;
                 model.addAttribute("mensajeRetraso", "El pago tiene " + diasRetraso + " días de retraso.");
-
-            }else if (fecha.isAfter(hoy)){
-                
-                model.addAttribute("idAlquiler", idAlquiler);
-                model.addAttribute("error2", "La fecha de pago no puede ser posterior a la fecha actual (" + hoy.toString() + ").");
-                return "pago/pagosPendientes";
             }
 
-            pago.setFechaPago(fecha);
-            pago.setMontoPagado(montoBase);
+            // pago.setFechaPago(fecha);
+            // pago.setMontoPagado(montoBase);
             model.addAttribute("pago", pago);
             model.addAttribute("formasPago", formaPagoService.listarFormasPago());
             model.addAttribute("monto", montoBase);
+            model.addAttribute("fechaPago", fecha);
             return "pago/confirmarPago";
 
         } catch (Exception e) {
@@ -134,10 +135,12 @@ public class RegistroPagoController {
     @Transactional
     public String registrarPago(@RequestParam int idPago,
                                 @RequestParam int idFormaPago,
+                                @RequestParam LocalDate fechaPago,
+                                @RequestParam double montoPagado,
                                 @RequestParam(required = false) boolean solicitarComprobante,
                                 ModelMap model) {
         try {
-            Pago pago = pagoService.registrarComoPagado(idPago, idFormaPago);
+            Pago pago = pagoService.registrarComoPagado(idPago, idFormaPago, fechaPago, montoPagado);
             model.addAttribute("mensaje", "Pago registrado correctamente.");
 
             if (solicitarComprobante) {

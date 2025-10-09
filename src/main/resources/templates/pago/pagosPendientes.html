@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Pagos Pendientes</title>
+    <link rel="stylesheet" th:href="@{/css/pago.css}">
     </head>
 <body>
 
-    <h1>Paso 2: Pagos Pendientes</h1>
+    <h1>Pagos Pendientes</h1>
 
     <div th:if="${mensaje}">
         <p th:text="${mensaje}" style="color: green; font-weight: bold;"></p>
@@ -14,7 +15,7 @@
     </div>
 
     <div th:if="${pagos != null and not #lists.isEmpty(pagos)}">
-        <form action="#" th:action="@{/registro-pago/calcular-monto}" method="post">
+        <form action="#" th:action="@{/registro-pago/calcular-monto}" method="post" class="container-datos">
             
             <input type="hidden" name="idAlquiler" th:value="${idAlquiler}">
 
@@ -31,10 +32,10 @@
                 <tbody>
                     <tr th:each="pago : ${pagos}">
                         <td>
-                            <input type="checkbox" name="pagosSeleccionados" th:value="${pago.idPago}">
+                            <input type="radio" name="idPago" th:value="${pago.idPago}" required>
                         </td>
-                        <input type="radio" name="idPago" th:value="${pago.idPago}" required>
-                        <td th:text="${pago.fecha_limite}">2025-01-10</td>
+                        <td th:text="${pago.idPago}"></td>
+                        <td th:text="${pago.fecha_limite}"></td>
                     </tr>
                 </tbody>
             </table>
@@ -44,14 +45,14 @@
             <label for="fechaPago">Fecha de Pago:</label>
             <input type="date" id="fechaPago" name="fechaPago" required>
             
-            <button type="submit">Procesar Pagos Seleccionados</button>
+            <button type="submit" class="btn-primary">CONFIRMAR</button>
             
         </form>
     </div>
 
-    <div th:if="${error2}" style="color: red;">
+    <div th:if="${error2}" class="message-error">
         <p><strong>la fecha de pago no puede ser mayor a la fecha actual</strong> <span th:text="${error}"></span></p>
-        <p><a th:href="@{/registro-pago/calcular-monto}">reintentar</a></p>
+        <a th:href="@{/registro-pago/pagos-pendientes(idAlquiler=${idAlquiler})}">Reintentar</a>
     </div>
 
 </body>
