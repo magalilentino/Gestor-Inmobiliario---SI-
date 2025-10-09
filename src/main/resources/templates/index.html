@@ -53,13 +53,27 @@
         <div class="container">
             <h1 th:text="${titulo}" class="display-4 mb-4">Gestor Inmobiliario</h1>
             <p th:text="${mensaje}" class="lead mb-4">Bienvenido al sistema de gestión inmobiliaria</p>
-            <!-- Botones de acción --> <a href="/visitas" class="btn btn-outline-light btn-lg">Agendar Visita</a>
-            <div class="dropdown d-inline-block me-3"> <a href="#"
-                    class="btn btn-light btn-lg dropdown-toggle">Gestionar Alquileres</a>
-                <div class="dropdown-content"> <a href="/alquiler/registrar">Registrar alquiler</a> <a
-                        href="/registro-pago/carga-inicial">Pagar alquiler</a> <a href="/rescindir">Rescindir Alquiler</a> </div>
-            </div> <a href="/agentes" class="btn btn-light btn-lg me-3">Gestionar Agentes</a> <a href="/propiedades"
-                class="btn btn-outline-light btn-lg">Ver Propiedades</a>
+            <!-- Botones de acción --> 
+            <a href="/visitas" class="btn btn-outline-light btn-lg">Agendar Visita</a>
+            
+            <div class="dropdown d-inline-block me-3"> 
+                <a href="#" class="btn btn-light btn-lg dropdown-toggle">Gestionar Alquileres</a>
+                <div class="dropdown-content"> 
+                    <a href="/alquiler/registrar">Registrar alquiler</a> 
+                    <a href="/registro-pago/carga-inicial">Pagar alquiler</a> 
+                    <a href="/rescindir">Rescindir Alquiler</a> 
+                </div>
+            </div> 
+            <div class="dropdown d-inline-block me-3">
+                <a href="#" class="btn btn-light btn-lg dropdown-toggle">Gestionar registros</a>
+                <div class="dropdown-content"> 
+                    <a href="/propiedad/registrar">Registrar propiedad</a> 
+                    <a href="/localidad/registrar">Registrar Localidad</a> 
+                    <a href="/provincia/registrar">Registrar Provincia</a> 
+                    <a href="/categoria/registrar">Registrar Categoria</a>
+                </div>
+            </div> 
+                <a href="/propiedades" class="btn btn-outline-light btn-lg">Ver Propiedades</a>
         </div>
     </div> <!-- Features Section -->
     <div class="container my-5">
@@ -67,11 +81,12 @@
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm card-hover">
                     <div class="card-body">
-                        <div class="mb-3"> <i class="bi bi-people-fill" style="font-size: 3rem; color: #667eea;"></i>
+                        <div class="mb-3"> 
+                            <i class="bi bi-people-fill" style="font-size: 3rem; color: #667eea;"></i>
                         </div>
                         <h5 class="card-title">Gestión de Agentes</h5>
-                        <p class="card-text">Administra y gestiona todos los agentes inmobiliarios de tu empresa.</p> <a
-                            href="/agentes" class="btn btn-primary">Ver Agentes</a>
+                        <p class="card-text">Administra y gestiona todos los agentes inmobiliarios de tu empresa.</p> 
+                        <a href="/agentes" class="btn btn-primary">Ver Agentes</a>
                     </div>
                 </div>
             </div>
@@ -81,8 +96,8 @@
                         <div class="mb-3"> <i class="bi bi-house-fill" style="font-size: 3rem; color: #667eea;"></i>
                         </div>
                         <h5 class="card-title">Propiedades</h5>
-                        <p class="card-text">Catálogo completo de propiedades disponibles para venta y alquiler.</p> <a
-                            href="/propiedades" class="btn btn-primary">Ver Propiedades</a>
+                        <p class="card-text">Catálogo completo de propiedades disponibles para venta y alquiler.</p> 
+                        <a href="/propiedades" class="btn btn-primary">Ver Propiedades</a>
                     </div>
                 </div>
             </div>
@@ -92,13 +107,14 @@
                         <div class="mb-3"> <i class="bi bi-graph-up" style="font-size: 3rem; color: #667eea;"></i>
                         </div>
                         <h5 class="card-title">Reportes</h5>
-                        <p class="card-text">Genera reportes y estadísticas para tomar mejores decisiones.</p> <a
-                            href="#" class="btn btn-primary">Ver Reportes</a>
+                        <p class="card-text">Genera reportes y estadísticas para tomar mejores decisiones.</p> 
+                        <a href="#" class="btn btn-primary">Ver Reportes</a>
                     </div>
                 </div>
             </div>
         </div>
-    </div> <!-- Footer -->
+    </div> 
+    <!-- Footer -->
     <footer class="bg-dark text-light py-4 mt-5">
         <div class="container text-center">
             <p>&copy; 2024 Gestor Inmobiliario. Todos los derechos reservados.</p>

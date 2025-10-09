@@ -14,9 +14,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.seminario.gestorInmobiliario.Entidades.Categoria;
 import com.seminario.gestorInmobiliario.Entidades.Localidad;
 import com.seminario.gestorInmobiliario.Entidades.Propiedad;
+import com.seminario.gestorInmobiliario.Entidades.Provincia;
 import com.seminario.gestorInmobiliario.Servicios.CategoriaServicio;
 import com.seminario.gestorInmobiliario.Servicios.LocalidadServicio;
 import com.seminario.gestorInmobiliario.Servicios.PropiedadServicio;
+import com.seminario.gestorInmobiliario.Servicios.ProvinciaServicio;
 
 @Controller
 @RequestMapping("/propiedad")
@@ -31,17 +33,25 @@ public class PropiedadControlador {
     @Autowired
     private CategoriaServicio categoriaServicio;
 
+    @Autowired
+    private ProvinciaServicio provinciaServicio;
+
     @GetMapping("/registrar") // localhost:8080/propiedad/registrar
     public String registrar(ModelMap model) {
-        List<Localidad> localidades = localidadServicio.listarLocalidades();
+        // List<Localidad> localidades = localidadServicio.listarLocalidades();
+        List<Provincia> provincias = provinciaServicio.listarProvincias();
         List<Categoria> categorias = categoriaServicio.listarCategorias();
-        model.addAttribute("localidades", localidades);
+        // model.addAttribute("localidades", localidades);
         model.addAttribute("categorias", categorias);
+        model.addAttribute("provincias", provincias);
         return "propiedad/form";
     }
 
     @PostMapping("/registro")
-    public String registro(@RequestParam String ubicacion,
+    public String registro(@RequestParam String calle,
+                        @RequestParam String altura,
+                        @RequestParam(required = false) String piso,
+                        @RequestParam(required = false) String dpto,
                         @RequestParam String medidas,
                         @RequestParam Integer cantAmbientes,
                         @RequestParam Integer idLocalidad,
@@ -50,6 +60,7 @@ public class PropiedadControlador {
                         ModelMap model) {
         try {
             byte[] contenido = imagen != null ? imagen.getBytes() : null;
+            String ubicacion =  calle+' '+altura+','+piso+','+dpto;
             propiedadServicio.crearPropiedad(0, ubicacion, medidas, cantAmbientes, idLocalidad, idCategoria, contenido);
             model.put("exito", "La propiedad fue cargada correctamente!");
             return "redirect:/propiedad/listar";

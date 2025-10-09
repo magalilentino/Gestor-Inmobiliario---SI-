@@ -9,7 +9,8 @@
 
 /* Fondo general */
 body {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background:#f4f4f4;
+     /* linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
     padding:  85px 40px 60px 40px;
     color: #333;
 }

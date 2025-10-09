@@ -16,10 +16,10 @@ public class Provincia {
     private String nombre;
 
     //setters y getters 
-    public int getId() {
+    public int getIdProvincia() {
         return idProvincia;
     }
-    public void setId(int idProvincia) {
+    public void setIdProvincia(int idProvincia) {
         this.idProvincia = idProvincia;
     }
     public String getNombre() {

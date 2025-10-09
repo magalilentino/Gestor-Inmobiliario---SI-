@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/registrarAlquiler.css}">
+    <link rel="stylesheet" href="/css/navAlquiler.css">
+    <title>Registrar Inquilino</title>
+</head>
+<body>
+    <div th:replace="~{fragmentos/navPropiedad :: nav}"></div>
+    <div class="form-container">
+        <h2 class="titulo">Registrar Nueva Propiedad</h2>
+        <form class="formulario" th:action="@{/propiedad/registro}" method="POST">
+            
+            <div class="input-group">
+                <h5 class="">Calle:</h5> 
+                <input type="text" class="input-text" name="calle" placeholder="calle">
+            </div>
+            <div class="input-group">
+                <h5 class="">Altura: </h5> 
+                <input type="text" class="input-text" name="altura" placeholder="altura">
+            </div>
+            <div class="input-group">
+                <h5 class="">Piso: </h5> 
+                <input type="text" class="input-text" name="piso" placeholder="psio">
+            </div>
+            <div class="input-group">
+                <h5 class="">Depto: </h5> 
+                <input type="text" class="input-text" name="depto" placeholder="depto">
+            </div>
+            <div class="input-group">
+                <h5 class="">Medidas:</h5> 
+                <input type="text" class="input-text" name="medidas" placeholder="medidas">
+            </div>
+            <div class="input-group">
+                <h5 class="">Cantidad de ambientes:</h5> 
+                <input type="text" class="input-text" name="cantAmbientes" placeholder="cantAmbientes">
+            </div>
+            <div class="input-group">
+                <h5 class="">Imagen:</h5> 
+                <input type="file" id="archivo" accept=".png" />
+            </div>
+
+            <label>Categoria:</label>
+            <select id="categoria" name="idCategoria" >
+                <option value="">Seleccionar Provincia</option>
+                <option th:each="categoria : ${categorias}" th:value="${categoria.idCategoria}" th:text="${categoria.nombre}"></option>
+            </select>
+
+            <label>Provincia:</label>
+            <select id="provincia" name="idProvincia" onchange="cargarLocalidades(this.value)">
+                <option value="">Seleccionar Provincia</option>
+                <option th:each="prov : ${provincias}" th:value="${prov.idProvincia}" th:text="${prov.nombre}"></option>
+            </select>
+
+            <label>Localidad:</label>
+            <select id="localidad" name="idLocalidad" required>
+                <option value="">Seleccionar provincia primero</option>
+            </select>
+
+            <script>
+            function cargarLocalidades(idProvincia) {
+                fetch('/localidad/listaProv?idProvincia=' + idProvincia)
+                    .then(response => response.json())
+                    .then(data => {
+                        const localidadSelect = document.getElementById('localidad');
+                        localidadSelect.innerHTML = '';
+
+                        if (data.length === 0) {
+                            const option = document.createElement('option');
+                            option.text = 'No hay localidades disponibles';
+                            option.disabled = true;
+                            localidadSelect.appendChild(option);
+                            return;
+                        }
+
+                        data.forEach(loc => {
+                            const option = document.createElement('option');
+                            option.value = loc.idLocalidad;
+                            option.text = loc.nombre;
+                            localidadSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error al cargar localidades:', error);
+                    });
+            }
+            </script>
+                
+            
+
+            <div th:replace="~{fragmentos/mensaje :: div}"></div>
+
+            <div class="botonera-principal">
+                <button type="submit" class="btn-azul">Registrar propiedad</button>
+            </div>
+
+        </form>
+
+
+        <section class="volver-section">
+            <a th:href="@{/alquiler/registrar}" class="volver-link">Volver</a>
+        </section>
+    </div>
+
+    
+</body>
+</html>

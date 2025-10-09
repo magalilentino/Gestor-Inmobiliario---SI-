@@ -60,4 +60,9 @@ public class LocalidadServicio {
             throw new Exception("El nombre no puede estar vacío");
         }
     }
+
+    @Transactional(readOnly = true)
+    public List<Localidad> buscarPorProvincia(int idProv){
+        return localidadRepository.buscarPorProvincia(idProv);
+    }
 }
