@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-    <link rel="stylesheet" href="/css/mensaje.css">
+    
 <body>
 
     <div th:fragment="div" class="mensaje-alerta-contenedor">
         
         <div th:if="${exito != null}" class="alerta alerta-exito">
-            <h5 class="alerta-titulo">¡Éxito!</h5>
+            <h4 class="alerta-titulo">¡Éxito!</h4>
             <p class="alerta-texto" th:text="${exito}"></p>
         </div>
 
         <div th:if="${error != null}" class="alerta alerta-error">
-            <h5 class="alerta-titulo">Error</h5>
+            <h4 class="alerta-titulo">Error</h4>
             <p class="alerta-texto" th:text="${error}"></p>
         </div>
         

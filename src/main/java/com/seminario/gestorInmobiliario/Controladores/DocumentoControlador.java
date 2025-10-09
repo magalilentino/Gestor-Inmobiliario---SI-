@@ -51,24 +51,4 @@ public class DocumentoControlador {
         }
     }
 
-    // @GetMapping("/registrar")
-    // public String crearDocumento() {
-    //     return "documento/form";
-    // }
-
-    // @PostMapping("/registro")
-    // public String guardarDocumento(@RequestParam String nombre, @RequestParam MultipartFile archivo,
-    //         @RequestParam(required = false) Integer idAlquiler, ModelMap modelo) {
-    //     try {
-    //         String descripcion = nombre;
-    //         byte[] contenido = archivo.getBytes();
-    //         String enlace = archivo.getOriginalFilename();
-    //         documentoServicio.crearDocumento(enlace, descripcion, contenido, idAlquiler);
-    //         modelo.put("exito", "El documento fue cargado correctamente!");
-    //         return "redirect:/";
-    //     } catch (Exception e) {
-    //         modelo.put("error", e.getMessage());
-    //         return "documento/form";
-    //     }
-    // }
 }

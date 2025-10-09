@@ -7,7 +7,7 @@
 
 /* Estilo base para la tarjeta de alerta */
 .alerta {
-    padding: 20px 40px;
+    padding: 15px 40px;
     margin: 0;
     border-radius: 0px;
     color: #ffffff; 
@@ -36,6 +36,6 @@
 
 /* Alerta de Error (Rojo) */
 .alerta-error {
-    background-color: #dc3545; 
-    background: linear-gradient(90deg, #dc3545e0 0%, #c42938 100%);
+    color: #dc3545; 
+    /* background: linear-gradient(90deg, #dc3545e0 0%, #c42938 100%); */
 }

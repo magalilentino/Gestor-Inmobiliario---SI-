@@ -43,19 +43,7 @@ public class InquilinoControlador {
         }
         return "alquiler/buscarInquilino";
     }
-    // @PostMapping("/registro")
-    // public String guardarInquilino(@RequestParam String nombre,
-    //         @RequestParam String dni, @RequestParam String telefono, @RequestParam String email,
-    //         @RequestParam String garantia, ModelMap modelo) {
-    //     try {
-    //         inquilinoServicio.crearInquilino(dni, nombre, email, telefono);
-    //         modelo.put("exito", "El inquilino fue registrado correctamente!");
-    //         return "redirect:/";
-    //     } catch (Exception e) {
-    //         modelo.put("error", e.getMessage());
-    //         return "inquilino/form";
-    //     }
-    // }
+  
 
     @GetMapping("/listar")
     public String listarInquilinos(ModelMap modelo) {
