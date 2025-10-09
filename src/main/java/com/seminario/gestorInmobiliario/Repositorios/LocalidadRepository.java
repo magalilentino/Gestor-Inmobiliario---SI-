@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LocalidadRepository extends JpaRepository<Localidad, Integer> {
 
-    @Query("SELECT l FROM Localidad l WHERE l.miProvincia.id = ?1")
+    @Query("SELECT l FROM Localidad l WHERE l.miProvincia.idProvincia = ?1")
     List<Localidad> buscarPorProvincia(int idProv);
     
 }

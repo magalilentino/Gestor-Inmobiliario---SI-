@@ -20,8 +20,8 @@ public class LocalidadController {
 
     @GetMapping("/listaProv")
     @ResponseBody
-    public List<Localidad> obtenerLocalidadesPorProvincia(@RequestParam int provinciaId) {
-        return localidadService.buscarPorProvincia(provinciaId);
+    public List<Localidad> obtenerLocalidadesPorProvincia(@RequestParam int idProvincia) {
+        return localidadService.buscarPorProvincia(idProvincia);
     }
 
 
