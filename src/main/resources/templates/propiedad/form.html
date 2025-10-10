@@ -12,7 +12,7 @@
     <div th:replace="~{fragmentos/navPropiedad :: nav}"></div>
     <div class="form-container">
         <h2 class="titulo">Registrar Nueva Propiedad</h2>
-        <form class="formulario" th:action="@{/propiedad/registro}" method="POST">
+        <form class="formulario" th:action="@{/propiedad/registro}" method="POST" enctype="multipart/form-data">
             
             <div class="input-group">
                 <h5>Calle:</h5> 
@@ -24,7 +24,7 @@
             </div>
             <div class="input-group">
                 <h5>Piso: </h5> 
-                <input type="text" class="input-text" name="piso" placeholder="psio">
+                <input type="text" class="input-text" name="piso" placeholder="piso">
             </div>
             <div class="input-group">
                 <h5>Depto: </h5> 
@@ -40,7 +40,8 @@
             </div>
             <div class="input-group">
                 <h5>Imagen:</h5> 
-                <input type="file" id="archivo" accept=".png, .jpeg, .jpg" class="input-file" />
+                <input type="file" class="input-file" name="archivo" >
+                <!-- <input type="file" id="archivo" accept=".png, .jpeg, .jpg" class="input-file" /> -->
             </div>
 
             <div class="input-group">

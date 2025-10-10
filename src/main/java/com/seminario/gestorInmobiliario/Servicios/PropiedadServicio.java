@@ -25,7 +25,7 @@ public class PropiedadServicio {
     private CategoriaRepository categoriaRepository;
 
     @Transactional
-    public void crearPropiedad(int idPropiedad, String ubicacion, String medidas, int cantAmbientes, int idLocalidad, int idCategoria, byte[] contenido) throws Exception {
+    public void crearPropiedad( String ubicacion, String medidas, int cantAmbientes, int idLocalidad, int idCategoria, byte[] contenido) throws Exception {
         validar(ubicacion, medidas, cantAmbientes, idLocalidad, idCategoria);
         
         Localidad localidad = localidadRepository.findById(idLocalidad).get();
@@ -39,7 +39,6 @@ public class PropiedadServicio {
 
         Propiedad propiedad = new Propiedad();
 
-        //propiedad.setId(idPropiedad);
         propiedad.setUbicacion(ubicacion);
         propiedad.setMedidas(medidas);
         propiedad.setCantAmbientes(cantAmbientes);

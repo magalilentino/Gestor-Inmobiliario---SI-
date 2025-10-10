@@ -22,11 +22,11 @@ public class Localidad {
     private Provincia miProvincia;
 
     //getters y setters 
-    public int getId() {
+    public int getIdLocalidad() {
         return idLocalidad;
     }
 
-    public void setId(int idLocalidad) {
+    public void setIdLocalidad(int idLocalidad) {
         this.idLocalidad = idLocalidad;
     }
 
