@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/registrarAlquiler.css}">
     <link rel="stylesheet" href="/css/navAlquiler.css">
-    <title>Registrar Inquilino</title>
+    <link rel="stylesheet" href="/css/mensaje.css">
+    <title>Registrar Propiedad</title>
 </head>
 <body>
     <div th:replace="~{fragmentos/navPropiedad :: nav}"></div>
@@ -14,54 +15,56 @@
         <form class="formulario" th:action="@{/propiedad/registro}" method="POST">
             
             <div class="input-group">
-                <h5 class="">Calle:</h5> 
+                <h5>Calle:</h5> 
                 <input type="text" class="input-text" name="calle" placeholder="calle">
             </div>
             <div class="input-group">
-                <h5 class="">Altura: </h5> 
+                <h5>Altura: </h5> 
                 <input type="text" class="input-text" name="altura" placeholder="altura">
             </div>
             <div class="input-group">
-                <h5 class="">Piso: </h5> 
+                <h5>Piso: </h5> 
                 <input type="text" class="input-text" name="piso" placeholder="psio">
             </div>
             <div class="input-group">
-                <h5 class="">Depto: </h5> 
+                <h5>Depto: </h5> 
                 <input type="text" class="input-text" name="depto" placeholder="depto">
             </div>
             <div class="input-group">
-                <h5 class="">Medidas:</h5> 
+                <h5>Medidas:</h5> 
                 <input type="text" class="input-text" name="medidas" placeholder="medidas">
             </div>
             <div class="input-group">
-                <h5 class="">Cantidad de ambientes:</h5> 
-                <input type="text" class="input-text" name="cantAmbientes" placeholder="cantAmbientes">
+                <h5>Cantidad de ambientes:</h5> 
+                <input type="number" class="input-text" name="cantAmbientes" placeholder="cantAmbientes">
             </div>
             <div class="input-group">
-                <h5 class="">Imagen:</h5> 
-                <input type="file" id="archivo" accept=".png" />
+                <h5>Imagen:</h5> 
+                <input type="file" id="archivo" accept=".png, .jpeg, .jpg" class="input-file" />
             </div>
 
-            </div>
-            <label>Categoria:</label>
-            <select id="categoria" name="idCategoria" >
-                <option value="">Seleccionar Categoria</option>
-                <option th:each="categoria : ${categorias}" th:value="${categoria.idCategoria}" th:text="${categoria.nombre}"></option>
-            </select>
-            </div>
-            
-            </div>
-            <label>Provincia:</label>
-            <select id="provincia" name="idProvincia" onchange="cargarLocalidades(this.value)">
-                <option value="">Seleccionar Provincia</option>
-                <option th:each="prov : ${provincias}" th:value="${prov.idProvincia}" th:text="${prov.nombre}"></option>
-            </select>
+            <div class="input-group">
+                <h5>Categoria:</h5> 
+                <select id="categoria" name="idCategoria" >
+                    <option value="">Seleccionar Categoria</option>
+                    <option th:each="categoria : ${categorias}" th:value="${categoria.idCategoria}" th:text="${categoria.nombre}"></option>
+                </select>
             </div>
 
-            <label>Localidad:</label>
-            <select id="localidad" name="idLocalidad" required>
-                <option value="">Seleccionar provincia primero</option>
-            </select>
+            <div class="input-group">
+                <h5>Provincia:</h5> 
+                <select id="provincia" name="idProvincia" onchange="cargarLocalidades(this.value)">
+                    <option value="">Seleccionar Provincia</option>
+                    <option th:each="prov : ${provincias}" th:value="${prov.idProvincia}" th:text="${prov.nombre}"></option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <h5>Localidad:</h5> 
+                <select id="localidad" name="idLocalidad" required>
+                    <option value="">Seleccionar provincia primero</option>
+                </select>
+            </div>
 
             <script>
             function cargarLocalidades(idProvincia) {
@@ -104,7 +107,7 @@
 
 
         <section class="volver-section">
-            <a th:href="@{/alquiler/registrar}" class="volver-link">Volver</a>
+            <a th:href="@{/index}" class="volver-link">Volver</a>
         </section>
     </div>
 

@@ -54,20 +54,20 @@ public class PropiedadControlador {
                         @RequestParam(required = false) String dpto,
                         @RequestParam String medidas,
                         @RequestParam Integer cantAmbientes,
-                        @RequestParam Integer idLocalidad,
+                        @RequestParam(required = false) Integer idLocalidad,
                         @RequestParam Integer idCategoria,
                         @RequestParam(required = false) MultipartFile imagen,
                         ModelMap model) {
         try {
             byte[] contenido = imagen != null ? imagen.getBytes() : null;
-            String ubicacion =  calle+' '+altura+','+piso+','+dpto;
+            String ubicacion =  calle + ' ' + altura + ',' + piso + ',' + dpto;
             propiedadServicio.crearPropiedad(0, ubicacion, medidas, cantAmbientes, idLocalidad, idCategoria, contenido);
             model.put("exito", "La propiedad fue cargada correctamente!");
-            return "redirect:/propiedad/listar";
         } catch (Exception ex) {
             model.put("error", ex.getMessage());
             return "propiedad/form";
         }
+        return "index";
     }
 
     @GetMapping("/modificar")

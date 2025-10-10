@@ -227,3 +227,14 @@ button:hover {
     border-radius: 6px;
     font-size: 0.95rem;
 }
+
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: white;
+    color: #333;
+}
