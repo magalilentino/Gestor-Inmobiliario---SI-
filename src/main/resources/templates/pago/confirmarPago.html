@@ -37,12 +37,15 @@
 
             <fieldset>
                 <legend>Seleccionar Forma de Pago</legend>
-                <select name="idFormaPago" required>
-                    <option value="">-- Seleccione una forma de pago --</option>
-                    <option th:each="forma : ${formasPago}" 
-                            th:value="${forma.idFormaPago}" 
-                            th:text="${forma.nombre}">Efectivo</option>
-                </select>
+                
+                    <select name="idFormaPago" required>
+                        <option value="">-- Seleccione una forma de pago --</option>
+                        <option th:each="forma : ${formasPago}" 
+                                th:value="${forma.idFormaPago}" 
+                                th:text="${forma.nombre}">
+                        </option>
+                    </select>
+                
             </fieldset>
 
             <fieldset>

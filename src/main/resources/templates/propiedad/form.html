@@ -42,17 +42,21 @@
                 <input type="file" id="archivo" accept=".png" />
             </div>
 
+            </div>
             <label>Categoria:</label>
             <select id="categoria" name="idCategoria" >
-                <option value="">Seleccionar Provincia</option>
+                <option value="">Seleccionar Categoria</option>
                 <option th:each="categoria : ${categorias}" th:value="${categoria.idCategoria}" th:text="${categoria.nombre}"></option>
             </select>
-
+            </div>
+            
+            </div>
             <label>Provincia:</label>
             <select id="provincia" name="idProvincia" onchange="cargarLocalidades(this.value)">
                 <option value="">Seleccionar Provincia</option>
                 <option th:each="prov : ${provincias}" th:value="${prov.idProvincia}" th:text="${prov.nombre}"></option>
             </select>
+            </div>
 
             <label>Localidad:</label>
             <select id="localidad" name="idLocalidad" required>
