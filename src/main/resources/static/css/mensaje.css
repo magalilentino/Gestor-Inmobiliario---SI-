@@ -29,8 +29,8 @@
 
 /* Alerta de Éxito (Verde) */
 .alerta-exito {
-    background-color: #28a745; 
-    background: linear-gradient(90deg, #28aa45e0 0%, #208e3b 100%);
+    color: #28a745; 
+    /* background: linear-gradient(90deg, #28aa45e0 0%, #208e3b 100%); */
 }
 
 

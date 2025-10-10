@@ -35,7 +35,8 @@
                     <td th:text="${propiedad.idPropiedad}" class="columna-id"></td>
                     <td th:text="${propiedad.getUbicacionCompleta}" class="columna-ubicacion"></td>
                     <td class="columna-imagen">
-                        <img th:src="@{${propiedad.contenido}}" alt="Imagen propiedad" class="propiedad-img-peq" />
+                        <a><img th:if="${propiedad.contenido != null}" class="propiedad-img" th:src="@{/propiedad/imagen/__${propiedad.idPropiedad}__}" ></a>
+                        <!-- <img th:src="@{/propiedad/imagen/{id}(id=${propiedad.idPropiedad})}"  alt="Imagen propiedad" class="propiedad-img-peq" /> -->
                     </td>
                 </tr>
             </tbody>
