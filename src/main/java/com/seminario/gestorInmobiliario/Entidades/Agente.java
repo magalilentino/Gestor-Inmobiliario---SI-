@@ -9,13 +9,13 @@ import jakarta.persistence.Table;
 @Table(name = "agente")
 public class Agente {
     @Id
-    @Column(name = "dniAgente")
+    @Column(name = "dni_agente")
     private String dniAgente;
 
     @Column(name = "email", length = 45, unique = true, nullable = false)
     private String email;
     
-    @Column(name = "nomApe", length = 45, nullable = false)
+    @Column(name = "nom_ape", length = 45, nullable = false)
     private String nomApe;
 
     @Column(name = "telefono", length = 45, unique = true, nullable = false)
