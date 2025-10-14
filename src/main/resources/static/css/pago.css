@@ -97,3 +97,18 @@ th {
 input[type="radio"], input[type="checkbox"] {
     margin-right: 5px;
 }
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.volver-link {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 8px 16px;
+    border: 1px solid #007bff;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}

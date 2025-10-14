@@ -54,7 +54,7 @@ public class LoginController {
     // Procesar registro
     @PostMapping("/registro")
     public String registrar(@RequestParam String nombreApellido,
-                            @RequestParam String dni,
+                            @RequestParam String dniAgente,
                             @RequestParam String email,
                             @RequestParam String telefono,
                             @RequestParam String matricula,
@@ -62,13 +62,13 @@ public class LoginController {
                             @RequestParam String clave,
                             ModelMap modelo) {
         try {
-            agenteService.crearAgente(dni, nombreApellido, email, telefono, matricula, usuario, clave);
+            agenteService.crearAgente(dniAgente, nombreApellido, email, telefono, matricula, usuario, clave);
             modelo.put("exito", "Agente registrado correctamente!");
             return "login"; // vuelve al login
         } catch (Exception e) {
             modelo.put("error", e.getMessage());
             modelo.put("nombreApellido", nombreApellido);
-            modelo.put("dni", dni);
+            modelo.put("dniAgente", dniAgente);
             modelo.put("email", email);
             modelo.put("usuario", usuario);
             return "registro";

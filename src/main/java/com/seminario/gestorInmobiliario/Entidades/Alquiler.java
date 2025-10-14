@@ -55,7 +55,7 @@ public class Alquiler {
     private Inquilino miInquilino;
 
     @ManyToOne
-    @JoinColumn(name = "agente_id", nullable = false)
+    @JoinColumn(name = "dniAgente", nullable = false)
     private Agente miAgente;
 
     @ManyToOne

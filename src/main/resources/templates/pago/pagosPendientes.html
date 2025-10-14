@@ -11,7 +11,7 @@
 
     <div th:if="${mensaje}">
         <p th:text="${mensaje}" style="color: green; font-weight: bold;"></p>
-        <p><a th:href="@{/registro-pago/carga-inicial}">Volver a buscar inquilino</a></p>
+        <p><a th:href="@{/registro-pago/carga-inicial}" class="volver-link">Volver a buscar inquilino</a></p>
     </div>
 
     <div th:if="${pagos != null and not #lists.isEmpty(pagos)}">
@@ -52,7 +52,7 @@
 
     <div th:if="${error2}" class="message-error">
         <p><strong>la fecha de pago no puede ser mayor a la fecha actual</strong> <span th:text="${error}"></span></p>
-        <a th:href="@{/registro-pago/pagos-pendientes(idAlquiler=${idAlquiler})}">Reintentar</a>
+        <a th:href="@{/registro-pago/pagos-pendientes(idAlquiler=${idAlquiler})}" >Reintentar</a>
     </div>
 
 </body>

@@ -14,6 +14,7 @@
         <p><strong>Monto Pagado:</strong> $<span th:text="${pago.montoPagado}"></span></p>
         <p><strong>Forma de Pago:</strong> <span th:text="${pago.formaPago.nombre}"></span></p>
         <p><strong>Estado:</strong> <span th:text="${pago.estado}"></span></p>
+        <a th:href="@{/index}" class="volver-link">Volver a la pagina principal</a>
     </div>
 </body>
 </html>

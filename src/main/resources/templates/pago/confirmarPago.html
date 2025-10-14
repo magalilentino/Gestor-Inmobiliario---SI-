@@ -11,7 +11,7 @@
 
     <div th:if="${error}" class="message-error">
         <p><strong>Error al calcular el monto:</strong> <span th:text="${error}"></span></p>
-        <p><a th:href="@{/registro-pago/pagos-pendientes(idAlquiler=${idAlquiler})}">Volver a seleccionar pagos</a></p>
+        <p><a th:href="@{/registro-pago/pagos-pendientes(idAlquiler=${idAlquiler})}" class="volver-link">Volver a seleccionar pagos</a></p>
     </div>
 
     <div th:if="${pago != null}" class="container-datos">
@@ -36,13 +36,15 @@
             <input type="hidden" name="montoPagado" th:value="${monto}"> 
 
             <fieldset>
+                <div class="input-group">
                 <legend>Seleccionar Forma de Pago</legend>
-                <select name="idFormaPago" required>
-                    <option value="">-- Seleccione una forma de pago --</option>
-                    <option th:each="forma : ${formasPago}" 
-                            th:value="${forma.idFormaPago}" 
-                            th:text="${forma.nombre}">Efectivo</option>
-                </select>
+                    <select name="idFormaPago" required>
+                        <option value="">-- Seleccione una forma de pago --</option>
+                        <option th:each="forma : ${formasPago}" 
+                                th:value="${forma.idFormaPago}" 
+                                th:text="${forma.nombre}">
+                        </option>
+                    </select>
             </fieldset>
 
             <fieldset>
