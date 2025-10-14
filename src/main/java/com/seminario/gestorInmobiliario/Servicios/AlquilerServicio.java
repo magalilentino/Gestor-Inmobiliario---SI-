@@ -54,10 +54,11 @@ public class AlquilerServicio {
 
 
     @Transactional 
-    public void crearAlquiler(LocalDate fechaIngreso, LocalDate fechaEgreso, double valorInicial, int idPropiedad, String dniAgente, String dniInquilino, List<Documento> documentos)
-            throws Exception {
+    public Alquiler crearAlquiler(LocalDate fechaIngreso, LocalDate fechaEgreso, double valorInicial, int idPropiedad, 
+                            String dniAgente, String dniInquilino, List<Documento> documentos, int periodoAumento, 
+                            double porcentajeAumento) throws Exception {
 
-        validar(fechaIngreso, fechaEgreso, valorInicial, idPropiedad, dniAgente, dniInquilino);
+        validar(fechaIngreso, fechaEgreso, valorInicial, idPropiedad, dniAgente, dniInquilino, periodoAumento, porcentajeAumento);
 
         Propiedad propiedad = propiedadRepositorio.findById(idPropiedad).get();
         Agente agente = agenteRepositorio.findById(dniAgente).get();
@@ -83,8 +84,12 @@ public class AlquilerServicio {
         alquiler.setMiInquilino(inquilino);
         alquiler.setDocumentos(documentos);
         alquiler.setEstado("Activo");
+        alquiler.setPeriodoAumento(periodoAumento);
+        alquiler.setPorcentajeAumento(porcentajeAumento);
 
         alquilerRepositorio.save(alquiler);
+
+        return alquiler;
 
     }
 
@@ -94,10 +99,11 @@ public class AlquilerServicio {
     }
 
     @Transactional
-    public void modificarAlquiler(LocalDate fechaIngreso, LocalDate fechaEgreso, double valorInicial, int idPropiedad, String dniAgente, String dniInquilino, int id)
-            throws Exception {
+    public void modificarAlquiler(LocalDate fechaIngreso, LocalDate fechaEgreso, double valorInicial,
+                                 int idPropiedad, String dniAgente, String dniInquilino, int id, 
+                                 int periodoAumento, double porcentajeAumento) throws Exception {
         
-        validar(fechaIngreso, fechaEgreso, valorInicial, idPropiedad, dniAgente, dniInquilino);
+        validar(fechaIngreso, fechaEgreso, valorInicial, idPropiedad, dniAgente, dniInquilino, periodoAumento, porcentajeAumento);
 
         Optional<Alquiler> alquilerOpt = alquilerRepositorio.findById(id);
         Optional<Propiedad> propiedadOpt = propiedadRepositorio.findById(idPropiedad);
@@ -124,6 +130,8 @@ public class AlquilerServicio {
         alquiler.setMiPropiedad(propiedadOpt.get());
         alquiler.setMiAgente(agenteOpt.get());
         alquiler.setMiInquilino(inquilinoOpt.get());
+        alquiler.setPeriodoAumento(periodoAumento);
+        alquiler.setPorcentajeAumento(porcentajeAumento);
 
         alquilerRepositorio.save(alquiler);
 
@@ -220,8 +228,8 @@ public class AlquilerServicio {
         alquilerRepositorio.save(alquiler);
     }
 
-    private void validar(LocalDate fechaIngreso, LocalDate fechaEgreso, double valorInicial, int idPropiedad, String dniAgente, String dniInquilino)
-            throws Exception {
+    private void validar(LocalDate fechaIngreso, LocalDate fechaEgreso, double valorInicial, int idPropiedad, 
+                        String dniAgente, String dniInquilino, int periodoAumento, double porcentajeAumento) throws Exception {
         if (fechaIngreso == null) {
             throw new Exception("La fecha de ingreso no puede ser nula");
         }
@@ -242,6 +250,12 @@ public class AlquilerServicio {
         }
         if (dniInquilino.isEmpty() || dniInquilino == null) {
             throw new Exception("El dni del inquilino no puede ser nulo o estar vacio");
+        }
+        if (periodoAumento <= 0) {
+            throw new Exception("El periodo del aumento debe ser un valor positivo");
+        }
+        if (porcentajeAumento <= 0) {
+            throw new Exception("El porcentaje del aumento debe ser un valor positivo");
         }
     }
 

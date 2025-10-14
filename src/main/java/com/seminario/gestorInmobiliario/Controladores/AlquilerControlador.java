@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.seminario.gestorInmobiliario.Entidades.Agente;
+import com.seminario.gestorInmobiliario.Entidades.Alquiler;
 import com.seminario.gestorInmobiliario.Entidades.Documento;
 import com.seminario.gestorInmobiliario.Entidades.Inquilino;
 import com.seminario.gestorInmobiliario.Entidades.Propiedad;
 import com.seminario.gestorInmobiliario.Servicios.AlquilerServicio;
 import com.seminario.gestorInmobiliario.Servicios.InquilinoService;
+import com.seminario.gestorInmobiliario.Servicios.PrecioServicio;
 import com.seminario.gestorInmobiliario.Servicios.PropiedadServicio;
 import com.seminario.gestorInmobiliario.Servicios.VisitaPropiedadServicio;
 
@@ -36,6 +38,9 @@ public class AlquilerControlador {
 
     @Autowired
     private InquilinoService inquilinoService;
+
+    @Autowired
+    private PrecioServicio precioServicio;
     
     @GetMapping("/registrar") // localhost:8080/alquiler/registrar
     public String registrar() {
@@ -46,6 +51,8 @@ public class AlquilerControlador {
     public String registro(@RequestParam LocalDate fechaIngreso, 
                             @RequestParam LocalDate fechaEgreso, 
                             @RequestParam double valorInicial, 
+                            @RequestParam int periodoAumento,
+                            @RequestParam double porcentajeAumento,
                             HttpSession session, 
                             ModelMap model){
         try {
@@ -55,9 +62,11 @@ public class AlquilerControlador {
             String dniAgente = agente != null ? agente.getDniAgente() : null;
             int idPropiedad = (int) session.getAttribute("idPropiedad");
 
-            alquilerServicio.crearAlquiler(fechaIngreso, fechaEgreso, valorInicial, idPropiedad, dniAgente, dniInquilino, documentos);
+            Alquiler alquilerCreado = alquilerServicio.crearAlquiler(fechaIngreso, fechaEgreso, valorInicial, idPropiedad, dniAgente, dniInquilino, documentos, periodoAumento, porcentajeAumento);
 
             propiedadServicio.cambiarEstadoPropiedad(idPropiedad, "Ocupada");
+             
+            precioServicio.crearPrecio(LocalDate.now(), idPropiedad, alquilerCreado.getIdAlquiler());
 
             model.put("exito", "El Alquiler fue cargado correctamente."); // falta mostrar este mensaje
 

@@ -33,15 +33,10 @@ public class Alquiler {
     private double valorInicial;
     @Column(nullable = false)
     private String estado;
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
+    @Column(nullable = false)
+    private int periodoAumento;
+    @Column(nullable = false)
+    private double porcentajeAumento;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "propiedad_id", nullable = false)
@@ -168,6 +163,29 @@ public class Alquiler {
         this.misPrecios = misPrecios;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public int getPeriodoAumento() {
+        return periodoAumento;
+    }
+
+    public void setPeriodoAumento(int periodoAumento) {
+        this.periodoAumento = periodoAumento;
+    }
+
+    public double getPorcentajeAumento() {
+        return porcentajeAumento;
+    }
+
+    public void setPorcentajeAumento(double porcentajeAumento) {
+        this.porcentajeAumento = porcentajeAumento;
+    }
 
     //calculo el total 
     public double getPrecio(LocalDate fechaPago){
