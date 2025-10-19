@@ -1,22 +1,22 @@
 package com.seminario.gestorInmobiliario.Servicios;
 
-import com.seminario.gestorInmobiliario.Entidades.Propiedad;
-import com.seminario.gestorInmobiliario.Entidades.Categoria;
-import com.seminario.gestorInmobiliario.Entidades.Localidad;
-import com.seminario.gestorInmobiliario.Repositorios.PropiedadRepository;
-
-import com.seminario.gestorInmobiliario.Repositorios.CategoriaRepository;
-import com.seminario.gestorInmobiliario.Repositorios.LocalidadRepository;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import com.seminario.gestorInmobiliario.Entidades.Categoria;
+import com.seminario.gestorInmobiliario.Entidades.Localidad;
+import com.seminario.gestorInmobiliario.Entidades.Propiedad;
+import com.seminario.gestorInmobiliario.Repositorios.CategoriaRepository;
+import com.seminario.gestorInmobiliario.Repositorios.LocalidadRepository;
+import com.seminario.gestorInmobiliario.Repositorios.PropiedadRepository;
 
 @Service
 public class PropiedadServicio {
+
     @Autowired
     private PropiedadRepository propiedadRepository;
     @Autowired
@@ -25,9 +25,9 @@ public class PropiedadServicio {
     private CategoriaRepository categoriaRepository;
 
     @Transactional
-    public void crearPropiedad( String ubicacion, String medidas, int cantAmbientes, int idLocalidad, int idCategoria, byte[] contenido) throws Exception {
+    public void crearPropiedad(String ubicacion, String medidas, int cantAmbientes, int idLocalidad, int idCategoria, byte[] contenido) throws Exception {
         validar(ubicacion, medidas, cantAmbientes, idLocalidad, idCategoria);
-        
+
         Localidad localidad = localidadRepository.findById(idLocalidad).get();
         if (localidad == null) {
             throw new Exception("La localidad indicada no existe");
@@ -110,10 +110,14 @@ public class PropiedadServicio {
             throw new Exception("No se encontro la propiedad solicitada");
         }
     }
-    
+
+    public List<Propiedad> buscarPorUbicacion(String ubicacion) {
+        return propiedadRepository.findByUbicacionContainingIgnoreCase(ubicacion);
+    }
+
     private void validar(String ubicacion, String medidas, Integer cantAmbientes, int idlocalidad, int idcategoria)
             throws Exception {
-        
+
         if (ubicacion.isEmpty() || ubicacion == null) {
             throw new Exception("La ubicacion no puede ser nulo o estar vacio");
         }
@@ -122,15 +126,15 @@ public class PropiedadServicio {
             throw new Exception("Las medidas no puede ser nulo o estar vacio");
         }
 
-        if(cantAmbientes == null) {
+        if (cantAmbientes == null) {
             throw new Exception("La cantidad de Ambientes no puede ser nulo o estar vacio");
         }
 
-        if(idlocalidad == 0) {
+        if (idlocalidad == 0) {
             throw new Exception("La localidad no puede ser nula o estar vacio");
         }
 
-        if(idcategoria == 0) {
+        if (idcategoria == 0) {
             throw new Exception("La categoria no puede ser nulo o estar vacio");
         }
     }

@@ -106,8 +106,4 @@ public class Propiedad {
         this.estado = estado;
     }
 
-    public String getUbicacionCompleta(){
-        return this.ubicacion + ", " + this.miLocalidad.getNombre() + ", " + this.miLocalidad.getMiProvincia().getNombre();
-    }
-
 }

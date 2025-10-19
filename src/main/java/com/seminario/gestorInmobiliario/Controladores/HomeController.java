@@ -49,7 +49,7 @@ public class HomeController {
         }
 
         modelo.put("agente", agente);
-        return "visitas/visitas";
+        return "visitas/agendar-visitas";
     }
 
 }

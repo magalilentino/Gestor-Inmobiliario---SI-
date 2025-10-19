@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar Visita</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{/css/agendar-visita.css}">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">🏠 Gestor Inmobiliario</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <div class="container text-center mt-5">
+        <h2 class="mb-4">Agendar una Visita</h2>
+
+        <!-- Buscador -->
+        <form class="search-bar d-flex" th:action="@{/visitas/buscar}" method="get">
+            <input type="text" name="query" class="form-control" placeholder="Buscá una propiedad (ID / ubicación)"
+                required>
+            <button type="submit"><i class="bi bi-search" style="font-size: 1.3rem;"></i></button>
+        </form>
+
+        <!-- Mensaje de error (propiedad no encontrada) -->
+        <div th:if="${mensajeError}" class="alert alert-danger mt-3" role="alert" th:text="${mensajeError}"></div>
+
+        <!-- Mensaje de advertencia (propiedad sin horarios) -->
+        <div th:if="${mensajeAdvertencia}" class="alert alert-warning mt-3" role="alert"
+            th:text="${mensajeAdvertencia}"></div>
+
+
+        <!-- Mostrar tabla solo si hay horarios -->
+        <div th:if="${horarios}">
+            <h5 class="mt-4 mb-3">Seleccione un horario disponible:</h5>
+
+            <form th:action="@{/visitas/reservar}" method="post">
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th></th>
+                                <th>ID Propiedad</th>
+                                <th>Ubicación</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="h : ${horarios}">
+                                <td><input type="radio" name="idSeleccionado" th:value="${h.idHorario}" required></td>
+                                <td th:text="${h.propiedad != null ? h.propiedad.idPropiedad : '-'}"></td>
+                                <td th:text="${h.propiedad != null ? h.propiedad.ubicacion : 'Sin datos'}"></td>
+                                <td th:text="${#temporals.format(h.fecha, 'dd/MM/yyyy')}"></td>
+                                <td
+                                    th:text="${#temporals.format(h.horaIni, 'HH:mm')} + ' - ' + ${#temporals.format(h.horaFin, 'HH:mm')} + ' hs'">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Botones -->
+                <div class="mt-4">
+                    <a href="/index" class="btn btn-primary me-3">Volver</a>
+                    <button type="submit" class="btn btn-primary">Aceptar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container text-center">
+            <p>&copy; 2024 Gestor Inmobiliario. Todos los derechos reservados.</p>
+            <p class="text-muted">Desarrollado con Spring Boot y Bootstrap</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Resaltar fila seleccionada
+        document.addEventListener('DOMContentLoaded', () => {
+            const radios = document.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    document.querySelectorAll('tr').forEach(tr => tr.classList.remove('selected'));
+                    radio.closest('tr').classList.add('selected');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
