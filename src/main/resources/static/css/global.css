@@ -1,0 +1,39 @@
+/* ==== Layout general ==== */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Usamos flexbox para empujar el footer al fondo */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* El contenedor principal ocupa el espacio restante */
+body > div:not(footer):not(nav) {
+    flex: 1;
+}
+
+/* Opcional: estilos del footer */
+footer {
+    margin-top: auto;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    transition: 0.2s;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.hero .btn, .hero .dropdown {
+    margin-right: 15px;
+}

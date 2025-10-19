@@ -49,7 +49,7 @@ public class VisitaController {
         }
 
         if (propiedadesEncontradas.isEmpty()) {
-            model.addAttribute("mensajeError", "No se encontró ninguna propiedad con ese criterio.");
+            model.addAttribute("mensajeError", "No se encontró ninguna propiedad con el criterio '" + query + "'.");
         } else {
             for (Propiedad propiedad : propiedadesEncontradas) {
                 List<HorarioVisita> horarios = horarioRepo.findByPropiedadAndDisponibleTrue(propiedad);
@@ -57,7 +57,7 @@ public class VisitaController {
             }
 
             if (horariosTotales.isEmpty()) {
-                model.addAttribute("mensajeAdvertencia", "No hay horarios disponibles para las propiedades encontradas.");
+                model.addAttribute("mensajeAdvertencia", "No hay horarios disponibles para las propiedades que coinciden con '" + query + "'.");
             } else {
                 model.addAttribute("horarios", horariosTotales);
             }
