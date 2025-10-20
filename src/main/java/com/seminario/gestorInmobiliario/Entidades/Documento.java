@@ -35,9 +35,9 @@ public class Documento implements Serializable {
     @JoinColumn(name = "alquiler_id")
     private Alquiler alquiler;
 
-    @ManyToOne
-    @JoinColumn(name = "idPago", nullable = true)
-    private Pago pago;
+    // @ManyToOne
+    // @JoinColumn(name = "idPago", nullable = false)
+    // private Pago pago;
 
     // Constructor vacío
     public Documento() {}

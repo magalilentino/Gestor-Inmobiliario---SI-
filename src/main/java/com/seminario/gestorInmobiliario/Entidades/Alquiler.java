@@ -1,10 +1,8 @@
 package com.seminario.gestorInmobiliario.Entidades;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -33,15 +31,10 @@ public class Alquiler {
     private double valorInicial;
     @Column(nullable = false)
     private String estado;
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
+    @Column(nullable = false)
+    private int periodoAumento;
+    @Column(nullable = false)
+    private double porcentajeAumento;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "propiedad_id", nullable = false)
@@ -143,21 +136,13 @@ public class Alquiler {
         this.miAgente = miAgente;
     }
 
-    public Aumento getMiAumento() {
-        return miAumento;
-    }
+    // public Aumento getMiAumento() {
+    //     return miAumento;
+    // }
 
-    public void setMiAumento(Aumento miAumento) {
-        this.miAumento = miAumento;
-    }
-
-    public List<Documento> getDocumentos() {
-        return documentos;
-    }
-
-    public void setDocumentos(List<Documento> documentos) {
-        this.documentos = documentos;
-    }
+    // public void setMiAumento(Aumento miAumento) {
+    //     this.miAumento = miAumento;
+    // }
 
     public List<Precio> getMisPrecios() {
         return misPrecios;
@@ -167,6 +152,29 @@ public class Alquiler {
         this.misPrecios = misPrecios;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public int getPeriodoAumento() {
+        return periodoAumento;
+    }
+
+    public void setPeriodoAumento(int periodoAumento) {
+        this.periodoAumento = periodoAumento;
+    }
+
+    public double getPorcentajeAumento() {
+        return porcentajeAumento;
+    }
+
+    public void setPorcentajeAumento(double porcentajeAumento) {
+        this.porcentajeAumento = porcentajeAumento;
+    }
 
     //calculo el total 
     public double getPrecio(LocalDate fechaPago){

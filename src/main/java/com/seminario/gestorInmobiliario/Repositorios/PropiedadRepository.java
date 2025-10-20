@@ -1,9 +1,14 @@
 package com.seminario.gestorInmobiliario.Repositorios;
 
-import com.seminario.gestorInmobiliario.Entidades.Propiedad;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
-@Repository
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.seminario.gestorInmobiliario.Entidades.Propiedad;
+
 public interface PropiedadRepository extends JpaRepository<Propiedad, Integer> {
+
+    // Este método permite buscar por ubicación (ignorando mayúsculas/minúsculas)
+    List<Propiedad> findByUbicacionContainingIgnoreCase(String ubicacion);
+
 }
