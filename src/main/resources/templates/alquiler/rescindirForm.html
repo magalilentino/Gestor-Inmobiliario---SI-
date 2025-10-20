@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rescindir Alquiler</title>
+    <link rel="stylesheet" th:href="@{/css/navAlquiler.css}">
+    <link rel="stylesheet" th:href="@{/css/registrarAlquiler.css}">
+    <link rel="stylesheet" th:href="@{/css/mensaje.css}">
+    <style>
+        .info-alquiler {
+            background-color: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .info-item {
+            margin-bottom: 8px;
+        }
+        
+        .label {
+            font-weight: bold;
+            display: inline-block;
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="~{fragmentos/navRescision :: nav}"></div>
+    
+    <div class="form-container">
+        <div th:replace="~{fragmentos/mensaje :: div}"></div>
+        
+        <h2 class="titulo">Rescindir Alquiler</h2>
+        
+        <div class="info-alquiler">
+            <div class="info-item">
+                <span class="label">ID:</span>
+                <span th:text="${alquiler.idAlquiler}"></span>
+            </div>
+            <div class="info-item">
+                <span class="label">Propiedad:</span>
+                <span th:text="${alquiler.miPropiedad.getUbicacionCompleta()}"></span>
+            </div>
+            <div class="info-item">
+                <span class="label">Inquilino:</span>
+                <span th:text="${alquiler.miInquilino.nomApe}"></span>
+            </div>
+            <div class="info-item">
+                <span class="label">Fecha de Ingreso:</span>
+                <span th:text="${#temporals.format(alquiler.fechaIngreso, 'dd/MM/yyyy')}"></span>
+            </div>
+            <div class="info-item">
+                <span class="label">Fecha de Egreso:</span>
+                <span th:text="${#temporals.format(alquiler.fechaEgreso, 'dd/MM/yyyy')}"></span>
+            </div>
+            <div class="info-item">
+                <span class="label">Valor Inicial:</span>
+                <span th:text="${alquiler.valorInicial}"></span>
+            </div>
+        </div>
+        
+        <!-- Formulario para cargar el documento de rescisión -->
+        <form class="formulario" th:if="${formularioCargado == null}" 
+              th:action="@{'/alquiler/cargar-formulario/' + ${alquiler.idAlquiler}}" 
+              method="POST" 
+              enctype="multipart/form-data">
+            <h5>Formulario de Rescisión:</h5>
+            <div style="margin-bottom: 15px;">
+                <input type="file" name="formularioRescision" required 
+                       accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                       style="margin-bottom: 10px;">
+                <p style="font-size: 0.8rem; color: #666;">
+                    Formatos permitidos: PDF, DOC, DOCX, JPG, JPEG, PNG
+                </p>
+            </div>
+            
+            <div class="botonera-principal">
+                <button type="submit" class="btn-azul">Cargar Formulario de Rescisión</button>
+            </div>
+        </form>
+        
+        <!-- Formulario para confirmar la rescisión después de cargar el documento -->
+        <form class="formulario" th:if="${formularioCargado != null}" 
+              th:action="@{'/alquiler/confirmar-rescision/' + ${alquiler.idAlquiler}}" 
+              method="POST">
+            
+            <div class="info-alquiler" style="background-color: #e8f4f8; margin-bottom: 15px;">
+                <div class="info-item">
+                    <span class="label">Formulario cargado:</span>
+                    <span th:text="${nombreArchivo}"></span>
+                    <span style="color: green; margin-left: 10px;">✓</span>
+                </div>
+            </div>
+            
+            <h5>Fecha de Rescisión:</h5>
+            <input type="date" class="input-text" name="fechaRescision" required pattern="\d{4}-\d{2}-\d{2}" 
+                   th:min="${#temporals.format(alquiler.fechaIngreso, 'yyyy-MM-dd')}"
+                   th:max="${#temporals.format(alquiler.fechaEgreso, 'yyyy-MM-dd')}">
+            
+            <!-- Campo oculto para la confirmación -->
+            <input type="hidden" name="confirmar" value="Si">
+            
+            <div class="botonera-principal">
+                <button type="submit" class="btn-azul">Confirmar Rescisión</button>
+            </div>
+        </form>
+        
+        <section class="volver-section">
+            <a th:href="@{/alquiler/listar-activos}" class="volver-link">Cancelar</a>
+        </section>
+    </div>
+</body>
+</html>

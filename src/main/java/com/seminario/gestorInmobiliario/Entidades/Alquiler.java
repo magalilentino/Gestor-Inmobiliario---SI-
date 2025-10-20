@@ -56,9 +56,12 @@ public class Alquiler {
     @JoinColumn(name = "dniAgente", nullable = false)
     private Agente miAgente;
 
-    // @ManyToOne
-    // @JoinColumn(name = "aumento_id")
-    // private Aumento miAumento;
+    @ManyToOne
+    @JoinColumn(name = "aumento_id")
+    private Aumento miAumento;
+
+    @OneToMany(mappedBy = "alquiler", cascade = CascadeType.ALL)
+    private List<Documento> documentos = new ArrayList<>();
 
     //setters y getters 
     public int getIdAlquiler() {
