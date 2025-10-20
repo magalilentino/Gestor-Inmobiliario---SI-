@@ -67,8 +67,7 @@ public class Alquiler {
     @JoinColumn(name = "aumento_id")
     private Aumento miAumento;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "alquiler_id")
+    @OneToMany(mappedBy = "alquiler", cascade = CascadeType.ALL)
     private List<Documento> documentos = new ArrayList<>();
 
     //setters y getters 

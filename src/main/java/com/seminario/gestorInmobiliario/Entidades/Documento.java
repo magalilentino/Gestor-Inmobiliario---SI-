@@ -32,11 +32,11 @@ public class Documento implements Serializable {
     private byte[] archivo;
 
     @ManyToOne
-    @JoinColumn(name = "id_alquiler")
+    @JoinColumn(name = "alquiler_id")
     private Alquiler alquiler;
 
     @ManyToOne
-    @JoinColumn(name = "idPago", nullable = false)
+    @JoinColumn(name = "idPago", nullable = true)
     private Pago pago;
 
     // Constructor vacío
@@ -87,7 +87,7 @@ public class Documento implements Serializable {
         return "Documento{" +
                 "idDocumento=" + idDocumento +
                 ", descripcion='" + descripcion + '\'' +
-                ", contenido='" + (archivo != null ? "[CONTENIDO BINARIO]" : "null") + '\'' +
+                ", archivo='" + (archivo != null ? "[ARCHIVO BINARIO]" : "null") + '\'' +
                 ", alquiler=" + (alquiler != null ? alquiler.getIdAlquiler() : "null") +
                 '}';
     }
