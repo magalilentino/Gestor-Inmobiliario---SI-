@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.seminario.gestorInmobiliario.Entidades.Agente;
 import com.seminario.gestorInmobiliario.Entidades.Alquiler;
-import com.seminario.gestorInmobiliario.Entidades.Aumento;
+//import com.seminario.gestorInmobiliario.Entidades.Aumento;
 import com.seminario.gestorInmobiliario.Entidades.Documento;
 import com.seminario.gestorInmobiliario.Entidades.Inquilino;
 import com.seminario.gestorInmobiliario.Entidades.Pago;
@@ -18,7 +18,7 @@ import com.seminario.gestorInmobiliario.Entidades.Precio;
 import com.seminario.gestorInmobiliario.Entidades.Propiedad;
 import com.seminario.gestorInmobiliario.Repositorios.AgenteRepository;
 import com.seminario.gestorInmobiliario.Repositorios.AlquilerRepository;
-import com.seminario.gestorInmobiliario.Repositorios.AumentoRepository;
+//import com.seminario.gestorInmobiliario.Repositorios.AumentoRepository;
 import com.seminario.gestorInmobiliario.Repositorios.DocumentoRepository;
 import com.seminario.gestorInmobiliario.Repositorios.InquilinoRepository;
 import com.seminario.gestorInmobiliario.Repositorios.PagoRepository;
@@ -40,8 +40,8 @@ public class AlquilerServicio {
     @Autowired
     private InquilinoRepository inquilinoRepositorio;
 
-    @Autowired
-    private AumentoRepository aumentoRepository;
+    // @Autowired
+    // private AumentoRepository aumentoRepository;
 
     @Autowired
     private PagoRepository pagoRepository;
@@ -55,7 +55,7 @@ public class AlquilerServicio {
 
     @Transactional 
     public Alquiler crearAlquiler(LocalDate fechaIngreso, LocalDate fechaEgreso, double valorInicial, int idPropiedad, 
-                            String dniAgente, String dniInquilino, List<Documento> documentos, int periodoAumento, 
+                            String dniAgente, String dniInquilino, int periodoAumento, 
                             double porcentajeAumento) throws Exception {
 
         validar(fechaIngreso, fechaEgreso, valorInicial, idPropiedad, dniAgente, dniInquilino, periodoAumento, porcentajeAumento);
@@ -82,7 +82,6 @@ public class AlquilerServicio {
         alquiler.setMiPropiedad(propiedad);
         alquiler.setMiAgente(agente);
         alquiler.setMiInquilino(inquilino);
-        alquiler.setDocumentos(documentos);
         alquiler.setEstado("Activo");
         alquiler.setPeriodoAumento(periodoAumento);
         alquiler.setPorcentajeAumento(porcentajeAumento);
@@ -142,33 +141,33 @@ public class AlquilerServicio {
         return alquilerRepositorio.getReferenceById(id);
     }
 
-    public void agregarAumento(int id, int idAumento)throws Exception{
-        Alquiler alquiler = alquilerRepositorio.findById(id).get();
-        Aumento aumento = aumentoRepository.findById(idAumento).get();
+    // public void agregarAumento(int id, int idAumento)throws Exception{
+    //     Alquiler alquiler = alquilerRepositorio.findById(id).get();
+    //     Aumento aumento = aumentoRepository.findById(idAumento).get();
 
-        if (alquiler == null) {
-            throw new Exception("El alquiler especificado no existe.");
-        }
-        if (aumento == null) {
-            throw new Exception("El aumento especificado no existe.");
-        }
+    //     if (alquiler == null) {
+    //         throw new Exception("El alquiler especificado no existe.");
+    //     }
+    //     if (aumento == null) {
+    //         throw new Exception("El aumento especificado no existe.");
+    //     }
 
-        alquiler.setMiAumento(aumento);
+    //     alquiler.setMiAumento(aumento);
 
-        alquilerRepositorio.save(alquiler);
-    }
+    //     alquilerRepositorio.save(alquiler);
+    // }
 
-    public void quitarAumento(int id)throws Exception{
-        Alquiler alquiler = alquilerRepositorio.findById(id).get();
+    // public void quitarAumento(int id)throws Exception{
+    //     Alquiler alquiler = alquilerRepositorio.findById(id).get();
 
-        if (alquiler == null) {
-            throw new Exception("El alquiler especificado no existe.");
-        }
+    //     if (alquiler == null) {
+    //         throw new Exception("El alquiler especificado no existe.");
+    //     }
 
-        alquiler.setMiAumento(null);
+    //     alquiler.setMiAumento(null);
 
-        alquilerRepositorio.save(alquiler);
-    }
+    //     alquilerRepositorio.save(alquiler);
+    // }
 
     public double getPrecioActual(){
         List<Precio> misPrecios= precioServicio.listarPrecios();
@@ -198,21 +197,21 @@ public class AlquilerServicio {
         alquilerRepositorio.save(alquiler);
     }
 
-    public void agregarDocumento(int id, int idDocumento) throws Exception{
-        Alquiler alquiler = alquilerRepositorio.findById(id).get();
-        Documento documento = documentoRepositorio.findById(idDocumento).get();
+    // public void agregarDocumento(int id, int idDocumento) throws Exception{
+    //     Alquiler alquiler = alquilerRepositorio.findById(id).get();
+    //     Documento documento = documentoRepositorio.findById(idDocumento).get();
 
-        if (alquiler == null) {
-            throw new Exception("El alquiler especificado no existe.");
-        }
-        if (documento == null) {
-            throw new Exception("El documento especificado no existe.");
-        }
+    //     if (alquiler == null) {
+    //         throw new Exception("El alquiler especificado no existe.");
+    //     }
+    //     if (documento == null) {
+    //         throw new Exception("El documento especificado no existe.");
+    //     }
 
-        alquiler.getDocumentos().add(documento);
+    //     alquiler.getDocumentos().add(documento);
 
-        alquilerRepositorio.save(alquiler);
-    }
+    //     alquilerRepositorio.save(alquiler);
+    // }
 
     public void resicionAlquiler(int id, LocalDate fechaResicion) throws Exception{
         Alquiler alquiler = alquilerRepositorio.findById(id).get();

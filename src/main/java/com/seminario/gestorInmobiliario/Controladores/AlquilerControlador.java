@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.seminario.gestorInmobiliario.Entidades.Agente;
 import com.seminario.gestorInmobiliario.Entidades.Alquiler;
-import com.seminario.gestorInmobiliario.Entidades.Documento;
 import com.seminario.gestorInmobiliario.Entidades.Inquilino;
 import com.seminario.gestorInmobiliario.Entidades.Propiedad;
 import com.seminario.gestorInmobiliario.Servicios.AlquilerServicio;
@@ -56,13 +55,13 @@ public class AlquilerControlador {
                             HttpSession session, 
                             ModelMap model){
         try {
-            List<Documento> documentos = (List<Documento>) session.getAttribute("documentosPendientes");
+            // List<Documento> documentos = (List<Documento>) session.getAttribute("documentosPendientes");
             String dniInquilino = (String) session.getAttribute("dniInquilino");
             Agente agente = (Agente) session.getAttribute("agentesession");
             String dniAgente = agente != null ? agente.getDniAgente() : null;
             int idPropiedad = (int) session.getAttribute("idPropiedad");
 
-            Alquiler alquilerCreado = alquilerServicio.crearAlquiler(fechaIngreso, fechaEgreso, valorInicial, idPropiedad, dniAgente, dniInquilino, documentos, periodoAumento, porcentajeAumento);
+            Alquiler alquilerCreado = alquilerServicio.crearAlquiler(fechaIngreso, fechaEgreso, valorInicial, idPropiedad, dniAgente, dniInquilino, periodoAumento, porcentajeAumento);
 
             propiedadServicio.cambiarEstadoPropiedad(idPropiedad, "Ocupada");
              

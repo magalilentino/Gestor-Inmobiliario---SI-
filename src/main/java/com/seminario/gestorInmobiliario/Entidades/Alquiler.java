@@ -1,10 +1,8 @@
 package com.seminario.gestorInmobiliario.Entidades;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -58,13 +56,9 @@ public class Alquiler {
     @JoinColumn(name = "dniAgente", nullable = false)
     private Agente miAgente;
 
-    @ManyToOne
-    @JoinColumn(name = "aumento_id")
-    private Aumento miAumento;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "alquiler_id")
-    private List<Documento> documentos = new ArrayList<>();
+    // @ManyToOne
+    // @JoinColumn(name = "aumento_id")
+    // private Aumento miAumento;
 
     //setters y getters 
     public int getIdAlquiler() {
@@ -139,21 +133,13 @@ public class Alquiler {
         this.miAgente = miAgente;
     }
 
-    public Aumento getMiAumento() {
-        return miAumento;
-    }
+    // public Aumento getMiAumento() {
+    //     return miAumento;
+    // }
 
-    public void setMiAumento(Aumento miAumento) {
-        this.miAumento = miAumento;
-    }
-
-    public List<Documento> getDocumentos() {
-        return documentos;
-    }
-
-    public void setDocumentos(List<Documento> documentos) {
-        this.documentos = documentos;
-    }
+    // public void setMiAumento(Aumento miAumento) {
+    //     this.miAumento = miAumento;
+    // }
 
     public List<Precio> getMisPrecios() {
         return misPrecios;
