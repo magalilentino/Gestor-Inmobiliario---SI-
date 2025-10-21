@@ -86,16 +86,7 @@ public class AlquilerServicio {
         alquiler.setPeriodoAumento(periodoAumento);
         alquiler.setPorcentajeAumento(porcentajeAumento);
 
-        // Primero guardamos el alquiler para obtener su ID
         alquilerRepositorio.save(alquiler);
-        
-        // Luego asociamos y guardamos los documentos transitorios (sin ID) que vienen de la sesión
-        if (documentos != null && !documentos.isEmpty()) {
-            for (Documento doc : documentos) {
-                doc.setAlquiler(alquiler);
-                documentoRepositorio.save(doc);
-            }
-        }
 
         return alquiler;
 
@@ -351,6 +342,47 @@ public class AlquilerServicio {
         }
         if (porcentajeAumento <= 0) {
             throw new Exception("El porcentaje del aumento debe ser un valor positivo");
+        }
+    }
+
+    public void agregarDocumento(int id, int idDocumento) throws Exception{
+        Alquiler alquiler = alquilerRepositorio.findById(id).get();
+        Documento documento = documentoRepositorio.findById(idDocumento).get();
+
+        if (alquiler == null) {
+            throw new Exception("El alquiler especificado no existe.");
+        }
+        if (documento == null) {
+            throw new Exception("El documento especificado no existe.");
+        }
+
+        alquiler.getDocumentos().add(documento);
+
+        alquilerRepositorio.save(alquiler);
+    }
+
+    private void validar(LocalDate fechaIngreso, LocalDate fechaEgreso, double valorInicial, int idPropiedad, String dniAgente, String dniInquilino)
+            throws Exception {
+        if (fechaIngreso == null) {
+            throw new Exception("La fecha de ingreso no puede ser nula");
+        }
+        if (fechaEgreso == null) {
+            throw new Exception("La fecha de egreso no puede ser nula");
+        }
+        if (!fechaEgreso.isAfter(fechaIngreso)) {
+            throw new Exception("La fecha de egreso no puede ser anterior o igual a la fecha de ingreso");
+        }
+        if (valorInicial <= 0) {
+            throw new Exception("El valor inicial debe ser un valor positivo");
+        }
+        if(idPropiedad == 0) {
+            throw new Exception("El idPropiedad no puede ser nulo");
+        }
+        if (dniAgente == null || dniAgente.isEmpty()) {
+            throw new Exception("El dni del agente no puede ser nulo o estar vacio");
+        }
+        if (dniInquilino == null || dniInquilino.isEmpty()) {
+            throw new Exception("El dni del inquilino no puede ser nulo o estar vacio");
         }
     }
 
