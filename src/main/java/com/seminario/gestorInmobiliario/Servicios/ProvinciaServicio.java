@@ -69,7 +69,7 @@ public class ProvinciaServicio {
     }
 
     private void validar(String nombre) throws Exception {
-        if (nombre.isEmpty() || nombre == null) {
+        if (nombre == null || nombre.isEmpty()) {
             throw new Exception("el nombre no puede ser nulo o estar vacío");
         }
     }

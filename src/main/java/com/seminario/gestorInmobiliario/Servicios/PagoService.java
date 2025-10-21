@@ -157,6 +157,7 @@ public class PagoService {
             nuevoPago.setAlquiler(alquiler);
 
             pagoRepository.save(nuevoPago);
+
         }
     }
 
@@ -187,9 +188,9 @@ public class PagoService {
     private void validar(LocalDate fecha_limite, double interesMora)
             throws Exception {
         
-        if (interesMora == 0) {
-            throw new Exception("El interesMora no puede ser nulo o estar vacio");
-        }
+        // if (interesMora == 0) {
+        //     throw new Exception("El interesMora no puede ser nulo o estar vacio");
+        // }
         if (fecha_limite.isAfter(LocalDate.now())){
             throw new Exception("la fecha debe ser mayor a la fecha actual");
         }

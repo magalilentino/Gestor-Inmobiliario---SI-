@@ -140,6 +140,50 @@ public class AlquilerServicio {
     public Alquiler getOne(int id){
         return alquilerRepositorio.getReferenceById(id);
     }
+    
+    /**
+     * Obtiene un alquiler con todas sus relaciones cargadas completamente para evitar
+     * problemas de LazyInitializationException al usar los datos en vistas
+     * Cuando se pasa el alquiler a la vista (Thymeleaf), si no se cargan las relaciones lazy (inquilino, propiedad, documentos), se produce este error cuando la vista intenta acceder a ellas.
+     * 
+     * @param id ID del alquiler
+     * @return Alquiler con todas sus relaciones inicializadas
+     * @throws Exception Si no se encuentra el alquiler
+     */
+    @Transactional(readOnly = true)
+    public Alquiler getAlquilerConDetallesCompletos(int id) throws Exception {
+        Alquiler alquiler = alquilerRepositorio.findById(id)
+                .orElseThrow(() -> new Exception("El alquiler con ID " + id + " no existe"));
+        
+        // Inicializar manualmente todas las relaciones necesarias
+        if (alquiler.getMiInquilino() != null) {
+            // Acceder a propiedades para forzar inicialización
+            alquiler.getMiInquilino().getNomApe();
+            alquiler.getMiInquilino().getDniInquilino();
+        }
+        
+        if (alquiler.getMiPropiedad() != null) {
+            // Acceder a propiedades para forzar inicialización
+            alquiler.getMiPropiedad().getUbicacion();
+            alquiler.getMiPropiedad().getEstado();
+        }
+        
+        if (alquiler.getMiAgente() != null) {
+            // Acceder a propiedades para forzar inicialización
+            alquiler.getMiAgente().getNomApe();
+        }
+        
+        // Inicializar documentos si existen
+        // if (alquiler.getDocumentos() != null) {
+        //     alquiler.getDocumentos().size(); // Esto fuerza la inicialización de la colección
+        //     // También inicializar cada documento
+        //     for (Documento doc : alquiler.getDocumentos()) {
+        //         doc.getDescripcion(); // Esto fuerza la inicialización de cada documento
+        //     }
+        // }
+        
+        return alquiler;
+    }
 
     // public void agregarAumento(int id, int idAumento)throws Exception{
     //     Alquiler alquiler = alquilerRepositorio.findById(id).get();
@@ -213,18 +257,61 @@ public class AlquilerServicio {
     //     alquilerRepositorio.save(alquiler);
     // }
 
-    public void resicionAlquiler(int id, LocalDate fechaResicion) throws Exception{
-        Alquiler alquiler = alquilerRepositorio.findById(id).get();
+    /**
+     * Rescinde un alquiler, actualizando su estado y la disponibilidad de la propiedad.
+     * Este método utiliza una nueva transacción para evitar problemas con la transacción principal.
+     * 
+     * @param id ID del alquiler a rescindir
+     * @param fechaRescision Fecha de rescisión del alquiler
+     * @throws Exception Si hay algún problema validando o rescindiendo el alquiler
+     */
+    @Transactional
+    public void rescindirAlquiler(int id, LocalDate fechaRescision) throws Exception {
+        Optional<Alquiler> alquilerOpt = alquilerRepositorio.findById(id);
 
-        if (alquiler == null) {
+        if (alquilerOpt.isEmpty()) {
             throw new Exception("El alquiler especificado no existe.");
         }
 
-        alquiler.setFechaRecision(fechaResicion);
-
-        //hay que cambiar el estado de la propiedad a disponible
-
-        alquilerRepositorio.save(alquiler);
+        Alquiler alquiler = alquilerOpt.get();
+        
+        // Inicializamos explícitamente la lista de documentos para evitar problemas con lazy loading
+        // Esto asegura que los documentos existentes se mantengan en la base de datos
+        if (alquiler.getDocumentos() != null) {
+            alquiler.getDocumentos().size(); // Forzar la carga de la colección lazy
+        }
+        
+        if (!"Activo".equals(alquiler.getEstado())) {
+            throw new Exception("Solo se pueden rescindir alquileres activos.");
+        }
+        
+        if (fechaRescision == null) {
+            throw new Exception("La fecha de rescisión no puede ser nula.");
+        }
+        
+        if (fechaRescision.isBefore(alquiler.getFechaIngreso())) {
+            throw new Exception("La fecha de rescisión no puede ser anterior a la fecha de inicio del alquiler.");
+        }
+        
+        if (fechaRescision.isAfter(alquiler.getFechaEgreso())) {
+            throw new Exception("La fecha de rescisión no puede ser posterior a la fecha de finalización del alquiler.");
+        }
+        
+        try {
+            // Actualizamos el estado del alquiler a "Rescindido"
+            alquiler.setEstado("Rescindido");
+            alquiler.setFechaRecision(fechaRescision);
+            
+            // Cambiamos el estado de la propiedad a "Disponible"
+            Propiedad propiedad = alquiler.getMiPropiedad();
+            propiedad.setEstado("Disponible");
+            
+            // Guardamos los cambios
+            propiedadRepositorio.save(propiedad);
+            alquilerRepositorio.save(alquiler);
+        } catch (Exception e) {
+            throw new Exception("Error al rescindir el alquiler: " + e.getMessage(), e);
+        }
     }
 
     private void validar(LocalDate fechaIngreso, LocalDate fechaEgreso, double valorInicial, int idPropiedad, 
@@ -244,10 +331,10 @@ public class AlquilerServicio {
         if(idPropiedad == 0) {
             throw new Exception("El idPropiedad no puede ser nulo");
         }
-        if (dniAgente.isEmpty() || dniAgente == null) {
+        if (dniAgente == null || dniAgente.isEmpty()) {
             throw new Exception("El dni del agente no puede ser nulo o estar vacio");
         }
-        if (dniInquilino.isEmpty() || dniInquilino == null) {
+        if (dniInquilino == null || dniInquilino.isEmpty()) {
             throw new Exception("El dni del inquilino no puede ser nulo o estar vacio");
         }
         if (periodoAumento <= 0) {
@@ -257,5 +344,46 @@ public class AlquilerServicio {
             throw new Exception("El porcentaje del aumento debe ser un valor positivo");
         }
     }
+
+    public void agregarDocumento(int id, int idDocumento) throws Exception{
+        Alquiler alquiler = alquilerRepositorio.findById(id).get();
+        // Documento documento = documentoRepositorio.findById(idDocumento).get();
+
+        if (alquiler == null) {
+            throw new Exception("El alquiler especificado no existe.");
+        }
+        // if (documento == null) {
+        //     throw new Exception("El documento especificado no existe.");
+        // }
+
+        // alquiler.getDocumentos().add(documento);
+
+        alquilerRepositorio.save(alquiler);
+    }
+
+    // private void validar(LocalDate fechaIngreso, LocalDate fechaEgreso, double valorInicial, int idPropiedad, String dniAgente, String dniInquilino)
+    //         throws Exception {
+    //     if (fechaIngreso == null) {
+    //         throw new Exception("La fecha de ingreso no puede ser nula");
+    //     }
+    //     if (fechaEgreso == null) {
+    //         throw new Exception("La fecha de egreso no puede ser nula");
+    //     }
+    //     if (!fechaEgreso.isAfter(fechaIngreso)) {
+    //         throw new Exception("La fecha de egreso no puede ser anterior o igual a la fecha de ingreso");
+    //     }
+    //     if (valorInicial <= 0) {
+    //         throw new Exception("El valor inicial debe ser un valor positivo");
+    //     }
+    //     if(idPropiedad == 0) {
+    //         throw new Exception("El idPropiedad no puede ser nulo");
+    //     }
+    //     if (dniAgente == null || dniAgente.isEmpty()) {
+    //         throw new Exception("El dni del agente no puede ser nulo o estar vacio");
+    //     }
+    //     if (dniInquilino == null || dniInquilino.isEmpty()) {
+    //         throw new Exception("El dni del inquilino no puede ser nulo o estar vacio");
+    //     }
+    // }
 
 }

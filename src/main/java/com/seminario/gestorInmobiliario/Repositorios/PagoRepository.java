@@ -15,6 +15,6 @@ public interface PagoRepository extends JpaRepository<Pago, Integer> {
     @Query("SELECT p FROM Pago p WHERE p.alquiler.id = :idAlquiler AND p.estado = :estado")
     List<Pago> findPagosPendientesPorAlquiler(@Param("idAlquiler") int idAlquiler, @Param("estado") String estado);
 
-    @Query("SELECT COUNT(p) > 0 FROM Pago p WHERE p.miAlquiler.id = :id AND MONTH(p.fechaLimite) = :mes AND YEAR(p.fechaLimite) = :anio")
+   @Query("SELECT COUNT(p) > 0 FROM Pago p WHERE p.alquiler.idAlquiler = :id AND FUNCTION('MONTH', p.fecha_limite) = :mes AND FUNCTION('YEAR', p.fecha_limite) = :anio")
     boolean existsByAlquilerIdAndMes(@Param("id") int id, @Param("mes") int mes, @Param("anio") int anio);
 }

@@ -17,7 +17,7 @@ public class Precio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPrecio; 
-    @Column(unique = true, nullable = false)
+    @Column( nullable = false)
     private LocalDate fechaDesde;
     @Column(nullable = false)
     private double montoPrecio; 
