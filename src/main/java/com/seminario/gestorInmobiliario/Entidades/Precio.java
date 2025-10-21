@@ -23,7 +23,7 @@ public class Precio {
     private double montoPrecio; 
 
     @ManyToOne
-    @JoinColumn(name = "alquiler_id", nullable = false, unique = true)
+    @JoinColumn(name = "alquiler_id", nullable = false)
     private Alquiler alquiler;
 
     

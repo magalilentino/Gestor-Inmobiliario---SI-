@@ -1,6 +1,7 @@
 package com.seminario.gestorInmobiliario.Entidades;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -35,6 +36,8 @@ public class Alquiler {
     private int periodoAumento;
     @Column(nullable = false)
     private double porcentajeAumento;
+    @Column(nullable = false)
+    private double interesMora;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "propiedad_id", nullable = false)
@@ -173,6 +176,15 @@ public class Alquiler {
         this.porcentajeAumento = porcentajeAumento;
     }
 
+    public double getInteresMora() {
+        return interesMora;
+    }
+
+    public void setInteresMora(double interesMora) {
+        this.interesMora = interesMora;
+    }
+
+
     //calculo el total 
     public double getPrecio(LocalDate fechaPago){
         double precio=0;
@@ -184,7 +196,10 @@ public class Alquiler {
         return precio;
     }
 
-
-
+    public int getMesesDesdeIngreso() {
+        LocalDate hoy = LocalDate.now();
+        return Period.between(fechaIngreso.withDayOfMonth(1), hoy.withDayOfMonth(1)).getMonths()
+            + Period.between(fechaIngreso.withDayOfMonth(1), hoy.withDayOfMonth(1)).getYears() * 12;
+    }
 
 }
