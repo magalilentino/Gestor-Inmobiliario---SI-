@@ -17,13 +17,13 @@ public class Precio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPrecio; 
-    @Column(unique = true, nullable = false)
+    @Column( nullable = false)
     private LocalDate fechaDesde;
     @Column(nullable = false)
     private double montoPrecio; 
 
     @ManyToOne
-    @JoinColumn(name = "alquiler_id", nullable = false, unique = true)
+    @JoinColumn(name = "alquiler_id", nullable = false)
     private Alquiler alquiler;
 
     

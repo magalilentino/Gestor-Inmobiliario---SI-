@@ -14,4 +14,7 @@ public interface AlquilerRepository extends JpaRepository<Alquiler, Integer> {
     
     @Query("SELECT a FROM Alquiler a WHERE a.miInquilino.dniInquilino = :dni AND a.estado = :estado")
     List<Alquiler> findAlquileresByDniAndEstado(@Param("dni") String dni, @Param("estado") String estado);
+
+    @Query("SELECT a FROM Alquiler a WHERE a.estado = :estado")
+    List<Alquiler> findByEstado(@Param("estado") String estado);
 }
