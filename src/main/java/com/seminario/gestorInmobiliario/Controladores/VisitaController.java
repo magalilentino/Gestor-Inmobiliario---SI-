@@ -33,35 +33,52 @@ public class VisitaController {
     @GetMapping("/visitas/buscar")
     public String buscarVisitas(@RequestParam("query") String query, Model model) {
 
-        List<Propiedad> propiedadesEncontradas = new ArrayList<>();
-        List<HorarioVisita> horariosTotales = new ArrayList<>();
+        // --- INICIO DE LA MODIFICACIÓN ---
 
-        try {
-            // Buscar por ID si es un número
-            int id = Integer.parseInt(query);
-            Propiedad propiedad = propiedadRepo.findById(id).orElse(null);
-            if (propiedad != null) {
-                propiedadesEncontradas.add(propiedad);
-            }
-        } catch (NumberFormatException e) {
-            // Buscar por ubicación si es texto
-            propiedadesEncontradas = propiedadRepo.findByUbicacionContainingIgnoreCase(query);
-        }
-
-        if (propiedadesEncontradas.isEmpty()) {
-            model.addAttribute("mensajeError", "No se encontró ninguna propiedad con el criterio '" + query + "'.");
-        } else {
-            for (Propiedad propiedad : propiedadesEncontradas) {
-                List<HorarioVisita> horarios = horarioRepo.findByPropiedadAndDisponibleTrue(propiedad);
-                horariosTotales.addAll(horarios);
-            }
+        // Comprueba si el 'query' es nulo o está vacío (después de quitar espacios)
+        if (query == null || query.trim().isEmpty()) {
+            
+            // Caso 1: El usuario NO escribió nada. Buscar todos los disponibles.
+            List<HorarioVisita> horariosTotales = horarioRepo.findAllDisponiblesOrdenados(); // <-- Se usa el nuevo método
 
             if (horariosTotales.isEmpty()) {
-                model.addAttribute("mensajeAdvertencia", "No hay horarios disponibles para las propiedades que coinciden con '" + query + "'.");
+                model.addAttribute("mensajeAdvertencia", "No hay ningún horario disponible registrado en el sistema.");
             } else {
                 model.addAttribute("horarios", horariosTotales);
             }
+
+        } else {
+            
+            // Caso 2: El usuario SÍ escribió algo. Ejecutar la lógica de búsqueda que ya tenías.
+            List<Propiedad> propiedadesEncontradas = new ArrayList<>();
+            try {
+                // Buscar por ID si es un número
+                int id = Integer.parseInt(query);
+                Propiedad propiedad = propiedadRepo.findById(id).orElse(null);
+                if (propiedad != null) {
+                    propiedadesEncontradas.add(propiedad);
+                }
+            } catch (NumberFormatException e) {
+                // Buscar por ubicación si es texto
+                propiedadesEncontradas = propiedadRepo.findByUbicacionContainingIgnoreCase(query);
+            }
+
+            if (propiedadesEncontradas.isEmpty()) {
+                model.addAttribute("mensajeError", "No se encontró ninguna propiedad con el criterio '" + query + "'.");
+            } else {
+                
+                // Hacemos UNA SOLA CONSULTA a la BD con la lista de propiedades encontradas.
+                List<HorarioVisita> horariosTotales = horarioRepo.findHorariosDisponiblesOrdenados(propiedadesEncontradas);
+
+                if (horariosTotales.isEmpty()) {
+                    model.addAttribute("mensajeAdvertencia", "No hay horarios disponibles para las propiedades que coinciden con '" + query + "'.");
+                } else {
+                    model.addAttribute("horarios", horariosTotales);
+                }
+            }
         }
+        
+        // --- FIN DE LA MODIFICACIÓN ---
 
         return "/visitas/agendar-visitas";
     }
