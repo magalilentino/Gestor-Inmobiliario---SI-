@@ -14,6 +14,9 @@ public interface LocalidadRepository extends JpaRepository<Localidad, Integer> {
 
     @Query("SELECT l FROM Localidad l WHERE l.miProvincia.idProvincia = ?1")
     List<Localidad> buscarPorProvincia(int idProv);
+    
+    @Query("SELECT l FROM Localidad l " + "WHERE LOWER(TRIM(l.miProvincia.nombre)) = LOWER(TRIM(:provincia))")
+    List<Localidad> buscarPorProvinciaNombre(String provincia);
 
     @Query("SELECT l FROM Localidad l WHERE l.nombre = :nombre OR l.codPostal = :codPostal")
     Localidad findByNombreOrCodigoPostal(@Param("nombre") String nombre, @Param("codPostal") Integer codPostal);

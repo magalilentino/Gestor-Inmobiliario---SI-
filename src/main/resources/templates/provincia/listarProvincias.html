@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provincias</title>
+    <link rel="stylesheet" th:href="@{/css/navAlquiler.css}">
+    <link rel="stylesheet" th:href="@{/css/mensaje.css}">
+    <style>
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        tr:hover {
+            background-color: #e1e1e1;
+        }
+        
+        .btn {
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        
+        .no-alquileres {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="~{fragmentos/navProvincia :: nav}"></div>
+    
+    <div class="container">
+        <h1>Provincias</h1>
+        
+        <div th:replace="~{fragmentos/mensaje :: div}"></div>
+        
+        <!-- Formulario de búsqueda -->
+        <div class="search-container" style="margin-bottom: 20px;">
+            <form th:action="@{/provincia/lstar}" method="GET">
+                
+            </form>
+        </div>
+        
+        <div th:if="${advertencia}" class="no-alquileres" th:text="${advertencia}"></div>
+        
+        <table th:if="${provincias != null and not #lists.isEmpty(provincias)}">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>nombre</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="provincia : ${provincias}">
+                    <td th:text="${provincia.idProvincia}"></td>
+                    <td th:text="${provincia.nombre}"></td>                
+                </tr>
+            </tbody>
+        </table>
+        
+        <div style="margin-top: 20px;">
+            <a th:href="@{/index}" class="btn">Volver al Inicio</a>
+        </div>
+    </div>
+</body>
+</html>

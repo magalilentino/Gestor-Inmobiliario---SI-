@@ -60,14 +60,23 @@ public class LocalidadController {
     }
 
     @GetMapping("/listar")
-    public String listarLocalidades(Model model) {
+    public String listarLocalidades(@RequestParam(required = false) String provincia, Model model) {
         try {
             List<Localidad> localidades = localidadService.listarLocalidades();
+
+            if (provincia != null && !provincia.isEmpty()) {
+                localidades = localidadService.listarLocalidadesPorProvincia(provincia);
+            } else {
+                localidades = localidadService.listarLocalidades();
+            }
+
             model.addAttribute("localidades", localidades);
-            return "localidades/lista";
+            model.addAttribute("provinciaSeleccionada", provincia);
+            return "localidad/listarLocalidades";
+            
         } catch (Exception e) {
             model.addAttribute("error", "Error al cargar agentes: " + e.getMessage());
-            return "localidades/lista";
+            return "localidad/listarLocalidades";
         }
     }
 }

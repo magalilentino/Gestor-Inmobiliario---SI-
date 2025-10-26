@@ -54,6 +54,12 @@ public class LocalidadService {
         return localidades;
     }
 
+    @Transactional(readOnly = true)
+    public List<Localidad> listarLocalidadesPorProvincia(String provincia) {
+        return localidadRepository.buscarPorProvinciaNombre(provincia);
+    }
+
+
     @Transactional
     public void modificarLocalidad(Integer idLocalidad, String nombre, Integer codPostal, Integer idProvincia)
         throws Exception {
