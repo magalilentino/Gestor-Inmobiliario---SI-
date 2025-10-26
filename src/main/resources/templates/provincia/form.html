@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/registrarAlquiler.css}">
+    <link rel="stylesheet" href="/css/navAlquiler.css">
+    <link rel="stylesheet" href="/css/mensaje.css">
+    <title>Registrar Provincia</title>
+</head>
+<body>
+    <div th:replace="~{fragmentos/navPropiedad :: nav}"></div>
+    <div class="form-container">
+        <h2 class="titulo">Registrar Nueva Provincia</h2>
+        
+            <div th:if="${error}" style="color: red;">
+                <p th:text="${error}"></p>
+            </div>
+
+            <div th:if="${exito}" style="color: green;">
+                <p th:text="${exito}"></p>
+            </div>
+        <form class="formulario" th:action="@{/provincia/registro}" method="POST" enctype="multipart/form-data">
+            
+            <div class="input-group">
+                <h5>Nombre:</h5> 
+                <input type="text" class="input-text" name="nombre" placeholder="nombre">
+            </div>
+                
+            <div th:replace="~{fragmentos/mensaje :: div}"></div>
+
+            <div class="botonera-principal">
+                <button type="submit" class="btn-azul">Registrar provincia</button>
+            </div>
+
+        </form>
+
+        <section class="volver-section">
+            <a th:href="@{/index}" class="volver-link">Volver</a>
+        </section>
+    </div>
+
+    
+</body>
+</html>

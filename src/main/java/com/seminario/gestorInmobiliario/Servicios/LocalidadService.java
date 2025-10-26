@@ -25,26 +25,25 @@ public class LocalidadService {
 
 
     @Transactional // Todos los metodos que generen cambios en la base de dados
-    public void crearLocalidad(String nombre, Integer codPostal, Integer idProvincia)
-            throws Exception {
-
+    public void crearLocalidad(String nombre, Integer codPostal, Integer idProvincia)throws Exception {
         validar(nombre,codPostal,idProvincia);
 
         Provincia provincia = provinciaRepository.findById(idProvincia).get();
 
-        if (provincia == null) {
-            throw new Exception("La provincia especificado no existe.");
+        Localidad existente = localidadRepository.findByNombreOrCodigoPostal(nombre, codPostal);
+        if (existente != null) {
+            throw new Exception("Ya existe una localidad con ese nombre o código postal.");
         }
 
         Localidad localidad = new Localidad();
-
         localidad.setNombre(nombre);
         localidad.setCodPostal(codPostal);
         localidad.setMiProvincia(provincia);
-
         localidadRepository.save(localidad);
-
     }
+
+    
+
 
     @Transactional(readOnly = true)
     public List<Localidad> listarLocalidades() {
@@ -113,5 +112,10 @@ public class LocalidadService {
         if (codPostal == null) {
             throw new Exception("El codPostal no puede ser nulo o estar vacio");
         }
+    }
+
+    @Transactional(readOnly = true)
+    public List<Localidad> buscarPorProvincia(int idProv){
+        return localidadRepository.buscarPorProvincia(idProv);
     }
 }

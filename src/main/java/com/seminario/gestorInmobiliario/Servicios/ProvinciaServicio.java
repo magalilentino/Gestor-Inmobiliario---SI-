@@ -19,15 +19,20 @@ public class ProvinciaServicio {
 
     @Transactional
     public void crearProvincia(String nombre) throws Exception {
-
         validar(nombre);
 
+        Provincia existente = provinciaRepository.findByNombre(nombre);
+        if (existente != null) {
+            throw new Exception("Ya existe una provincia con este nombre");
+        }
+
         Provincia provincia = new Provincia();
-
         provincia.setNombre(nombre);
-
         provinciaRepository.save(provincia);
     }
+    
+
+
 
     @Transactional(readOnly = true)
     public List<Provincia> listarProvincias() {

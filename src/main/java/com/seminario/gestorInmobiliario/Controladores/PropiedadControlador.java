@@ -21,7 +21,7 @@ import com.seminario.gestorInmobiliario.Entidades.Localidad;
 import com.seminario.gestorInmobiliario.Entidades.Propiedad;
 import com.seminario.gestorInmobiliario.Entidades.Provincia;
 import com.seminario.gestorInmobiliario.Servicios.CategoriaServicio;
-import com.seminario.gestorInmobiliario.Servicios.LocalidadServicio;
+import com.seminario.gestorInmobiliario.Servicios.LocalidadService;
 import com.seminario.gestorInmobiliario.Servicios.PropiedadServicio;
 import com.seminario.gestorInmobiliario.Servicios.ProvinciaServicio;
 
@@ -33,7 +33,7 @@ public class PropiedadControlador {
     private PropiedadServicio propiedadServicio;
 
     @Autowired
-    private LocalidadServicio localidadServicio;
+    private LocalidadService localidadServicio;
 
     @Autowired
     private CategoriaServicio categoriaServicio;

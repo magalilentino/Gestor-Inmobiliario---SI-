@@ -4,19 +4,26 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.seminario.gestorInmobiliario.Entidades.Localidad;
-import com.seminario.gestorInmobiliario.Servicios.LocalidadServicio;
+import com.seminario.gestorInmobiliario.Servicios.LocalidadService;
+import com.seminario.gestorInmobiliario.Servicios.ProvinciaServicio;
 
 @Controller
 @RequestMapping("/localidad")
 public class LocalidadController {
+
     @Autowired
-    private LocalidadServicio localidadService;
+    private LocalidadService localidadService;
+
+    @Autowired
+    private ProvinciaServicio provinciaServicio;
 
     @GetMapping("/listaProv")
     @ResponseBody
@@ -24,5 +31,34 @@ public class LocalidadController {
         return localidadService.buscarPorProvincia(idProvincia);
     }
 
+    @GetMapping("/registrar") // localhost:8080/localidad/registrar
+    public String registrar(ModelMap model) {
 
+        model.addAttribute("provincias", provinciaServicio.listarProvincias());
+        return "localidad/form";
+    }
+    
+    @PostMapping("/registro")
+    public String registrarLocalidad(
+            @RequestParam Integer idProvincia,
+            @RequestParam String nombre,
+            @RequestParam Integer codPostal,
+            ModelMap model) {
+
+        try {
+            localidadService.crearLocalidad(nombre, codPostal, idProvincia);
+            model.put("exito", "La localidad fue registrada correctamente.");
+        } catch (Exception e) {
+            model.put("error", e.getMessage());
+        }
+
+        // Siempre vuelvo al formulario
+        model.addAttribute("provincias", provinciaServicio.listarProvincias());
+        return "localidad/form";
+    }
 }
+
+
+    
+
+

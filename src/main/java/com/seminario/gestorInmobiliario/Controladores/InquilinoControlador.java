@@ -25,7 +25,7 @@ public class InquilinoControlador {
         return "inquilino/form";
     }
 
-      @PostMapping("/registro")
+    @PostMapping("/registro")
     public String registro(@RequestParam String dni, 
                             @RequestParam String nomApe, 
                             @RequestParam String telefono,  
