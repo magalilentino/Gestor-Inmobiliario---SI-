@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rescisión Exitosa</title>
+    <link rel="stylesheet" th:href="@{/css/navAlquiler.css}">
+    <link rel="stylesheet" th:href="@{/css/mensaje.css}">
+    <style>
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        
+        .warning-message {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        
+        .info-alquiler {
+            background-color: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        
+        .info-item {
+            margin-bottom: 10px;
+            display: flex;
+        }
+        
+        .label {
+            font-weight: bold;
+            width: 150px;
+            display: inline-block;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .rescision-details {
+            border-top: 2px solid #007bff;
+            margin-top: 15px;
+            padding-top: 15px;
+        }
+        
+        h1, h2 {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="~{fragmentos/navRescision :: nav}"></div>
+    
+    <div class="container">
+        <div th:if="${exito}" class="success-message">
+            <i class="fas fa-check-circle" style="font-size: 1.5rem; margin-right: 10px;"></i>
+            <span th:text="${exito}">¡Rescisión completada con éxito!</span>
+        </div>
+        
+        <div th:if="${advertencia}" class="warning-message">
+            <i class="fas fa-exclamation-triangle" style="font-size: 1.5rem; margin-right: 10px;"></i>
+            <span th:text="${advertencia}">Advertencia sobre el documento</span>
+        </div>
+        
+        <h1>Detalles del Alquiler Rescindido</h1>
+        
+        <div class="info-alquiler" th:if="${alquiler != null}">
+            <div class="info-item">
+                <span class="label">ID Alquiler:</span>
+                <span th:text="${alquiler.idAlquiler}">ID</span>
+            </div>
+            <div class="info-item" th:if="${alquiler.miPropiedad != null}">
+                <span class="label">Propiedad:</span>
+                <span th:text="${alquiler.miPropiedad.ubicacion}">Ubicación</span>
+            </div>
+            <div class="info-item" th:if="${alquiler.miInquilino != null}">
+                <span class="label">Inquilino:</span>
+                <span th:text="${alquiler.miInquilino != null ? alquiler.miInquilino.nomApe : 'No disponible'}">Nombre</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Fecha de Ingreso:</span>
+                <span th:text="${alquiler != null && alquiler.fechaIngreso != null ? #temporals.format(alquiler.fechaIngreso, 'dd/MM/yyyy') : '-'}">Fecha</span>
+            </div>
+            
+            <div class="rescision-details" th:if="${alquiler != null}">
+                <h2>Información de la Rescisión</h2>
+                <div class="info-item">
+                    <span class="label">Fecha de Rescisión:</span>
+                    <span th:text="${alquiler.fechaRecision != null ? #temporals.format(alquiler.fechaRecision, 'dd/MM/yyyy') : '-'}">Fecha</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Estado:</span>
+                    <span th:text="${alquiler.estado}" style="color: #dc3545; font-weight: bold;">Estado</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Propiedad ahora:</span>
+                    <span style="color: #28a745; font-weight: bold;">Disponible</span>
+                </div>
+                <div class="info-item" th:if="${documentoId != null}">
+                    <span class="label">Documento guardado:</span>
+                    <span th:text="'ID: ' + ${documentoId}"></span>
+                    <span style="color: #007bff; margin-left: 10px;">✓</span>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center;">
+            <a th:href="@{/alquiler/listar-activos}" class="btn">Ver Alquileres Activos</a>
+            <a th:href="@{/}" class="btn" style="margin-left: 10px;">Ir al Inicio</a>
+        </div>
+    </div>
+</body>
+</html>

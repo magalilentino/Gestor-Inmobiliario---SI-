@@ -1,6 +1,7 @@
 package com.seminario.gestorInmobiliario.Entidades;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,8 @@ public class Alquiler {
     private int periodoAumento;
     @Column(nullable = false)
     private double porcentajeAumento;
+    @Column(nullable = false)
+    private double interesMora;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "propiedad_id", nullable = false)
@@ -62,8 +65,7 @@ public class Alquiler {
     @JoinColumn(name = "aumento_id")
     private Aumento miAumento;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "alquiler_id")
+    @OneToMany(mappedBy = "alquiler", cascade = CascadeType.ALL)
     private List<Documento> documentos = new ArrayList<>();
 
     //setters y getters 
@@ -139,13 +141,13 @@ public class Alquiler {
         this.miAgente = miAgente;
     }
 
-    public Aumento getMiAumento() {
-        return miAumento;
-    }
+    // public Aumento getMiAumento() {
+    //     return miAumento;
+    // }
 
-    public void setMiAumento(Aumento miAumento) {
-        this.miAumento = miAumento;
-    }
+    // public void setMiAumento(Aumento miAumento) {
+    //     this.miAumento = miAumento;
+    // }
 
     public List<Documento> getDocumentos() {
         return documentos;
@@ -187,6 +189,15 @@ public class Alquiler {
         this.porcentajeAumento = porcentajeAumento;
     }
 
+    public double getInteresMora() {
+        return interesMora;
+    }
+
+    public void setInteresMora(double interesMora) {
+        this.interesMora = interesMora;
+    }
+
+
     //calculo el total 
     public double getPrecio(LocalDate fechaPago){
         double precio=0;
@@ -198,7 +209,10 @@ public class Alquiler {
         return precio;
     }
 
-
-
+    public int getMesesDesdeIngreso() {
+        LocalDate hoy = LocalDate.now();
+        return Period.between(fechaIngreso.withDayOfMonth(1), hoy.withDayOfMonth(1)).getMonths()
+            + Period.between(fechaIngreso.withDayOfMonth(1), hoy.withDayOfMonth(1)).getYears() * 12;
+    }
 
 }

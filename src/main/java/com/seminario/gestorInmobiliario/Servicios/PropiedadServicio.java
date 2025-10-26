@@ -84,6 +84,13 @@ public class PropiedadServicio {
     public List<Propiedad> listarPropiedades() {
         return propiedadRepository.findAll();
     }
+    
+    public List<Propiedad> listarPropiedadesDisponibles() {
+        List<Propiedad> propiedades = propiedadRepository.findAll();
+        return propiedades.stream()
+                .filter(propiedad -> "Disponible".equals(propiedad.getEstado()))
+                .toList();
+    }
 
     @Transactional
     public void eliminarPropiedad(int idPropiedad) throws Exception {
@@ -117,12 +124,12 @@ public class PropiedadServicio {
 
     private void validar(String ubicacion, String medidas, Integer cantAmbientes, int idlocalidad, int idcategoria)
             throws Exception {
-
-        if (ubicacion.isEmpty() || ubicacion == null) {
+        
+        if (ubicacion == null || ubicacion.isEmpty()) {
             throw new Exception("La ubicacion no puede ser nulo o estar vacio");
         }
 
-        if (medidas.isEmpty() || medidas == null) {
+        if (medidas == null || medidas.isEmpty()) {
             throw new Exception("Las medidas no puede ser nulo o estar vacio");
         }
 

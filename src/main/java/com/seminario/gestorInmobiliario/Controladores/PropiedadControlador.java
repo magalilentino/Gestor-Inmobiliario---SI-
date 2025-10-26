@@ -3,8 +3,8 @@ package com.seminario.gestorInmobiliario.Controladores;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -65,7 +65,7 @@ public class PropiedadControlador {
                         ModelMap model) {
         try {
             byte[] contenido = archivo != null ? archivo.getBytes() : null;
-            String ubicacion = calle + ' ' + altura + ',' + piso + ',' + depto;;
+            String ubicacion = calle + ' ' + altura + ',' + piso + ',' + depto;
             if (piso == null || piso.isEmpty() || depto == null || depto.isEmpty()) {
                 ubicacion =  calle + ' ' + altura ;
             }

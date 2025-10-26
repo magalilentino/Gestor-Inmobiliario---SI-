@@ -24,7 +24,7 @@ public class LocalidadService {
     private ProvinciaRepository provinciaRepository;
 
 
-    @Transactional // Todos los metodos que generen cambios en la base de dados
+    @Transactional
     public void crearLocalidad(String nombre, Integer codPostal, Integer idProvincia)throws Exception {
         validar(nombre,codPostal,idProvincia);
 

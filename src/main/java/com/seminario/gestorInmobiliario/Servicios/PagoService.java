@@ -7,12 +7,17 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.seminario.gestorInmobiliario.Entidades.Pago;
+import com.seminario.gestorInmobiliario.Entidades.Precio;
+import com.seminario.gestorInmobiliario.Entidades.Alquiler;
 import com.seminario.gestorInmobiliario.Entidades.FormaPago;
 import com.seminario.gestorInmobiliario.Repositorios.PagoRepository;
+import com.seminario.gestorInmobiliario.Repositorios.PrecioRepository;
+import com.seminario.gestorInmobiliario.Repositorios.AlquilerRepository;
 import com.seminario.gestorInmobiliario.Repositorios.FormaPagoRepository;
 
 
@@ -26,6 +31,11 @@ public class PagoService {
     @Autowired
     private FormaPagoRepository formaPagoRepository;
 
+    @Autowired
+    private AlquilerRepository alquilerRepository;
+
+    @Autowired
+    private PrecioRepository precioRepository;
 
     @Transactional 
     public void crearPago(LocalDate fecha_limite, double interesMora)
@@ -37,7 +47,7 @@ public class PagoService {
 
         pago.setFecha_limite(fecha_limite);
         pago.setEstado();
-        pago.setInteresMora(interesMora);
+        // pago.setInteresMora(interesMora);
 
         pagoRepository.save(pago);
 
@@ -64,7 +74,7 @@ public class PagoService {
             Pago pago = pagoOpt.get();
 
             pago.setFecha_limite(fecha_limite);
-            pago.setInteresMora(interesMora);
+            // pago.setInteresMora(interesMora);
 
             pagoRepository.save(pago);
         }
@@ -99,7 +109,7 @@ public class PagoService {
             precio= pago.getAlquiler().getPrecio(fechaPago);
 
             if(fechaPago.isAfter(pago.getFecha_limite())){
-                precio= precio*pago.getInteresMora();
+                precio= precio*pago.getAlquiler().getInteresMora();
                 long diasRetraso = ChronoUnit.DAYS.between(pago.getFecha_limite(), fechaPago);
                 throw new Exception("los días de restraso del pago son: " + diasRetraso);
             }
@@ -128,14 +138,59 @@ public class PagoService {
         }
         return pago;
     }
-        
+       
+    @Scheduled(cron = "0 0 6 1 * *") // 6:00 AM el día 1 de cada mes
+    public void generarPagosMensuales() throws Exception{
+        List<Alquiler> alquileresActivos = alquilerRepository.findByEstado("Activo");
+
+        for (Alquiler alquiler : alquileresActivos) {
+            LocalDate hoy = LocalDate.now();
+            LocalDate fechaLimite = hoy.withDayOfMonth(15); 
+            boolean yaExiste = pagoRepository.existsByAlquilerIdAndMes(alquiler.getIdAlquiler(), hoy.getMonthValue(), hoy.getYear());
+            if (yaExiste) {
+                throw new Exception("ya existe un pago en el mes actual para ese alquiler");
+            };
+            this.calcularMontoConAumento(alquiler);
+            Pago nuevoPago = new Pago();
+            nuevoPago.setFecha_limite(fechaLimite);
+            nuevoPago.setEstado("Pendiente");
+            nuevoPago.setAlquiler(alquiler);
+
+            pagoRepository.save(nuevoPago);
+
+        }
+    }
+
+    private void calcularMontoConAumento(Alquiler alquiler) {
+    Precio ultimoPrecio = precioRepository.findTopByAlquilerOrderByFechaDesdeDesc(alquiler);
+    double montoBase = ultimoPrecio.getPrecio();
+
+    int mesesTranscurridos = alquiler.getMesesDesdeIngreso();
+    int periodo = alquiler.getPeriodoAumento();
+
+    if (periodo > 0 && mesesTranscurridos > 0 && mesesTranscurridos % periodo == 0) { 
+        double porcentaje = alquiler.getPorcentajeAumento();
+        double nuevoMonto = montoBase * (1 + porcentaje / 100);
+
+        // Registrar nuevo precio
+        Precio nuevo = new Precio();
+        nuevo.setFechaDesde(LocalDate.now());
+        nuevo.setPrecio(nuevoMonto);
+        nuevo.setAlquiler(alquiler);
+
+        precioRepository.save(nuevo);
+
+    }
+
+
+}
 
     private void validar(LocalDate fecha_limite, double interesMora)
             throws Exception {
         
-        if (interesMora == 0) {
-            throw new Exception("El interesMora no puede ser nulo o estar vacio");
-        }
+        // if (interesMora == 0) {
+        //     throw new Exception("El interesMora no puede ser nulo o estar vacio");
+        // }
         if (fecha_limite.isAfter(LocalDate.now())){
             throw new Exception("la fecha debe ser mayor a la fecha actual");
         }

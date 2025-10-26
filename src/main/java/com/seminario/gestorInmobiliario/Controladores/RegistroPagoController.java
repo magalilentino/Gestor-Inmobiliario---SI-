@@ -109,7 +109,7 @@ public class RegistroPagoController {
             }else if (fecha.isAfter(pago.getFecha_limite())) {
 
                 diasRetraso = (int) ChronoUnit.DAYS.between(pago.getFecha_limite(), fecha);
-                double interes = pago.getInteresMora() * diasRetraso;
+                double interes = pago.getAlquiler().getInteresMora() * diasRetraso;
                 montoBase += interes;
                 model.addAttribute("mensajeRetraso", "El pago tiene " + diasRetraso + " días de retraso.");
             }

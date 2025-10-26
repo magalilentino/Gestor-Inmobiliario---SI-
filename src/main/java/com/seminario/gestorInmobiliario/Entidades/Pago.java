@@ -24,9 +24,6 @@ public class Pago {
     @Column(nullable = false)
     private String estado;
 
-    @Column(nullable = false)
-    private double interesMora;
-
     private LocalDate fechaPago;
 
     @Column(nullable = true)
@@ -76,14 +73,6 @@ public class Pago {
 
     public void setFecha_limite(LocalDate fecha_limite) {
         this.fecha_limite = fecha_limite;
-    }
-
-    public double getInteresMora() {
-        return interesMora;
-    }
-
-    public void setInteresMora(double interesMora) {
-        this.interesMora = interesMora;
     }
 
     public LocalDate getFechaPago() {
