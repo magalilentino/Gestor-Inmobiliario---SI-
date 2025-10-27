@@ -57,8 +57,8 @@ public class HomeController {
     }
 
     @GetMapping("/categorias")
-    public String categorias(HttpSession session, ModelMap modelo) {
-        Agente agente = (Agente) session.getAttribute("agentesession");
+    public String categorias(Authentication auth, ModelMap modelo) {
+        Agente agente = agenteService.getByUser(auth.getName());
         if (agente == null) {
             return "redirect:/login";
         }
