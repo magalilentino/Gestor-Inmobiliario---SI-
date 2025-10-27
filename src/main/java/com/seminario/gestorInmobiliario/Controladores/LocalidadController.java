@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.seminario.gestorInmobiliario.Entidades.Agente;
 import com.seminario.gestorInmobiliario.Entidades.Localidad;
 import com.seminario.gestorInmobiliario.Servicios.LocalidadService;
 import com.seminario.gestorInmobiliario.Servicios.ProvinciaServicio;
