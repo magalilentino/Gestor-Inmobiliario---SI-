@@ -20,7 +20,7 @@ public class CategoriaServicio {
     @Transactional
     public void crearCategoria(String nombre, String descripcion ) throws Exception {
 
-        //validar(nombre);
+        validar(nombre);
 
         Categoria categoria = new Categoria();
 
@@ -37,8 +37,8 @@ public class CategoriaServicio {
 
     @Transactional
     public void modificarCategoria(String nombre, String descripcion, int id) throws Exception {
-        
-        // validar(nombre);
+
+        validarModificacion(nombre, id);
 
         Optional<Categoria> categoriaOpt = categoriaRepositorio.findById(id);
 
@@ -71,10 +71,23 @@ public class CategoriaServicio {
     }
 
 
-    // private void validar(String nombre) throws Exception {
-    //     if (nombre.isEmpty() || nombre == null) {
-    //         throw new Exception("el nombre no puede ser nulo o estar vacío");
-    //     }
-    // }
+    private void validar(String nombre) throws Exception {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new Exception("el nombre no puede ser nulo o estar vacío");
+        }
+        if (categoriaRepositorio.existsByNombreIgnoreCase(nombre)) {
+            throw new Exception("Ya existe una categoría con este nombre");
+        }
+    }
 
+    private void validarModificacion(String nombre, int id) throws Exception {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new Exception("el nombre no puede ser nulo o estar vacío");
+        }        
+        // Verificar si existe otra categoría con el mismo nombre (excluyendo la actual)
+        Optional<Categoria> categoriaExistente = categoriaRepositorio.findByNombreIgnoreCase(nombre);
+        if (categoriaExistente.isPresent() && categoriaExistente.get().getIdCategoria() != id) {
+            throw new Exception("Ya existe otra categoría con ese nombre");
+        }
+    }
 }
