@@ -56,4 +56,14 @@ public class HomeController {
         return "visitas/agendar-visitas";
     }
 
+    @GetMapping("/categorias")
+    public String categorias(HttpSession session, ModelMap modelo) {
+        Agente agente = (Agente) session.getAttribute("agentesession");
+        if (agente == null) {
+            return "redirect:/login";
+        }
+
+        modelo.put("agente", agente);
+        return "categorias/lista";
+    }
 }
