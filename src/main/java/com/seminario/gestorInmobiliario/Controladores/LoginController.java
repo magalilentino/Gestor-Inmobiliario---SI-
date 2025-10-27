@@ -23,27 +23,32 @@ public class LoginController {
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo) {
         if (error != null) {
-            modelo.put("error", error);
+            modelo.put("error", "Usuario o Contraseña inválidos!");
         }
         return "login"; // login.html en templates
     }
 
+    // @GetMapping("/index")
+    // public String index() {
+    //     return "index.html";
+    // }
     // Procesar login
-    @PostMapping("/login")
-    public String ingresar(@RequestParam String usuario,
-                           @RequestParam String clave,
-                           HttpSession session,
-                           ModelMap modelo) {
-        try {
-            Agente agente = agenteService.login(usuario, clave);
-            session.setAttribute("agentesession", agente); // guardar en sesión
-            return "redirect:/index";
-        } catch (Exception e) {
-            modelo.put("error", e.getMessage());
-            modelo.put("usuario", usuario);
-            return "login";
-        }
-    }
+    
+    // @PostMapping("/login")
+    // public String ingresar(@RequestParam String usuario,
+    //                        @RequestParam String clave,
+    //                        HttpSession session,
+    //                        ModelMap modelo) {
+    //     try {
+    //         Agente agente = agenteService.login(usuario, clave);
+    //         session.setAttribute("agentesession", agente); // guardar en sesión
+    //         return "redirect:/index";
+    //     } catch (Exception e) {
+    //         modelo.put("error", e.getMessage());
+    //         modelo.put("usuario", usuario);
+    //         return "login";
+    //     }
+    // }
 
     // Página de registro
     @GetMapping("/registro")

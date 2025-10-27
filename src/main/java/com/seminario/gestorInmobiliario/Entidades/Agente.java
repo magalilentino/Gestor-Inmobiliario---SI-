@@ -27,7 +27,7 @@ public class Agente {
     @Column(name = "usuario", length = 45, unique = true, nullable = false)
     private String usuario;
 
-    @Column(name = "clave", length = 45, nullable = false)
+    @Column(name = "clave", length = 100, nullable = false) //al encriptarla necesito mas caracteres
     private String clave;
 
     public String getDniAgente() {
