@@ -81,6 +81,11 @@ public class AgenteServicios implements UserDetailsService {
         return agenteRepositorio.getReferenceById(dniAgente);
     }
 
+    @Transactional(readOnly = true)
+    public Agente getByUser(String usuario) {
+        return agenteRepositorio.findByUsuario(usuario).orElse(null);
+    }
+
     // public Agente login(String usuario, String clave) throws Exception {
     //     Agente agente = agenteRepositorio.findByUsuario(usuario)
     //             .orElseThrow(() -> new Exception("Usuario no encontrado"));

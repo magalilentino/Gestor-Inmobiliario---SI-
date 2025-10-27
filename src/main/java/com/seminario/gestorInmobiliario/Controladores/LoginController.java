@@ -1,6 +1,7 @@
 package com.seminario.gestorInmobiliario.Controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,6 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
-
 
     @Autowired
     private AgenteServicios agenteService;
@@ -82,8 +82,8 @@ public class LoginController {
 
     // Página de inicio (solo para agentes logueados)
     @GetMapping("/inicio")
-    public String inicio(HttpSession session, ModelMap modelo) {
-        Agente agente = (Agente) session.getAttribute("agentesession");
+    public String inicio(Authentication auth, ModelMap modelo) {
+        Agente agente = agenteService.getByUser(auth.getName());
         if (agente == null) {
             return "redirect:/login?error=Debes iniciar sesión";
         }
