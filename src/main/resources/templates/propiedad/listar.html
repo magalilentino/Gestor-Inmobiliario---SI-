@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Propiedades</title>
+    <link rel="stylesheet" th:href="@{/css/navAlquiler.css}">
+    <link rel="stylesheet" th:href="@{/css/mensaje.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+
+        /* Contador inline en el header */
+        .stat-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 12px 24px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .stat-number-inline {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .stat-label-inline {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Estilos del buscador */
+        .search-container {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 180px;
+            padding: 12px 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-input-small {
+            flex: 0 0 120px;
+            padding: 12px 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input-small:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn-search {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-search:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-clear {
+            padding: 12px 30px;
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-clear:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .property-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .property-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .property-content {
+            padding: 25px;
+        }
+
+        .property-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .property-details {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+
+        .detail-icon {
+            font-size: 1.2rem;
+            width: 25px;
+            text-align: center;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #4a5568;
+            min-width: 100px;
+        }
+
+        .detail-value {
+            color: #718096;
+            flex: 1;
+        }
+
+        .property-status {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-disponible {
+            background-color: #48bb78;
+            color: white;
+        }
+
+        .status-ocupado {
+            background-color: #f56565;
+            color: white;
+        }
+
+        .property-category {
+            display: inline-block;
+            background: #edf2f7;
+            color: #4a5568;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+
+        .no-properties {
+            background: white;
+            padding: 60px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .no-properties-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .no-properties h2 {
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .no-properties p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+
+        .btn-back {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-back:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .stats {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-box {
+            background: #f7fafc;
+            padding: 15px 20px;
+            border-radius: 10px;
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #718096;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="~{fragmentos/navPropiedadListar :: nav}"></div>
+    
+    <div class="container">
+        <div class="header">
+            <!-- Título con contador -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h1 style="margin: 0;">🏠 Catálogo de Propiedades</h1>
+                <div class="stat-badge" th:if="${propiedades != null and !propiedades.isEmpty()}">
+                    <span class="stat-number-inline" th:text="${#lists.size(propiedades)}">0</span>
+                    <span class="stat-label-inline">Propiedades</span>
+                </div>
+            </div>
+            
+            <p style="margin-bottom: 25px;">Explora todas las propiedades disponibles en nuestro sistema</p>
+            
+            <!-- Buscador de Propiedades -->
+            <div class="search-container">
+                <form action="/propiedad/listar" method="GET" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    
+                    <!-- Búsqueda por ubicación -->
+                    <input type="text" 
+                           name="ubicacion" 
+                           placeholder="🔍 Buscar por ubicación..."
+                           class="search-input"
+                           th:value="${param.ubicacion}">
+                    
+                    <!-- Búsqueda por provincia -->
+                    <input type="text" 
+                           name="provincia" 
+                           placeholder="🗺️ Provincia..."
+                           class="search-input"
+                           th:value="${param.provincia}">
+                    
+                    <!-- Búsqueda por localidad -->
+                    <input type="text" 
+                           name="localidad" 
+                           placeholder="🏘️ Localidad..."
+                           class="search-input"
+                           th:value="${param.localidad}">
+                    
+                    <!-- Búsqueda por ambientes -->
+                    <input type="number" 
+                           name="ambientes" 
+                           placeholder="🚪 Ambientes..."
+                           class="search-input-small"
+                           min="1"
+                           th:value="${param.ambientes}">
+                    
+                    <!-- Búsqueda por categoría -->
+                    <input type="text" 
+                           name="categoria" 
+                           placeholder="🏷️ Categoría..."
+                           class="search-input"
+                           th:value="${param.categoria}">
+                    
+                    <!-- Botones -->
+                    <button type="submit" class="btn-search">Buscar</button>
+                    <a href="/propiedad/listar" class="btn-clear">Limpiar</a>
+                </form>
+            </div>
+        </div>
+
+        <div th:replace="~{fragmentos/mensaje :: div}"></div>
+
+        <!-- Grid de Propiedades -->
+        <div class="properties-grid" th:if="${propiedades != null and !propiedades.isEmpty()}">
+            <div class="property-card" th:each="prop : ${propiedades}">
+                
+                <!-- Imagen de la propiedad -->
+                <div class="property-image">
+                    <img th:if="${prop.contenido != null}" 
+                         th:src="@{/propiedad/imagen/{id}(id=${prop.idPropiedad})}" 
+                         alt="Imagen de propiedad">
+                    <span th:if="${prop.contenido == null}">🏢</span>
+                </div>
+
+                <!-- Contenido de la tarjeta -->
+                <div class="property-content">
+                    
+                    <!-- Título (Ubicación) -->
+                    <h2 class="property-title">
+                        📍 <span th:text="${prop.ubicacion}"></span>
+                    </h2>
+
+                    <!-- Detalles de la propiedad -->
+                    <div class="property-details">
+                        
+                        <div class="detail-row">
+                            <span class="detail-icon">🏘️</span>
+                            <span class="detail-label">Localidad:</span>
+                            <span class="detail-value" th:text="${prop.localidad.nombre}"></span>
+                        </div>
+
+                        <div class="detail-row">
+                            <span class="detail-icon">🗺️</span>
+                            <span class="detail-label">Provincia:</span>
+                            <span class="detail-value" th:text="${prop.localidad.miProvincia.nombre}"></span>
+                        </div>
+
+                        <div class="detail-row">
+                            <span class="detail-icon">🚪</span>
+                            <span class="detail-label">Ambientes:</span>
+                            <span class="detail-value" th:text="${prop.cantAmbientes}"></span>
+                        </div>
+
+                        <div class="detail-row">
+                            <span class="detail-icon">📏</span>
+                            <span class="detail-label">Medidas:</span>
+                            <span class="detail-value" th:text="${prop.medidas}"></span>
+                        </div>
+
+                        <div class="detail-row">
+                            <span class="detail-icon">🏷️</span>
+                            <span class="detail-label">Categoría:</span>
+                            <span class="detail-value" th:text="${prop.categoria.nombre}"></span>
+                        </div>
+
+                        <div class="detail-row">
+                            <span class="detail-icon">📊</span>
+                            <span class="detail-label">Estado:</span>
+                            <span class="property-status" 
+                                  th:classappend="${prop.estado == 'disponible'} ? 'status-disponible' : 'status-ocupado'"
+                                  th:text="${prop.estado}">
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Mensaje cuando no hay propiedades -->
+        <div class="no-properties" th:if="${propiedades == null or propiedades.isEmpty()}">
+            <div class="no-properties-icon">🏚️</div>
+            <h2>No hay propiedades registradas</h2>
+            <p>Aún no se han cargado propiedades en el sistema</p>
+        </div>
+
+        <!-- Botón volver -->
+        <div style="text-align: center;">
+            <a th:href="@{/index}" class="btn-back">⬅️ Volver al Inicio</a>
+        </div>
+
+    </div>
+</body>
+</html>

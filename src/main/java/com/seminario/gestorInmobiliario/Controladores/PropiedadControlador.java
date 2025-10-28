@@ -162,8 +162,55 @@ public class PropiedadControlador {
     }
 
     @GetMapping("/listar")
-    public String listar(ModelMap model) {
+    public String listar(
+            @RequestParam(required = false) String ubicacion,
+            @RequestParam(required = false) String provincia,
+            @RequestParam(required = false) String localidad,
+            @RequestParam(required = false) Integer ambientes,
+            @RequestParam(required = false) String categoria,
+            ModelMap model) {
+        
         List<Propiedad> propiedades = propiedadServicio.listarPropiedades();
+        
+        // Aplicar filtros si se proporcionan
+        if (ubicacion != null && !ubicacion.trim().isEmpty()) {
+            propiedades = propiedades.stream()
+                .filter(p -> p.getUbicacion() != null && 
+                            p.getUbicacion().toLowerCase().contains(ubicacion.toLowerCase().trim()))
+                .toList();
+        }
+        
+        if (provincia != null && !provincia.trim().isEmpty()) {
+            propiedades = propiedades.stream()
+                .filter(p -> p.getLocalidad() != null && 
+                            p.getLocalidad().getMiProvincia() != null &&
+                            p.getLocalidad().getMiProvincia().getNombre()
+                                .toLowerCase().contains(provincia.toLowerCase().trim()))
+                .toList();
+        }
+        
+        if (localidad != null && !localidad.trim().isEmpty()) {
+            propiedades = propiedades.stream()
+                .filter(p -> p.getLocalidad() != null && 
+                            p.getLocalidad().getNombre()
+                                .toLowerCase().contains(localidad.toLowerCase().trim()))
+                .toList();
+        }
+        
+        if (ambientes != null && ambientes > 0) {
+            propiedades = propiedades.stream()
+                .filter(p -> p.getCantAmbientes() == ambientes)
+                .toList();
+        }
+        
+        if (categoria != null && !categoria.trim().isEmpty()) {
+            propiedades = propiedades.stream()
+                .filter(p -> p.getCategoria() != null && 
+                            p.getCategoria().getNombre()
+                                .toLowerCase().contains(categoria.toLowerCase().trim()))
+                .toList();
+        }
+        
         model.addAttribute("propiedades", propiedades);
         return "propiedad/listar";
     }

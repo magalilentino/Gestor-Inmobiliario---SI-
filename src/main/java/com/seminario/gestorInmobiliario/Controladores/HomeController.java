@@ -42,7 +42,7 @@ public class HomeController {
         if (agente == null) {
             return "redirect:/login";
         }
-        return "propiedades/lista";
+        return "redirect:/propiedad/listar";
     }
 
     @GetMapping("/visitas")

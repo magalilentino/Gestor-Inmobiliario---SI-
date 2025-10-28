@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,12 +20,10 @@ public class CategoriaController {
     @Autowired
     private CategoriaServicio categoriaServicio;
     
-    // GET: Mostrar página con formulario + listado
+    // GET: Mostrar formulario de registro
     @GetMapping("/registrar")
-    public String registrar(ModelMap model) {
-        List<Categoria> categorias = categoriaServicio.listarCategorias();
-        model.put("categorias", categorias);
-        return "categoria/registrar";
+    public String registrar() {
+        return "categoria/form";
     }
     
     // POST: Registrar nueva categoría
@@ -36,48 +33,23 @@ public class CategoriaController {
                           ModelMap model) {
         try {
             categoriaServicio.crearCategoria(nombre, descripcion);
-            model.put("exito", "Categoría registrada correctamente");
+            model.put("exito", "La categoría fue cargada correctamente.");
         } catch (Exception e) {
             model.put("error", e.getMessage());
         }
-        
-        // Recargar lista
-        List<Categoria> categorias = categoriaServicio.listarCategorias();
-        model.put("categorias", categorias);
-        return "categoria/registrar";
+        return "categoria/form";
     }
     
-    // POST: Modificar categoría existente
-    @PostMapping("/modificar")
-    public String modificar(@RequestParam int id,
-                           @RequestParam String nombre,
-                           @RequestParam(required = false) String descripcion,
-                           ModelMap model) {
+    // GET: Listar todas las categorías
+    @GetMapping("/listar")
+    public String listarCategorias(ModelMap model) {
         try {
-            categoriaServicio.modificarCategoria(nombre, descripcion, id);
-            model.put("exito", "Categoría modificada correctamente");
+            List<Categoria> categorias = categoriaServicio.listarCategorias();
+            model.put("categorias", categorias);
+            return "categoria/listarCategorias";
         } catch (Exception e) {
-            model.put("error", e.getMessage());
+            model.put("error", "Error al cargar categorías: " + e.getMessage());
+            return "categoria/listarCategorias";
         }
-        
-        // Recargar lista
-        List<Categoria> categorias = categoriaServicio.listarCategorias();
-        model.put("categorias", categorias);
-        return "categoria/registrar";
-    }
-    
-    // POST: Eliminar categoría (opcional)
-    @PostMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable int id, ModelMap model) {
-        try {
-            categoriaServicio.eliminarCategoria(id);
-            model.put("exito", "Categoría eliminada correctamente");
-        } catch (Exception e) {
-            model.put("error", e.getMessage());
-        }
-        
-        List<Categoria> categorias = categoriaServicio.listarCategorias();
-        model.put("categorias", categorias);
-        return "categoria/registrar";
     }
 }
