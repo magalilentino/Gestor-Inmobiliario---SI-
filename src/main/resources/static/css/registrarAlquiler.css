@@ -91,6 +91,15 @@ button:hover {
     justify-content: space-between;
     gap: 10px;
     margin-top: 10px;
+    text-decoration: none; 
+    border: none;         
+    outline: none;
+    
+}
+
+.fila-botones {
+    margin-top: 20px;
+    text-align: right ;
 }
 
 .btn-azul {
@@ -103,6 +112,8 @@ button:hover {
     cursor: pointer;
     flex: 1;
     transition: background-color 0.3s ease;
+    text-decoration: none;
+    border: none;
 }
 
 .btn-azul:hover {
@@ -128,7 +139,7 @@ button:hover {
 /* Cartel de error o acción */
 .cartel-opciones {
     margin-top: 20px;
-    text-align: center;
+    text-align: right;
 }
 
 .cartel-opciones button {
@@ -195,7 +206,7 @@ button:hover {
 
 /* Link de volver */
 .volver-section {
-    margin-top: 20px;
+    margin-top: 30px;
     text-align: right ;
 }
 
@@ -239,4 +250,13 @@ select {
     font-size: 1rem;
     background-color: white;
     color: #333;
+}
+
+.alerta-contenedor {
+    margin: 30px auto;
+    padding: 20px;
+    max-width: 600px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }

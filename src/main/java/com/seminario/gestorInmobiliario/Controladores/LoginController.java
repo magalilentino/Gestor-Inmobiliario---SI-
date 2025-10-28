@@ -1,6 +1,7 @@
 package com.seminario.gestorInmobiliario.Controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,6 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class LoginController {
 
-
     @Autowired
     private AgenteServicios agenteService;
 
@@ -23,27 +23,32 @@ public class LoginController {
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo) {
         if (error != null) {
-            modelo.put("error", error);
+            modelo.put("error", "Usuario o Contraseña inválidos!");
         }
         return "login"; // login.html en templates
     }
 
+    // @GetMapping("/index")
+    // public String index() {
+    //     return "index.html";
+    // }
     // Procesar login
-    @PostMapping("/login")
-    public String ingresar(@RequestParam String usuario,
-                           @RequestParam String clave,
-                           HttpSession session,
-                           ModelMap modelo) {
-        try {
-            Agente agente = agenteService.login(usuario, clave);
-            session.setAttribute("agentesession", agente); // guardar en sesión
-            return "redirect:/index";
-        } catch (Exception e) {
-            modelo.put("error", e.getMessage());
-            modelo.put("usuario", usuario);
-            return "login";
-        }
-    }
+    
+    // @PostMapping("/login")
+    // public String ingresar(@RequestParam String usuario,
+    //                        @RequestParam String clave,
+    //                        HttpSession session,
+    //                        ModelMap modelo) {
+    //     try {
+    //         Agente agente = agenteService.login(usuario, clave);
+    //         session.setAttribute("agentesession", agente); // guardar en sesión
+    //         return "redirect:/index";
+    //     } catch (Exception e) {
+    //         modelo.put("error", e.getMessage());
+    //         modelo.put("usuario", usuario);
+    //         return "login";
+    //     }
+    // }
 
     // Página de registro
     @GetMapping("/registro")
@@ -77,8 +82,8 @@ public class LoginController {
 
     // Página de inicio (solo para agentes logueados)
     @GetMapping("/inicio")
-    public String inicio(HttpSession session, ModelMap modelo) {
-        Agente agente = (Agente) session.getAttribute("agentesession");
+    public String inicio(Authentication auth, ModelMap modelo) {
+        Agente agente = agenteService.getByUser(auth.getName());
         if (agente == null) {
             return "redirect:/login?error=Debes iniciar sesión";
         }

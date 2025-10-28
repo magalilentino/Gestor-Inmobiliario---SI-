@@ -4,49 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/registrarAlquiler.css}">
+    <link rel="stylesheet" th:href="@{/css/mensaje.css}">
     <link rel="stylesheet" href="/css/navAlquiler.css">
     <title>Registrar Alquiler</title>
 </head>
 <body>
     <div th:replace="~{fragmentos/navAlquiler :: nav}"></div>
     <div class="form-container">
-    
-   <form th:action="@{/documento/registrar}" method="GET">
-    <h2 class="titulo">Seleccione la propiedad:</h2>
-    <div class="tabla-propiedades-container">
-        <table class="tabla-propiedades">
-            <thead>
-                <tr>
-                    <th></th> 
-                    <th>id propiedad</th>
-                    <th>ubicacion</th>
-                    <th>imagen</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="propiedad : ${propVisitadas}" class="fila-propiedad-seleccionable">
-                    <td class="columna-radio">
-                        <label class="radio-label">
-                            <input type="radio" name="idPropiedad" th:value="${propiedad.idPropiedad}" required class="radio-select"/>
-                            <div class="custom-radio"></div> 
-                        </label>
-                    </td>
-                    
-                    <td th:text="${propiedad.idPropiedad}" class="columna-id"></td>
-                    <td th:text="${propiedad.getUbicacionCompleta}" class="columna-ubicacion"></td>
-                    <td class="columna-imagen">
-                        <a><img th:if="${propiedad.contenido != null}" class="propiedad-img" th:src="@{/propiedad/imagen/__${propiedad.idPropiedad}__}" ></a>
-                        <!-- <img th:src="@{/propiedad/imagen/{id}(id=${propiedad.idPropiedad})}"  alt="Imagen propiedad" class="propiedad-img-peq" /> -->
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+
+    <div th:if="${#lists.isEmpty(propVisitadas)}">
+        <div class="alerta alerta-error">
+            <p class="alerta-titulo">No hay propiedades visitadas</p>
+            <p class="alerta-texto">Este inquilino aún no ha visitado ninguna propiedad. Por favor, registre una visita antes de continuar.</p>
+        </div>
+        <div class= "fila-botones">
+            <a th:href="@{/index}" class="btn-azul">Ir al Inicio</a>
+        </div>
     </div>
 
-    <div class="botonera-principal">
-        <button type="submit" class="btn-azul">Cargar Documentos</button>
+    <div th:unless="${#lists.isEmpty(propVisitadas)}">
+        <form th:action="@{/documento/registrar}" method="GET">
+            <h2 class="titulo">Seleccione la propiedad:</h2>
+            <div class="tabla-propiedades-container">
+                <table class="tabla-propiedades">
+                    <thead>
+                        <tr>
+                            <th></th> 
+                            <th>id propiedad</th>
+                            <th>ubicacion</th>
+                            <th>imagen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="propiedad : ${propVisitadas}" class="fila-propiedad-seleccionable">
+                            <td class="columna-radio">
+                                <label class="radio-label">
+                                    <input type="radio" name="idPropiedad" th:value="${propiedad.idPropiedad}" required class="radio-select"/>
+                                    <div class="custom-radio"></div> 
+                                </label>
+                            </td>
+                            
+                            <td th:text="${propiedad.idPropiedad}" class="columna-id"></td>
+                            <td th:text="${propiedad.getUbicacionCompleta}" class="columna-ubicacion"></td>
+                            <td class="columna-imagen">
+                                <a><img th:if="${propiedad.contenido != null}" class="propiedad-img" th:src="@{/propiedad/imagen/__${propiedad.idPropiedad}__}" ></a>
+                                <!-- <img th:src="@{/propiedad/imagen/{id}(id=${propiedad.idPropiedad})}"  alt="Imagen propiedad" class="propiedad-img-peq" /> -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="fila-botones">
+                <button type="submit" class="btn-azul">Cargar Documentos</button>
+            </div>
+        </form>
     </div>
-</form>
 
 <section class="volver-section">
     <div>

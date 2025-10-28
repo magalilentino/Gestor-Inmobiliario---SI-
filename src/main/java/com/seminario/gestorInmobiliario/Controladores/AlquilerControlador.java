@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import com.seminario.gestorInmobiliario.Entidades.Alquiler;
 import com.seminario.gestorInmobiliario.Entidades.Documento;
 import com.seminario.gestorInmobiliario.Entidades.Inquilino;
 import com.seminario.gestorInmobiliario.Entidades.Propiedad;
+import com.seminario.gestorInmobiliario.Servicios.AgenteServicios;
 import com.seminario.gestorInmobiliario.Servicios.AlquilerServicio;
 import com.seminario.gestorInmobiliario.Servicios.DocumentoServicio;
 import com.seminario.gestorInmobiliario.Servicios.InquilinoService;
@@ -48,6 +50,9 @@ public class AlquilerControlador {
     
     @Autowired
     private DocumentoServicio documentoServicio;
+
+    @Autowired
+    private AgenteServicios agenteService;
     
     @GetMapping("/registrar") // localhost:8080/alquiler/registrar
     public String registrar() {
@@ -60,20 +65,29 @@ public class AlquilerControlador {
                             @RequestParam double valorInicial, 
                             @RequestParam int periodoAumento,
                             @RequestParam double porcentajeAumento,
+                            @RequestParam double interesMora,
+                            Authentication auth,
                             HttpSession session, 
                             ModelMap model){
         try {
-            // List<Documento> documentos = (List<Documento>) session.getAttribute("documentosPendientes");
             String dniInquilino = (String) session.getAttribute("dniInquilino");
-            Agente agente = (Agente) session.getAttribute("agentesession");
+            Agente agente = agenteService.getByUser(auth.getName());
             String dniAgente = agente != null ? agente.getDniAgente() : null;
             int idPropiedad = (int) session.getAttribute("idPropiedad");
 
-            Alquiler alquilerCreado = alquilerServicio.crearAlquiler(fechaIngreso, fechaEgreso, valorInicial, idPropiedad, dniAgente, dniInquilino, periodoAumento, porcentajeAumento);
+            Alquiler alquilerCreado = alquilerServicio.crearAlquiler(fechaIngreso, fechaEgreso, valorInicial, idPropiedad, 
+                                                                    dniAgente, dniInquilino, periodoAumento, porcentajeAumento, interesMora);
 
             propiedadServicio.cambiarEstadoPropiedad(idPropiedad, "Ocupada");
              
             precioServicio.crearPrecio(LocalDate.now(), valorInicial, alquilerCreado.getIdAlquiler());
+
+            List<Documento> documentos = (List<Documento>) session.getAttribute("documentosPendientes");
+            documentoServicio.agregarDocumentos(documentos, alquilerCreado);
+
+            //Limpio el session
+            List<String> atributosTemporales = List.of("documentosPendientes", "dniInquilino", "idPropiedad");
+            atributosTemporales.forEach(session::removeAttribute);
 
             model.put("exito", "El Alquiler fue cargado correctamente."); // falta mostrar este mensaje
 
@@ -224,10 +238,11 @@ public class AlquilerControlador {
                                     @RequestParam(name = "fechaRescision") String fechaRescisionStr, 
                                     @RequestParam(name = "confirmar", required = false) String confirmar,
                                     HttpSession session,
+                                    Authentication auth,
                                     ModelMap model) {
         try {
             // Verificamos que el usuario esté autenticado
-            Agente agente = (Agente) session.getAttribute("agentesession");
+            Agente agente = agenteService.getByUser(auth.getName());
             if (agente == null) {
                 return "redirect:/login?error=Debe iniciar sesión para continuar";
             }

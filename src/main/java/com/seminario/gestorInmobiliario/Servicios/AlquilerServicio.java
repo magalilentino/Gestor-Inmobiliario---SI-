@@ -56,9 +56,9 @@ public class AlquilerServicio {
     @Transactional 
     public Alquiler crearAlquiler(LocalDate fechaIngreso, LocalDate fechaEgreso, double valorInicial, int idPropiedad, 
                             String dniAgente, String dniInquilino, int periodoAumento, 
-                            double porcentajeAumento) throws Exception {
+                            double porcentajeAumento, double interesMora) throws Exception {
 
-        validar(fechaIngreso, fechaEgreso, valorInicial, idPropiedad, dniAgente, dniInquilino, periodoAumento, porcentajeAumento);
+        validar(fechaIngreso, fechaEgreso, valorInicial, idPropiedad, dniAgente, dniInquilino, periodoAumento, porcentajeAumento, interesMora);
 
         Propiedad propiedad = propiedadRepositorio.findById(idPropiedad).get();
         Agente agente = agenteRepositorio.findById(dniAgente).get();
@@ -85,6 +85,7 @@ public class AlquilerServicio {
         alquiler.setEstado("Activo");
         alquiler.setPeriodoAumento(periodoAumento);
         alquiler.setPorcentajeAumento(porcentajeAumento);
+        alquiler.setInteresMora(interesMora);
 
         alquilerRepositorio.save(alquiler);
 
@@ -100,9 +101,9 @@ public class AlquilerServicio {
     @Transactional
     public void modificarAlquiler(LocalDate fechaIngreso, LocalDate fechaEgreso, double valorInicial,
                                  int idPropiedad, String dniAgente, String dniInquilino, int id, 
-                                 int periodoAumento, double porcentajeAumento) throws Exception {
+                                 int periodoAumento, double porcentajeAumento, double interesMora) throws Exception {
         
-        validar(fechaIngreso, fechaEgreso, valorInicial, idPropiedad, dniAgente, dniInquilino, periodoAumento, porcentajeAumento);
+        validar(fechaIngreso, fechaEgreso, valorInicial, idPropiedad, dniAgente, dniInquilino, periodoAumento, porcentajeAumento, interesMora);
 
         Optional<Alquiler> alquilerOpt = alquilerRepositorio.findById(id);
         Optional<Propiedad> propiedadOpt = propiedadRepositorio.findById(idPropiedad);
@@ -131,6 +132,7 @@ public class AlquilerServicio {
         alquiler.setMiInquilino(inquilinoOpt.get());
         alquiler.setPeriodoAumento(periodoAumento);
         alquiler.setPorcentajeAumento(porcentajeAumento);
+        alquiler.setInteresMora(interesMora);
 
         alquilerRepositorio.save(alquiler);
 
@@ -315,7 +317,7 @@ public class AlquilerServicio {
     }
 
     private void validar(LocalDate fechaIngreso, LocalDate fechaEgreso, double valorInicial, int idPropiedad, 
-                        String dniAgente, String dniInquilino, int periodoAumento, double porcentajeAumento) throws Exception {
+                        String dniAgente, String dniInquilino, int periodoAumento, double porcentajeAumento, double interesMora) throws Exception {
         if (fechaIngreso == null) {
             throw new Exception("La fecha de ingreso no puede ser nula");
         }
@@ -342,6 +344,9 @@ public class AlquilerServicio {
         }
         if (porcentajeAumento <= 0) {
             throw new Exception("El porcentaje del aumento debe ser un valor positivo");
+        }
+        if (interesMora <= 0) {
+            throw new Exception("El interes de mora debe ser un valor positivo");
         }
     }
 

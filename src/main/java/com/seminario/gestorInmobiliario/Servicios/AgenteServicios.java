@@ -4,6 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,7 +16,7 @@ import com.seminario.gestorInmobiliario.Entidades.Agente;
 import com.seminario.gestorInmobiliario.Repositorios.AgenteRepository;
 
 @Service
-public class AgenteServicios {
+public class AgenteServicios implements UserDetailsService {
 
     @Autowired
     private AgenteRepository agenteRepositorio;
@@ -29,7 +34,7 @@ public class AgenteServicios {
         agente.setTelefono(telefono);
         agente.setMatricula(matricula);
         agente.setUsuario(usuario);
-        agente.setClave(clave);
+        agente.setClave(new BCryptPasswordEncoder().encode(clave));
         agenteRepositorio.save(agente);
     }
 
@@ -52,7 +57,7 @@ public class AgenteServicios {
             agente.setTelefono(telefono);
             agente.setMatricula(matricula);
             agente.setUsuario(usuario);
-            agente.setClave(clave);
+            agente.setClave(new BCryptPasswordEncoder().encode(clave));
             agenteRepositorio.save(agente);
         } else {
             throw new Exception("No se encontro el agente solicitado");
@@ -76,16 +81,33 @@ public class AgenteServicios {
         return agenteRepositorio.getReferenceById(dniAgente);
     }
 
-    public Agente login(String usuario, String clave) throws Exception {
-        Agente agente = agenteRepositorio.findByUsuario(usuario)
-                .orElseThrow(() -> new Exception("Usuario no encontrado"));
-
-        if (!agente.getClave().equals(clave)) {
-            throw new Exception("Clave incorrecta");
-        }
-
-        return agente;
+    @Transactional(readOnly = true)
+    public Agente getByUser(String usuario) {
+        return agenteRepositorio.findByUsuario(usuario).orElse(null);
     }
+
+    // public Agente login(String usuario, String clave) throws Exception {
+    //     Agente agente = agenteRepositorio.findByUsuario(usuario)
+    //             .orElseThrow(() -> new Exception("Usuario no encontrado"));
+
+    //     if (!agente.getClave().equals(clave)) {
+    //         throw new Exception("Clave incorrecta");
+    //     }
+
+    //     return agente;
+    // }
+
+    @Override
+    public UserDetails loadUserByUsername(String usuario) throws UsernameNotFoundException {
+        Agente agente = agenteRepositorio.findByUsuario(usuario)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+
+        return User.builder()
+                .username(agente.getUsuario())
+                .password(agente.getClave()) 
+                .build();
+    }
+
 
     private void validar(String dniAgente, String email, String matricula, String usuario, String clave) throws Exception {
 

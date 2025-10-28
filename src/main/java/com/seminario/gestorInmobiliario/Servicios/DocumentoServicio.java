@@ -43,6 +43,12 @@ public class DocumentoServicio {
         return documentos;
     }
 
+    public void agregarDocumentos(List<Documento> documentos, Alquiler alquiler) {
+        for (Documento doc : documentos) {
+            doc.setAlquiler(alquiler);
+            documentoRepositorio.save(doc);
+        }
+    }
 
     // @Transactional
     // public void crearDocumento(String enlace, String descripcion, byte[] contenido, Integer idAlquiler)

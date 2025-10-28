@@ -36,7 +36,7 @@
         const descripcion = document.getElementById("descripcion").value;
 
         // Si no se presionó "Ingresar otro", agregamos el documento actual
-        if (documentos.length === 0 && archivo && descripcion) {
+        if (archivo && descripcion) {
             documentos.push({ archivo, descripcion });
         }
 
@@ -76,8 +76,11 @@
         <form id="formDocumentos" enctype="multipart/form-data">
             <input type="file" id="archivo" accept=".pdf" />
             <input type="text" id="descripcion" placeholder="Descripción" class="input-text"/>
-            <button type="button" onclick="agregarDocumento()" class="btn-azul">Ingresar otro</button>
-            <button type="button" onclick="enviarDocumentos()" class="btn-verde">Aceptar</button>
+            <div class="fila-botones">
+                <button type="button" onclick="agregarDocumento()" class="btn-azul">Ingresar otro</button>
+                <button type="button" onclick="enviarDocumentos()" class="btn-verde">Aceptar</button>
+            </div>
+    
         </form>
 
         <h4 class="subtittulo">Documentos agregados:</h4>
