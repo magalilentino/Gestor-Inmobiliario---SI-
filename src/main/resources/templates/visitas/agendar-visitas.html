@@ -26,64 +26,67 @@
     <!-- Contenido principal -->
     <div class="container text-center mt-5">
         <h2 class="mb-4">Agendar una Visita</h2>
-
-        <!-- Buscador -->
         <form class="search-bar d-flex" th:action="@{/visitas/buscar}" method="get">
-            <input type="text" name="query" class="form-control" placeholder="Buscá una propiedad (ID / ubicación)">
-            <button type="submit"><i class="bi bi-search" style="font-size: 1.3rem;"></i></button>
-        </form>
 
-        <!-- Mensaje de error (propiedad no encontrada) -->
-        <div th:if="${mensajeError}" class="alert alert-danger mt-3" role="alert" th:text="${mensajeError}"></div>
-
-        <!-- Mensaje de advertencia (propiedad sin horarios) -->
-        <div th:if="${mensajeAdvertencia}" class="alert alert-warning mt-3" role="alert"
-            th:text="${mensajeAdvertencia}"></div>
-
-
-        <!-- Mostrar tabla solo si hay horarios -->
-        <div th:if="${horarios}">
-            <h5 class="mt-4 mb-3">Seleccione un horario disponible:</h5>
-
-            <form th:action="@{/visitas/reservar}" method="post">
-                <div class="table-responsive">
-                    <table class="table table-bordered text-center align-middle">
-                        <thead class="table-light">
-                            <tr>
-                                <th></th>
-                                <th>ID Propiedad</th>
-                                <th>Ubicación</th>
-                                <th>Fecha</th>
-                                <th>Hora</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="h : ${horarios}">
-                                <td><input type="radio" name="idSeleccionado" th:value="${h.idHorario}" required></td>
-                                <td th:text="${h.propiedad != null ? h.propiedad.idPropiedad : '-'}"></td>
-                                <td th:text="${h.propiedad != null ? h.propiedad.ubicacion : 'Sin datos'}"></td>
-                                <td th:text="${#temporals.format(h.fecha, 'dd/MM/yyyy')}"></td>
-                                <td
-                                    th:text="${#temporals.format(h.horaIni, 'HH:mm')} + ' - ' + ${#temporals.format(h.horaFin, 'HH:mm')} + ' hs'">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Botones -->
-                <div class="mt-4">
-                    <a href="/visitas" class="btn btn-primary me-3">Volver a buscar</a>
-                    <button type="submit" class="btn btn-primary">Aceptar</button>
-                </div>
+            <!-- Buscador -->
+            <form class="search-bar d-flex" th:action="@{/visitas/buscar}" method="get">
+                <input type="text" name="query" class="form-control" placeholder="Buscá una propiedad (ID / ubicación)">
+                <button type="submit"><i class="bi bi-search" style="font-size: 1.3rem;"></i></button>
             </form>
-        </div>
-        <!-- Botón Volver (abajo a la derecha dentro del contenido blanco) -->
-        <div class="container mt-4 text-end">
-            <a href="/index" class="btn btn-secondary">
-                ← Volver al inicio
-            </a>
-        </div>
+
+            <!-- Mensaje de error (propiedad no encontrada) -->
+            <div th:if="${mensajeError}" class="alert alert-danger mt-3" role="alert" th:text="${mensajeError}">
+            </div>
+
+            <!-- Mensaje de advertencia (propiedad sin horarios) -->
+            <div th:if="${mensajeAdvertencia}" class="alert alert-warning mt-3" role="alert"
+                th:text="${mensajeAdvertencia}"></div>
+
+
+            <!-- Mostrar tabla solo si hay horarios -->
+            <div th:if="${horarios}">
+                <h5 class="mt-4 mb-3">Seleccione un horario disponible:</h5>
+
+                <form th:action="@{/visitas/formulario-visitante}" method="get">
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-center align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th></th>
+                                    <th>ID Propiedad</th>
+                                    <th>Ubicación</th>
+                                    <th>Fecha</th>
+                                    <th>Hora</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="h : ${horarios}">
+                                    <td><input type="radio" name="idSeleccionado" th:value="${h.idHorario}" required>
+                                    </td>
+                                    <td th:text="${h.propiedad != null ? h.propiedad.idPropiedad : '-'}"></td>
+                                    <td th:text="${h.propiedad != null ? h.propiedad.ubicacion : 'Sin datos'}"></td>
+                                    <td th:text="${#temporals.format(h.fecha, 'dd/MM/yyyy')}"></td>
+                                    <td
+                                        th:text="${#temporals.format(h.horaIni, 'HH:mm')} + ' - ' + ${#temporals.format(h.horaFin, 'HH:mm')} + ' hs'">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="mt-4">
+                        <a href="/visitas" class="btn btn-primary me-3">Volver a buscar</a>
+                        <button type="submit" class="btn btn-primary">Aceptar</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Botón Volver (abajo a la derecha dentro del contenido blanco) -->
+            <div class="container mt-4 text-end">
+                <a href="/index" class="btn btn-secondary">
+                    ← Volver al inicio
+                </a>
+            </div>
 
     </div>
 
