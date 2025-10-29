@@ -16,7 +16,6 @@ import com.seminario.gestorInmobiliario.Entidades.Propiedad;
 import com.seminario.gestorInmobiliario.Entidades.Visitas;
 import com.seminario.gestorInmobiliario.Repositorios.HorarioVisitaRepository;
 import com.seminario.gestorInmobiliario.Repositorios.PropiedadRepository;
-import com.seminario.gestorInmobiliario.Servicios.HorarioVisitaService;
 import com.seminario.gestorInmobiliario.Servicios.VisitasServicio;
 
 @Controller
@@ -27,9 +26,6 @@ public class VisitaController {
 
     @Autowired
     private HorarioVisitaRepository horarioRepo;
-
-    @Autowired
-    private HorarioVisitaService horarioVisitaService;
 
     @Autowired
     private VisitasServicio visitasService;
