@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categorías</title>
+    <link rel="stylesheet" th:href="@{/css/navAlquiler.css}">
+    <link rel="stylesheet" th:href="@{/css/mensaje.css}">
+    <style>
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        tr:hover {
+            background-color: #e1e1e1;
+        }
+        
+        .btn {
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .no-categorias {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="~{fragmentos/navCategoria :: nav}"></div>
+    
+    <div class="container">
+        <h1>Categorías</h1>
+        
+        <div th:replace="~{fragmentos/mensaje :: div}"></div>
+        
+        <div th:if="${advertencia}" class="no-categorias" th:text="${advertencia}"></div>
+        
+        <table th:if="${categorias != null and not #lists.isEmpty(categorias)}">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="categoria : ${categorias}">
+                    <td th:text="${categoria.idCategoria}"></td>
+                    <td th:text="${categoria.nombre}"></td>
+                    <td th:text="${categoria.descripcion != null ? categoria.descripcion : '-'}"></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div style="margin-top: 20px;">
+            <a th:href="@{/index}" class="btn">Volver al Inicio</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,6 +1,6 @@
 package com.seminario.gestorInmobiliario.Servicios;
 import java.time.Duration;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Service;
 
@@ -17,8 +17,8 @@ public class HorarioVisitaService {
     }
 
     public void guardarHorario(HorarioVisita horario) {
-        LocalTime inicio = horario.getHoraIni();
-        LocalTime fin = horario.getHoraFin();
+        LocalDateTime inicio = horario.getHoraIni();
+        LocalDateTime fin = horario.getHoraFin();
 
         // Validar que la hora de fin sea posterior a la de inicio
         if (!fin.isAfter(inicio)) {

@@ -42,7 +42,7 @@ public class HomeController {
         if (agente == null) {
             return "redirect:/login";
         }
-        return "propiedades/lista";
+        return "redirect:/propiedad/listar";
     }
 
     @GetMapping("/visitas")
@@ -56,4 +56,14 @@ public class HomeController {
         return "visitas/agendar-visitas";
     }
 
+    @GetMapping("/categorias")
+    public String categorias(Authentication auth, ModelMap modelo) {
+        Agente agente = agenteService.getByUser(auth.getName());
+        if (agente == null) {
+            return "redirect:/login";
+        }
+
+        modelo.put("agente", agente);
+        return "categorias/lista";
+    }
 }
