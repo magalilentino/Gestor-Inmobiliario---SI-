@@ -23,14 +23,15 @@ public class DocumentoControlador {
     @Autowired
     private DocumentoServicio documentoServicio;
 
-     @GetMapping("/registrar")
+    @GetMapping("/registrar")
     public String registrar(@RequestParam int idPropiedad,
                             HttpSession session,
                             ModelMap model) {
         String email = (String) session.getAttribute("email");
         model.put("email", email);
-        model.put("idPropiedad", idPropiedad);
+        
         session.setAttribute("idPropiedad", idPropiedad);
+        model.put("idPropiedad", idPropiedad);
         return "documento/form";
     }
 

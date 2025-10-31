@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 public class Localidad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idLocalidad; 
+    private Integer idLocalidad; 
     private String nombre;
     private int codPostal;
 
@@ -22,11 +22,11 @@ public class Localidad {
     private Provincia miProvincia;
 
     //getters y setters 
-    public int getIdLocalidad() {
+    public Integer getIdLocalidad() {
         return idLocalidad;
     }
 
-    public void setIdLocalidad(int idLocalidad) {
+    public void setIdLocalidad(Integer idLocalidad) {
         this.idLocalidad = idLocalidad;
     }
 

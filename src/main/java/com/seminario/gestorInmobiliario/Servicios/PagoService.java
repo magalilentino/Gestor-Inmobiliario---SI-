@@ -162,28 +162,28 @@ public class PagoService {
     }
 
     private void calcularMontoConAumento(Alquiler alquiler) {
-    Precio ultimoPrecio = precioRepository.findTopByAlquilerOrderByFechaDesdeDesc(alquiler);
-    double montoBase = ultimoPrecio.getPrecio();
+        Precio ultimoPrecio = precioRepository.findTopByAlquilerOrderByFechaDesdeDesc(alquiler);
+        double montoBase = ultimoPrecio.getPrecio();
 
-    int mesesTranscurridos = alquiler.getMesesDesdeIngreso();
-    int periodo = alquiler.getPeriodoAumento();
+        int mesesTranscurridos = alquiler.getMesesDesdeIngreso();
+        int periodo = alquiler.getPeriodoAumento();
 
-    if (periodo > 0 && mesesTranscurridos > 0 && mesesTranscurridos % periodo == 0) { 
-        double porcentaje = alquiler.getPorcentajeAumento();
-        double nuevoMonto = montoBase * (1 + porcentaje / 100);
+        if (periodo > 0 && mesesTranscurridos > 0 && mesesTranscurridos % periodo == 0) { 
+            double porcentaje = alquiler.getPorcentajeAumento();
+            double nuevoMonto = montoBase * (1 + porcentaje / 100);
 
-        // Registrar nuevo precio
-        Precio nuevo = new Precio();
-        nuevo.setFechaDesde(LocalDate.now());
-        nuevo.setPrecio(nuevoMonto);
-        nuevo.setAlquiler(alquiler);
+            // Registrar nuevo precio
+            Precio nuevo = new Precio();
+            nuevo.setFechaDesde(LocalDate.now());
+            nuevo.setPrecio(nuevoMonto);
+            nuevo.setAlquiler(alquiler);
 
-        precioRepository.save(nuevo);
+            precioRepository.save(nuevo);
+
+        }
+
 
     }
-
-
-}
 
     private void validar(LocalDate fecha_limite, double interesMora)
             throws Exception {

@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>Pagos Pendientes</title>
     <link rel="stylesheet" th:href="@{/css/pago.css}">
+    <link rel="stylesheet"  th:href="@{/css/navAlquiler.css}">
     </head>
 <body>
-
+    <div th:replace="~{fragmentos/navAlquiler :: nav}"></div>
     <h1>Pagos Pendientes</h1>
 
     <div th:if="${mensaje}">

@@ -137,6 +137,48 @@ public class AlquilerControlador {
     }
 }
 
+// getMapping para volver atras
+    @GetMapping("/volverPropiedad")
+    public String volverSeleccionPropiedad(HttpSession session, ModelMap model) {
+        String dni = (String) session.getAttribute("dniInquilino");
+        String email = (String) session.getAttribute("email");
+
+        if (dni == null || email == null) {
+            model.put("error", "No se pudo recuperar el inquilino. Volvé a buscarlo.");
+            return "alquiler/buscarInquilino";
+        }
+
+        List<Propiedad> propVisitadas = visitaPropiedadServicio.listarPropVisitadas(email);
+
+        if (propVisitadas == null || propVisitadas.isEmpty()) {
+            propVisitadas = propiedadServicio.listarPropiedadesDisponibles();
+            if (propVisitadas.isEmpty()) {
+                model.put("advertencia", "No hay propiedades disponibles para alquilar");
+            } else {
+                model.put("info", "No se encontraron visitas previas para este inquilino. Mostrando todas las propiedades disponibles.");
+            }
+        }
+
+        model.put("propVisitadas", propVisitadas);
+        model.put("exito", "Inquilino encontrado");
+        return "propiedad/seleccionar";
+    }
+
+    @GetMapping("/volverDocumento")
+    public String volverACargaDeDocumentos(HttpSession session, ModelMap model) {
+        Integer idPropiedad = (Integer) session.getAttribute("idPropiedad");
+        String email = (String) session.getAttribute("email");
+
+        if (idPropiedad == null || email == null) {
+            model.put("error", "No se pudo recuperar la propiedad o el inquilino. Volvé a buscar el inquilino.");
+            return "alquiler/buscarInquilino";
+        }
+
+        model.put("idPropiedad", idPropiedad);
+        model.put("email", email);
+        return "documento/form";
+    }
+
     @GetMapping("/listar-activos")
     public String listarAlquileresActivos(@RequestParam(required = false) String busqueda, ModelMap model) {
         try {

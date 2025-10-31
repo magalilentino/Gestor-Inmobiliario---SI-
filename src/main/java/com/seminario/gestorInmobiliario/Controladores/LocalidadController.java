@@ -47,13 +47,15 @@ public class LocalidadController {
             ModelMap model) {
 
         try {
-            localidadService.crearLocalidad(nombre, codPostal, idProvincia);
-            model.put("exito", "La localidad fue registrada correctamente.");
+            Localidad localidadRegistrada = localidadService.crearLocalidad(nombre, codPostal, idProvincia);
+            
+            model.put("exito", "La localidad fue registrada exitosamente");
+            model.put("localidadRegistrada",localidadRegistrada.getIdLocalidad());
+
         } catch (Exception e) {
             model.put("error", e.getMessage());
         }
 
-        // Siempre vuelvo al formulario
         model.addAttribute("provincias", provinciaServicio.listarProvincias());
         return "localidad/form";
     }
@@ -68,11 +70,10 @@ public class LocalidadController {
             } else {
                 localidades = localidadService.listarLocalidades();
             }
-
+            
             model.addAttribute("localidades", localidades);
             model.addAttribute("provinciaSeleccionada", provincia);
             return "localidad/listarLocalidades";
-            
         } catch (Exception e) {
             model.addAttribute("error", "Error al cargar agentes: " + e.getMessage());
             return "localidad/listarLocalidades";

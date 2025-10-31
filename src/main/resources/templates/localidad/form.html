@@ -11,14 +11,19 @@
 <body>
     <div th:replace="~{fragmentos/navLocalidad :: nav}"></div>
     <div class="form-container">
+
         <h2 class="titulo">Registrar Nueva Localidad</h2>
+
             <div th:if="${error}" style="color: red;">
                 <p th:text="${error}"></p>
+            </div>           
+            <div th:if="${exito}" style="color: green;">
+        
+                <p th:text="${exito} + ' con el ID: ' + ${localidadRegistrada}">
+                    La provincia fue registrada exitosamente con el ID:
+                </p>
             </div>
 
-            <div th:if="${exito}" style="color: green;">
-                <p th:text="${exito}"></p>
-            </div>
         <form class="formulario" th:action="@{/localidad/registro}" method="POST" enctype="multipart/form-data">
 
                 <label for="idProvincia">Provincia:</label>
@@ -38,8 +43,6 @@
                 <h5>Codigo Postal: </h5> 
                 <input type="text" class="input-text" name="codPostal" placeholder="codPostal">
             </div>
- 
-            <div th:replace="~{fragmentos/mensaje :: div}"></div>
 
             <div class="botonera-principal">
                 <button type="submit" class="btn-azul">Registrar localidad</button>

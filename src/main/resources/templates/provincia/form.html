@@ -11,14 +11,17 @@
 <body>
     <div th:replace="~{fragmentos/navProvincia :: nav}"></div>
     <div class="form-container">
-        <h2 class="titulo">Registrar Nueva Provincia</h2>
+            <h2 class="titulo">Registrar Nueva Provincia</h2>
+            
+            <div th:if="${exito}" style="color: green;">
         
-            <div th:if="${error}" style="color: red;">
-                <p th:text="${error}"></p>
+                <p th:text="${exito} + ' con el ID: ' + ${idProvinciaRegistrada}">
+                    La provincia fue registrada exitosamente con el ID:
+                </p>
             </div>
 
-            <div th:if="${exito}" style="color: green;">
-                <p th:text="${exito}"></p>
+            <div th:if="${error}" style="color: red;">
+                <p th:text="${error}"></p>
             </div>
         <form class="formulario" th:action="@{/provincia/registro}" method="POST" enctype="multipart/form-data">
             
@@ -26,8 +29,6 @@
                 <h5>Nombre:</h5> 
                 <input type="text" class="input-text" name="nombre" placeholder="nombre">
             </div>
-                
-            <div th:replace="~{fragmentos/mensaje :: div}"></div>
 
             <div class="botonera-principal">
                 <button type="submit" class="btn-azul">Registrar provincia</button>

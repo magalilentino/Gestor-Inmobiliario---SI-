@@ -85,31 +85,15 @@
 
         <h4 class="subtittulo">Documentos agregados:</h4>
         <ul id="listaDocumentos" class="lista-documentos"></ul>
+
+        <section class="volver-section">
+            <div>
+                <a th:href="@{/alquiler/volverPropiedad}" class="volver-link">Volver</a>
+            </div>
+        </section>
     </div>
+
+   
 </body>
 </html>
 
-
-<!-- 
-    <h2>Cargar Documentos</h2>
-
-    <input type="hidden" id="idAlquiler" th:value="${alquiler.idAlquiler}" />
-
-
-    <div class="campo">
-        <label>Documento N° <span id="contadorDocumento">1</span></label>
-        <input type="file" id="archivo" accept=".pdf" />
-    </div>
-
-    <div class="campo">
-        <label>Descripción:</label><br>
-        <input type="text" id="descripcion" maxlength="100" placeholder="Descripción del documento" />
-    </div>
-
-    <div class="botones">
-        <button type="button" onclick="agregarDocumento()">Ingresar otro</button>
-        <button type="button" onclick="enviarDocumentos()">Aceptar</button>
-    </div>
-
-    <h4>Documentos agregados:</h4>
-    <ul id="listaDocumentos"></ul> -->

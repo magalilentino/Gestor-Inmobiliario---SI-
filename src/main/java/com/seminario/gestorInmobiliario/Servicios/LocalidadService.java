@@ -25,7 +25,7 @@ public class LocalidadService {
 
 
     @Transactional
-    public void crearLocalidad(String nombre, Integer codPostal, Integer idProvincia)throws Exception {
+    public Localidad crearLocalidad(String nombre, Integer codPostal, Integer idProvincia)throws Exception {
         validar(nombre,codPostal,idProvincia);
 
         Provincia provincia = provinciaRepository.findById(idProvincia).get();
@@ -39,7 +39,8 @@ public class LocalidadService {
         localidad.setNombre(nombre);
         localidad.setCodPostal(codPostal);
         localidad.setMiProvincia(provincia);
-        localidadRepository.save(localidad);
+
+        return localidadRepository.save(localidad);
     }
 
     

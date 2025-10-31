@@ -31,15 +31,17 @@ public class ProvinciaController {
     public String registro(@RequestParam String nombre, 
                             ModelMap model){
         try {
-            
-            provinciaServicio.crearProvincia(nombre);
-            model.put("exito", "La provincia fue cargada correctamente."); 
-            
+            Provincia provinciaRegistrada = provinciaServicio.crearProvincia(nombre);
+
+            model.put("exito", "La provincia fue registrada exitosamente"); 
+            model.put("idProvinciaRegistrada", provinciaRegistrada.getIdProvincia());
+
         } catch (Exception ex) {
             model.put("error", ex.getMessage());
         }
         return "provincia/form";
     }
+
 
     @GetMapping("/listar")
     public String listarProvincias(Model model) {

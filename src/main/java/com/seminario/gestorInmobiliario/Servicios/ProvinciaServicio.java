@@ -18,7 +18,7 @@ public class ProvinciaServicio {
     private ProvinciaRepository provinciaRepository;
 
     @Transactional
-    public void crearProvincia(String nombre) throws Exception {
+    public Provincia crearProvincia(String nombre) throws Exception {
         validar(nombre);
 
         Provincia existente = provinciaRepository.findByNombre(nombre);
@@ -29,10 +29,10 @@ public class ProvinciaServicio {
         Provincia provincia = new Provincia();
         provincia.setNombre(nombre);
         provinciaRepository.save(provincia);
+        
+        return provinciaRepository.save(provincia);
     }
     
-
-
 
     @Transactional(readOnly = true)
     public List<Provincia> listarProvincias() {
