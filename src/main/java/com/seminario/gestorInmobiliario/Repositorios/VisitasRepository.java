@@ -8,10 +8,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.seminario.gestorInmobiliario.Entidades.Propiedad;
 import com.seminario.gestorInmobiliario.Entidades.Visitas;
 
 @Repository
 public interface VisitasRepository extends JpaRepository<Visitas, Integer> {
+
+    @Query("SELECT v.propiedad FROM Visitas v "
+        +"WHERE v.email = :email "
+        +"AND v.propiedad.estado = 'Disponible'")
+    List<Propiedad> listarPropVisitadas(@Param("email") String email);
 
     /**
      * Cuenta cuántas visitas se agendaron en un rango de fechas (ej. este mes).
@@ -22,9 +28,9 @@ public interface VisitasRepository extends JpaRepository<Visitas, Integer> {
     /**
      * Obtiene el Top 5 de propiedades más visitadas en un rango de fechas.
      */
-    @Query(value = "SELECT v.id_propiedad.ubicacion, COUNT(v.nroVisita) AS totalVisitas " +
+    @Query(value = "SELECT v.propiedad.ubicacion, COUNT(v.nroVisita) AS totalVisitas " +
                    "FROM Visitas v WHERE v.fecha BETWEEN :inicio AND :fin " +
-                   "GROUP BY v.id_propiedad.ubicacion " +
+                   "GROUP BY v.propiedad.ubicacion " +
                    "ORDER BY totalVisitas DESC")
     List<Object[]> findTopPropiedadesVisitadasEnRango(@Param("inicio") LocalDate inicio, @Param("fin") LocalDate fin);
 }

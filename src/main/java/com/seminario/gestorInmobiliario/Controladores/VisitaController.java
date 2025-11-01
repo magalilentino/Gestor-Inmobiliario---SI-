@@ -111,7 +111,7 @@ public class VisitaController {
             Visitas nuevaVisita = new Visitas();
 
             // Usamos los setters de tu entidad
-            nuevaVisita.setIdPropiedad(horario.getPropiedad()); // setPropiedad -> setIdPropiedad
+            nuevaVisita.setPropiedad(horario.getPropiedad()); // setPropiedad -> setIdPropiedad
             nuevaVisita.setFecha(horario.getFecha());
             nuevaVisita.setHoraIni(horario.getHoraIni());       // setHora -> setHoraIni
             nuevaVisita.setHoraFin(horario.getHoraFin());       // Añadido

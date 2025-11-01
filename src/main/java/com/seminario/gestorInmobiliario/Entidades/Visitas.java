@@ -22,8 +22,8 @@ public class Visitas {
     private int nroVisita;
 
     @ManyToOne
-    @JoinColumn(name = "idPropiedad", nullable = false)
-    private Propiedad id_propiedad; // Tu setter para esto es setIdPropiedad
+    @JoinColumn(name = "propiedad", nullable = false)
+    private Propiedad propiedad; // Tu setter para esto es setIdPropiedad
 
     @Column (nullable = false, columnDefinition = "DATE") // Ajustado a DATE para LocalDate
     private LocalDate fecha;
@@ -52,8 +52,8 @@ public class Visitas {
     public int getNroVisita() {
         return nroVisita;
     }
-    public Propiedad getIdPropiedad() { // Getter para la propiedad
-        return id_propiedad;
+    public Propiedad getPropiedad() { // Getter para la propiedad
+        return propiedad;
     }
     public LocalDate getFecha() {
         return fecha;
@@ -85,8 +85,8 @@ public class Visitas {
     public void setNroVisita(int nroVisita) {
         this.nroVisita = nroVisita;
     }
-    public void setIdPropiedad(Propiedad id_propiedad) {
-        this.id_propiedad = id_propiedad;
+    public void setPropiedad(Propiedad propiedad) {
+        this.propiedad = propiedad;
     }
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;

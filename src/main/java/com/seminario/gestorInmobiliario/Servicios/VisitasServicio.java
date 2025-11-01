@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.seminario.gestorInmobiliario.Entidades.Propiedad;
 import com.seminario.gestorInmobiliario.Entidades.Visitas;
 import com.seminario.gestorInmobiliario.Repositorios.VisitasRepository;
 
@@ -53,6 +54,11 @@ public class VisitasServicio {
     @Transactional(readOnly = true)
     public List<Visitas> listarVisitas() {
         return visitasRepositorio.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public List<Propiedad> listarPropVisitadas(String email) {
+        return visitasRepositorio.listarPropVisitadas(email);
     }
 
     @Transactional
@@ -106,7 +112,7 @@ public class VisitasServicio {
         if (visita == null) {
             throw new Exception("La visita no puede ser nula");
         }
-        if (visita.getIdPropiedad() == null) {
+        if (visita.getPropiedad() == null) {
             throw new Exception("La visita debe estar asociada a una propiedad");
         }
         if (visita.getFecha() == null) {

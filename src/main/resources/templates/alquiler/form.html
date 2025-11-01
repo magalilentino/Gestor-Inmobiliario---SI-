@@ -41,9 +41,22 @@
         </form>
 
         <section class="volver-section">
-            <a th:href="@{/alquiler/volverDocumento}" class="volver-link">Volver</a>
+            <a id="volverDocumento" th:href="@{/alquiler/volverDocumento}" class="volver-link">Volver</a>
         </section>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const volverLink = document.getElementById("volverDocumento");
+
+            volverLink.addEventListener("click", function(event) {
+                const confirmar = confirm("Si volvés para atrás se eliminarán los documentos ya cargados. ¿Deseás continuar?");
+                if (!confirmar) {
+                    event.preventDefault(); // cancela la navegación
+                }
+            });
+        });
+    </script>
     
 </body>
 </html>

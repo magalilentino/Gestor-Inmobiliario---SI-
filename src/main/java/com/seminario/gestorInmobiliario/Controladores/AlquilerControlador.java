@@ -26,7 +26,7 @@ import com.seminario.gestorInmobiliario.Servicios.DocumentoServicio;
 import com.seminario.gestorInmobiliario.Servicios.InquilinoService;
 import com.seminario.gestorInmobiliario.Servicios.PrecioServicio;
 import com.seminario.gestorInmobiliario.Servicios.PropiedadServicio;
-import com.seminario.gestorInmobiliario.Servicios.VisitaPropiedadServicio;
+import com.seminario.gestorInmobiliario.Servicios.VisitasServicio;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -37,7 +37,7 @@ public class AlquilerControlador {
     private AlquilerServicio alquilerServicio;
 
     @Autowired
-    private VisitaPropiedadServicio visitaPropiedadServicio;
+    private VisitasServicio visitasServicio;
 
     @Autowired
     private PropiedadServicio propiedadServicio;
@@ -115,7 +115,7 @@ public class AlquilerControlador {
         session.setAttribute("email", email);
 
         // Intentar obtener propiedades visitadas
-        List<Propiedad> propVisitadas = visitaPropiedadServicio.listarPropVisitadas(email);
+        List<Propiedad> propVisitadas = visitasServicio.listarPropVisitadas(email);
         
         // Si no hay propiedades visitadas disponibles, obtener todas las propiedades disponibles
         if (propVisitadas == null || propVisitadas.isEmpty()) {
@@ -148,7 +148,7 @@ public class AlquilerControlador {
             return "alquiler/buscarInquilino";
         }
 
-        List<Propiedad> propVisitadas = visitaPropiedadServicio.listarPropVisitadas(email);
+        List<Propiedad> propVisitadas = visitasServicio.listarPropVisitadas(email);
 
         if (propVisitadas == null || propVisitadas.isEmpty()) {
             propVisitadas = propiedadServicio.listarPropiedadesDisponibles();

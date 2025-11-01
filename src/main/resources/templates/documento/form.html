@@ -18,12 +18,35 @@
                 return;
             }
 
+            const index = documentos.length;
             documentos.push({ archivo, descripcion });
 
             // Mostrar en lista
             const lista = document.getElementById("listaDocumentos");
             const item = document.createElement("li");
-            item.textContent = `Documento ${documentos.length}: ${descripcion}`;
+            item.textContent = `Documento ${index + 1}: ${descripcion} `;
+
+            const btnEliminar = document.createElement("button");
+            btnEliminar.className = "btn-eliminar";
+            btnEliminar.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                </svg>
+            `;
+
+               
+            // const icon = document.createElement('i');
+            // icon.className = 'bi bi-trash';
+
+            btnEliminar.onclick = () => {
+                documentos.splice(index, 1);
+                item.remove();
+                actualizarLista();
+            };
+
+            // btnEliminar.appendChild(icon);
+            item.appendChild(btnEliminar);
             lista.appendChild(item);
 
             // Limpiar campos
@@ -31,40 +54,70 @@
             document.getElementById("descripcion").value = "";
         }
 
-       function enviarDocumentos() {
-        const archivo = document.getElementById("archivo").files[0];
-        const descripcion = document.getElementById("descripcion").value;
+        function actualizarLista() {
+            const lista = document.getElementById("listaDocumentos");
+            lista.innerHTML = "";
+            documentos.forEach((doc, i) => {
+                const item = document.createElement("li");
+                item.textContent = `Documento ${i + 1}: ${doc.descripcion} `;
 
-        // Si no se presionó "Ingresar otro", agregamos el documento actual
-        if (archivo && descripcion) {
-            documentos.push({ archivo, descripcion });
+                const btnEliminar = document.createElement("button");
+                btnEliminar.className = "btn-eliminar";
+                btnEliminar.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                    </svg>
+                `;
+
+                // btnEliminar.textContent = "Eliminar";
+                // btnEliminar.className = "btn-eliminar";
+    
+                btnEliminar.onclick = () => {
+                    documentos.splice(i, 1);
+                    actualizarLista();
+                };
+
+                //btnEliminar.appendChild(icon);
+                item.appendChild(btnEliminar);
+                lista.appendChild(item);
+            });
         }
 
-        if (documentos.length === 0) {
-            alert("No hay documentos para enviar.");
-            return;
-        }
+        function enviarDocumentos() {
+            const archivo = document.getElementById("archivo").files[0];
+            const descripcion = document.getElementById("descripcion").value;
 
-        const formData = new FormData();
-
-        documentos.forEach((doc) => {
-            formData.append("archivos", doc.archivo);
-            formData.append("descripciones", doc.descripcion);
-        });
-
-        fetch("/documento/registro", {
-            method: "POST",
-            body: formData
-        })
-        .then(response => {
-            if (response.ok) {
-                alert("Documentos cargados correctamente.");
-                window.location.href = "/alquiler/form";
-            } else {
-                alert("Error al cargar documentos.");
+            // Si no se presionó "Ingresar otro", agregamos el documento actual
+            if (archivo && descripcion) {
+                documentos.push({ archivo, descripcion });
             }
-        });
-    }
+
+            if (documentos.length === 0) {
+                alert("No hay documentos para enviar.");
+                return;
+            }
+
+            const formData = new FormData();
+
+            documentos.forEach((doc) => {
+                formData.append("archivos", doc.archivo);
+                formData.append("descripciones", doc.descripcion);
+            });
+
+            fetch("/documento/registro", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Documentos cargados correctamente.");
+                    window.location.href = "/alquiler/form";
+                } else {
+                    alert("Error al cargar documentos.");
+                }
+            });
+        }
     </script>
 </head>
 

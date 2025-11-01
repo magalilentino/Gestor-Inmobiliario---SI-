@@ -46,6 +46,15 @@ h5 {
     color: #333;
 }
 
+.lista-documentos li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f1f1f1;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
 
 /* Inputs */
 input[type="text"] {
@@ -82,7 +91,7 @@ button {
     transition: background-color 0.3s ease;
 }
 
-button:hover {
+button:not(.btn-eliminar):hover {
     background-color: #0056b3;
 }
 
@@ -135,6 +144,37 @@ button:hover {
 .btn-verde:hover {
     background-color: #218838;
 }
+
+
+.btn-eliminar {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 30px;
+    padding: 0;
+}
+
+.btn-eliminar svg {
+    fill: #e74c3c; 
+    vertical-align: middle;
+    transition: fill 0.2s ease;
+}
+
+.btn-eliminar:hover svg {
+    fill: #c0392b; 
+}
+
+/* .btn-eliminar {
+    background-color: #ffffff; 
+    border: 1px solid #b3b1b1;
+    color: #e74c3c;
+    padding: 4px 8px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.btn-eliminar:hover {
+    background-color: #bbb9b9;
+}  */
 
 /* Cartel de error o acción */
 .cartel-opciones {
@@ -207,7 +247,7 @@ button:hover {
 /* Link de volver */
 .volver-section {
     margin-top: 30px;
-    text-align: right ;
+    text-align: left ;
 }
 
 .volver-link {
